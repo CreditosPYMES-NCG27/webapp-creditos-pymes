@@ -71,7 +71,7 @@ src/
 │   │
 │   ├── 📂 Heroe/                 # Micro-feature (componente único)
 │   │   ├── HeroeSection.jsx
-│   │   └── HeroeSection.css      # Estilos específicos del héroe
+│   │   └── HeroeSection.css      # Estilos (opcional/ajuste) (css.module opcional)
 │   │
 │   ├── 📂 Form/                  # Macro-feature (múltiples componentes)
 │   │   ├── components/
@@ -110,7 +110,7 @@ src/
 │   └── formatDate.js
 │
 ├── 📂 data/                      # Data y mocks globales
-│   └── countries.json
+│   └── data.json
 │
 ├── App.jsx                       # Componente raíz
 └── main.jsx                      # Punto de entrada
