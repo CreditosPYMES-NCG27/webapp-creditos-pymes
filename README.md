@@ -42,14 +42,15 @@ npm run dev
 
 ## 📦 Dependencias principales
 
-Este proyecto utiliza **Vite + React.js** como base, más:
+Este proyecto utiliza **Vite + React** como base, más:
 
-| Dependencia          | Propósito                                           |
-| -------------------- | --------------------------------------------------- |
-| **Bootstrap**        | Estilos responsivos y componentes UI                |
-| **@popperjs/core**   | Soporte para componentes interactivos de Bootstrap  |
-| **react-router-dom** | Manejo de rutas y navegación en la aplicación React |
+| Dependencia | Propósito |
+|-------------|-----------|
+| **Bootstrap** | Estilos responsivos y componentes UI |
+| **@popperjs/core** | Soporte para componentes interactivos de Bootstrap |
+| **react-router-dom** | Sistema de enrutamiento para la aplicación |
 
+---
 
 ## 📁 Estructura del proyecto
 
@@ -69,7 +70,8 @@ src/
 ├── 📂 features/                  # Módulos y features específicos
 │   │
 │   ├── 📂 Heroe/                 # Micro-feature (componente único)
-│   │   └── HeroeSection.jsx
+│   │   ├── HeroeSection.jsx
+│   │   └── HeroeSection.css      # Estilos específicos del héroe
 │   │
 │   ├── 📂 Form/                  # Macro-feature (múltiples componentes)
 │   │   ├── components/
