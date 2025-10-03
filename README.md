@@ -42,14 +42,14 @@ npm run dev
 
 ## 📦 Dependencias principales
 
-Este proyecto utiliza **Vite + React** como base, más:
+Este proyecto utiliza **Vite + React.js** como base, más:
 
-| Dependencia | Propósito |
-|-------------|-----------|
-| **Bootstrap** | Estilos responsivos y componentes UI |
-| **@popperjs/core** | Soporte para componentes interactivos de Bootstrap |
+| Dependencia          | Propósito                                           |
+| -------------------- | --------------------------------------------------- |
+| **Bootstrap**        | Estilos responsivos y componentes UI                |
+| **@popperjs/core**   | Soporte para componentes interactivos de Bootstrap  |
+| **react-router-dom** | Manejo de rutas y navegación en la aplicación React |
 
----
 
 ## 📁 Estructura del proyecto
 
