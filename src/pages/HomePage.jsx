@@ -1,5 +1,13 @@
-import HeroeSection from "../features/HeroeSection/HeroeSection";
+import HeroSection from "../features/HeroeSection/HeroSection";
+import LoanAmount from "../features/HeroeSection/LoanAmount";
 
-export default function HomePage() {
-    return <HeroeSection />;
-}   
+const HomePage = () => {
+    return (
+        <div className="container-fluid p-0 m-0 bg-light"> 
+            <HeroSection /> 
+            <LoanAmount /> 
+        </div>
+    );
+};
+
+export default HomePage;

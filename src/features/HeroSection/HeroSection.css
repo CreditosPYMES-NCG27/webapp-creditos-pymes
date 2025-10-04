@@ -1,0 +1,16 @@
+.heroe {
+  background-image: url('../../assets/fondo.webp');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+
+  display: flex;
+  justify-content: center;  /* centra horizontal */
+  align-items: center;      /* centra vertical */
+  text-align: center;
+}
+
+.heroe .content {
+  max-width: 600px;   /* controla el ancho del bloque de texto */
+  margin: 0 auto;     /* lo centra */
+}
