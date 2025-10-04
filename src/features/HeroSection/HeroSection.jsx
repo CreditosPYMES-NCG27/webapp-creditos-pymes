@@ -1,6 +1,6 @@
-import './HeroeSection.css';
+import './HeroSection.css';
 
-export default function HeroeSection() {
+export default function HeroSection() {
   return (
     <div className="container heroe text-white text-center">
       <div className="content">
