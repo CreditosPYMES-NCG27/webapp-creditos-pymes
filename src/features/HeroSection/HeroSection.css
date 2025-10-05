@@ -5,12 +5,12 @@
   height: 80vh;
 
   display: flex;
-  justify-content: center;  /* centra horizontal */
-  align-items: center;      /* centra vertical */
+  justify-content: center;  
+  align-items: center;      
   text-align: center;
 }
 
 .heroe .content {
-  max-width: 600px;   /* controla el ancho del bloque de texto */
-  margin: 0 auto;     /* lo centra */
+  max-width: 600px;  
+  margin: 0 auto;    
 }
