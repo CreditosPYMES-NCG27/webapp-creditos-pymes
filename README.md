@@ -1,0 +1,91 @@
+<div align="center">
+
+# 🏦 Webapp Créditos PYMES
+
+### Sistema de gestión de créditos para pequeñas y medianas empresas
+
+---
+
+</div>
+
+## 📋 Requisitos previos
+
+Asegúrate de tener instalado:
+
+| Herramienta | Versión mínima |
+|-------------|----------------|
+| Node.js     | v18 o superior |
+| npm         | incluido con Node |
+
+---
+
+## 🚀 Instalación y ejecución
+
+```bash
+# Clonar el repositorio
+git clone https://github.com/CreditosPYMES-NCG27/webapp-creditos-pymes.git
+
+# Navegar al directorio
+cd webapp-creditos-pymes
+
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
+npm run dev
+```
+
+---
+
+## 📦 Dependencias principales
+
+Este proyecto utiliza **Vite + React** como base, más:
+
+| Dependencia | Propósito |
+|-------------|-----------|
+| **Bootstrap** | Estilos responsivos y componentes UI |
+| **@popperjs/core** | Soporte para componentes interactivos de Bootstrap |
+| **react-router-dom** | Sistema de enrutamiento para la aplicación |
+
+---
+
+## 📁 Estructura del proyecto
+
+```
+proyecto/
+│
+├── 📂 public/              # Archivos públicos estáticos
+│
+└── 📂 src/
+    ├── 📂 assets/          # imagenes...
+    ├── 📂 components/      # Componentes globales reutilizables
+    ├── 📂 features/        # Módulos y features específicos de la aplicación
+    ├── 📂 pages/           # Páginas que componen las rutas de la aplicación
+    ├── 📂 routes/          # Configuración del sistema de rutas
+    ├── 📂 styles/          # Estilos globales y variables CSS
+    │
+    ├── App.jsx             # Componente raíz
+    └── main.jsx            # Punto de entrada de la aplicación
+```
+
+### 📋 Carpetas opcionales
+
+Las siguientes carpetas se pueden agregar dentro de `src/`:
+
+- `hooks/` - Custom hooks globales
+- `context/` - Contextos de React
+- `store/` - Gestión de estado global
+- `services/` - Llamadas a APIs y servicios externos
+- `utils/` - Funciones helper y utilidades
+- `data/` - Data mock y constantes
+- `auth/` - Lógica de autenticación
+
+> Cada desarrollador las incorpora según los requisitos del proyecto.
+
+---
+
+<div align="center">
+
+**Desarrollado con ❤️ por el equipo NCG27**
+
+</div>
