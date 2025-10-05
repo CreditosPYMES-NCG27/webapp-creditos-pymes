@@ -75,10 +75,10 @@ Las siguientes carpetas se pueden agregar dentro de `src/`:
 - `hooks/` - Custom hooks globales
 - `context/` - Contextos de React
 - `store/` - Gestión de estado global
-- `services/` - Llamadas a APIs y servicios externos
 - `utils/` - Funciones helper y utilidades
 - `data/` - Data mock y constantes
 - `auth/` - Lógica de autenticación
+- ...
 
 > Cada desarrollador las incorpora según los requisitos del proyecto.
 

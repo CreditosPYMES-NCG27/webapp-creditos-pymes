@@ -1,5 +1,5 @@
-import './HeroeSection.css';
-export default function HeroeSection() {
+import './HeroSection.css';
+export default function HeroSection() {
   return (
     <div className="container heroe text-center p-5 rounded my-5">
       <h1 className="display-4">Webapp Créditos PYMES</h1>
