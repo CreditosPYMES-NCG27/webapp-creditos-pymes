@@ -2,7 +2,7 @@ import './HeroSection.css';
 
 export default function HeroSection() {
   return (
-    <div className="container heroe text-center p-5 rounded my-5">
+    <div className="heroe text-center p-5">
       <div className="content">
         <h1 className="display-4">
           Soluciones financieras adaptadas a cada etapa de crecimiento
@@ -12,5 +12,6 @@ export default function HeroSection() {
         </button>
       </div>
     </div>
+
   );
 }

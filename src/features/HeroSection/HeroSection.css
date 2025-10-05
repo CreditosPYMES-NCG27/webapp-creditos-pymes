@@ -3,15 +3,18 @@
   background-size: cover;
   background-position: center;
   height: 80vh;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;  
-  align-items: center;      
+  justify-content: flex-start;
+  align-items: center;
   text-align: center;
+  padding-top: 8rem;
+
   color: white;
 }
 
 .heroe .content {
-  max-width: 600px;  
-  margin: 0 auto;    
+  max-width: 600px;
+   margin: 3rem auto 0 auto;
 }
