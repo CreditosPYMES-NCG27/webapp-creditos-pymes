@@ -8,10 +8,12 @@ export default function HeroSection() {
         <h1 className="display-4">
           Soluciones financieras adaptadas a cada etapa de crecimiento
         </h1>
-        
-        {/* 🔹 Botón con nuestro componente */}
-        <Button text="Comenzar" color="trird" size="md" />
+
+        <Button text="Iniciar Sesión" color="trird" size="md" action="alert" className="me-2"/>
+        <Button text="Registrarse" color="secondary" size="md" > </Button>
+
       </div>
     </div>
   );
 }
+
