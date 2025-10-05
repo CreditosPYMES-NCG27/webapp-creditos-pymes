@@ -1,7 +1,15 @@
+import "./Button.css";
 
-export default function Button({ text }) {
+export default function Button({
+  text,
+  color = "primary", // "primary" | "secondary" | "danger"
+  size = "md",          // "sm" | "md" | "lg"
+  className = ""
+}) {
   return (
-    <button type="button" className="btn">
+    <button 
+      className={`btn btn-${color} btn-${size} btn-custom ${className}`}
+    >
       {text}
     </button>
   );

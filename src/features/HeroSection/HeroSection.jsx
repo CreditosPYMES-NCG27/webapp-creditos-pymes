@@ -1,4 +1,5 @@
 import './HeroSection.css';
+import Button from '@/components/Button/Button';
 
 export default function HeroSection() {
   return (
@@ -7,11 +8,10 @@ export default function HeroSection() {
         <h1 className="display-4">
           Soluciones financieras adaptadas a cada etapa de crecimiento
         </h1>
-        <button className="btn btn-primary btn-lg mt-3">
-          Comenzar
-        </button>
+        
+        {/* 🔹 Botón con nuestro componente */}
+        <Button text="Comenzar" color="trird" size="md" />
       </div>
     </div>
-
   );
 }

@@ -1,0 +1,66 @@
+/* ==============================
+   BUTTON BASE (EXTIENDE BOOTSTRAP)
+   ============================== */
+.btn-custom {
+  font-weight: 500;
+  border: none;
+  border-radius: 0.5rem;
+  transition: background-color 0.5s ease, transform 0.5s ease;
+  cursor: pointer;
+}
+.btn-custom:hover {
+  transform: scale(1.07);
+}
+
+/* ==============================
+   BUTTON COLORS (SOBREESCRIBEN BOOTSTRAP)
+   ============================== */
+.btn-custom.btn-primary {
+  background-color: var(--blue-500);
+  color: #000000;
+}
+.btn-custom.btn-primary:hover {
+  background-color: var(--blue-700);
+}
+
+.btn-custom.btn-secondary {
+  background-color: var(--gray-300);
+  color: var(--gray-900);
+}
+.btn-custom.btn-trird {
+  background-color: var(--aqua-500);
+  color: #000000;
+}
+.btn-custom.btn-trird:hover {
+  background-color: var(--blue-700);
+
+}
+.btn-custom.btn-secondary:hover {
+  background-color: var(--gray-400);
+}
+
+.btn-custom.btn-danger {
+  background-color: var(--red-500);
+  color: #fff;
+}
+.btn-custom.btn-danger:hover {
+  background-color: var(--red-600);
+}
+
+/* ==============================
+   BUTTON SIZES (SOBREESCRIBEN BOOTSTRAP)
+   ============================== */
+.btn-custom.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-custom.btn-md {
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+}
+
+.btn-custom.btn-lg {
+  padding: 0.75rem 1.25rem;
+  font-size: 1.25rem;
+}
