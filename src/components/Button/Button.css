@@ -14,12 +14,14 @@
   font-weight: 500;
   border: none;
 }
+
 .btn-custom.btn-secondary:hover {
   background-color: var(--gray-200);
   color: #000000;
   font-weight: 500;
   border: none;
 }
+
 .btn-custom.btn-trird {
   background-color: var(--aqua-500);
   color: #000000;
