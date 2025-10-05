@@ -1,5 +1,5 @@
-import HeroeSection from "../features/HeroeSection/HeroeSection";
+import HeroSection from "../HeroSection/HeroSection";
 
 export default function HomePage() {
-    return <HeroeSection />;
+    return <HeroSection />;
 }   
