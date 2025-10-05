@@ -1,7 +1,7 @@
 .container.heroe {
   padding: 4rem 2rem;
   margin: 2rem auto;
-  background-color: #f8f9fa; 
+  background-color: var(--gray-500) ; 
   border-radius: 1rem;
   text-align: center;
 }
