@@ -28,9 +28,6 @@ git clone https://github.com/CreditosPYMES-NCG27/webapp-creditos-pymes.git
 # Navegar al directorio
 cd webapp-creditos-pymes
 
-# Cambiar a la rama de desarrollo
-git checkout development
-
 # Instalar dependencias
 npm install
 
@@ -55,66 +52,35 @@ Este proyecto utiliza **Vite + React** como base, más:
 ## 📁 Estructura del proyecto
 
 ```
-src/
+proyecto/
 │
-├── 📂 assets/                    # Recursos estáticos
+├── 📂 public/              # Archivos públicos estáticos
 │
-├── 📂 components/                # Componentes globales reutilizables
-│   ├── Navbar/
-│   │   └── Navbar.jsx
-│   ├── Footer/
-│   │   └── Footer.jsx
-│   └── Button/
-│       └── Button.jsx
-│
-├── 📂 features/                  # Módulos y features específicos
-│   │
-│   ├── 📂 Heroe/                 # Micro-feature (componente único)
-│   │   ├── HeroeSection.jsx
-│   │   └── HeroeSection.css      # Estilos (opcional/ajuste) (css.module opcional)
-│   │
-│   ├── 📂 Form/                  # Macro-feature (múltiples componentes)
-│   │   ├── components/
-│   │   │   ├── Inputs.jsx
-│   │   │   └── Buttons.jsx
-│   │   ├── formService.js
-│   │   ├── useForm.js
-│   │   └── Form.jsx
-│   │
-│   └── 📂 Table/                 # Macro-feature opcional
-│       ├── components/
-│       │   └── Table.jsx
-│       ├── hooks/
-│       │   └── useTable.js
-│       ├── utils/
-│       │   └── tableValidators.js
-│       └── data/
-│           └── tableMock.json
-│
-├── 📂 pages/                     # Páginas que orquestan features
-│   ├── HomePage.jsx
-│   ├── DashboardPage.jsx
-│   └── AuthPage.jsx
-│
-├── 📂 routes/
-│   └── AppRoutes.jsx             # Configuración de rutas
-│
-├── 📂 hooks/                     # Hooks globales
-│   └── useFetch.js
-│
-├── 📂 context/                   # Contextos globales
-│   ├── AuthContext.jsx
-│   └── ThemeContext.jsx
-│
-├── 📂 utils/                     # Utilidades globales
-│   └── formatDate.js
-│
-├── 📂 data/                      # Data y mocks globales
-│   └── data.json
-│
-├── App.jsx                       # Componente raíz
-└── main.jsx                      # Punto de entrada
+└── 📂 src/
+    ├── 📂 assets/          # imagenes...
+    ├── 📂 components/      # Componentes globales reutilizables
+    ├── 📂 features/        # Módulos y features específicos de la aplicación
+    ├── 📂 pages/           # Páginas que componen las rutas de la aplicación
+    ├── 📂 routes/          # Configuración del sistema de rutas
+    ├── 📂 styles/          # Estilos globales y variables CSS
+    │
+    ├── App.jsx             # Componente raíz
+    └── main.jsx            # Punto de entrada de la aplicación
 ```
+
+### 📋 Carpetas opcionales
+
+Las siguientes carpetas se pueden agregar dentro de `src/`:
+
+- `hooks/` - Custom hooks globales
+- `context/` - Contextos de React
+- `store/` - Gestión de estado global
+- `utils/` - Funciones helper y utilidades
+- `data/` - Data mock y constantes
+- `auth/` - Lógica de autenticación
+- ...
+
+> Cada desarrollador las incorpora según los requisitos del proyecto.
 
 ---
 
