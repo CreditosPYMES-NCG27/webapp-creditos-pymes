@@ -1,5 +1,5 @@
 .heroe {
-  background-image: url('../../assets/fondo.webp');
+  background-image: url('@/assets/images/fondo.webp');
   background-size: cover;
   background-position: center;
   height: 80vh;
