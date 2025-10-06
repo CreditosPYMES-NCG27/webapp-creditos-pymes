@@ -18,34 +18,19 @@
 .custom-range {
   height: 6px;
   background: #e9ecef;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .custom-range::-webkit-slider-thumb {
-  background: #ff5a5f;
-  border: 2px solid white;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  margin-top: -7px;
-  appearance: none;
+  background: #ff5a5f !important; 
+  border: 2px solid rgb(0, 0, 0) !important;
 }
 
 .custom-range::-moz-range-thumb {
-  background: #ff5a5f;
-  border: 2px solid white;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  cursor: pointer;
+  background: #ff5a5f !important;
 }
 
 .custom-range::-ms-thumb {
   background: #ff5a5f;
-  border: 2px solid white;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  cursor: pointer;
+  border: 2px solid rgb(0, 0, 0) !important;
 }

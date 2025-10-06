@@ -53,7 +53,7 @@ export default function LoanAmount() {
       <div className="d-flex justify-content-around border-top pt-3">
         <div className="text-center">
           <div className="small text-muted">Cuota mensual</div>
-          <div className="fw-bold fs-5 text-primary">
+          <div className="fw-bold fs-5 ">
             218 €/mes
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function LoanAmount() {
       </div>
 
       <div className="text-center mt-3">
-        <a href="#" className="text-success fw-semibold">
+        <a href="#" className="text-success fw-semibold text-decoration-none">
           Más detalles
         </a>
       </div>
