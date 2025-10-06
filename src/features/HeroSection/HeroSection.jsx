@@ -10,6 +10,7 @@ export default function HeroSection() {
         </h1>
 
         <Button text="Iniciar Sesión" color="trird" size="md" action="alert" className="me-2"/>
+        
         <Button text="Registrarse" color="secondary" size="md" > </Button>
       
       </div>
