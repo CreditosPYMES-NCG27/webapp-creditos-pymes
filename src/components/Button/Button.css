@@ -1,0 +1,95 @@
+/* ============================== BTN CUSTOM  ============================== */
+
+/* .btn-custom {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 0.375rem; 
+}
+
+.btn-custom:hover {
+  transform: scale(1.1); 
+} */
+
+/* ============================== BUTTON COLORS (SOBREESCRIBEN BOOTSTRAP) ============================== */
+
+
+.btn-custom.btn-primary {
+  background-color: var(--blue-500) !important;
+  color: #000000 !important;
+  border-color: var(--blue-500) !important;
+}
+
+.btn-custom.btn-primary:hover,
+.btn-custom.btn-primary:focus,
+.btn-custom.btn-primary:active,
+.btn-custom.btn-primary:focus-visible {
+  background-color: var(--blue-700) !important;
+  color: #000000 !important;
+  border-color: var(--blue-700) !important;
+  box-shadow: none !important;
+}
+
+.btn-custom.btn-secondary {
+  background-color: var(--gray-200) !important;
+  color: #000000 !important;
+  font-weight: 500;
+  border: none !important;
+}
+
+.btn-custom.btn-secondary:hover,
+.btn-custom.btn-secondary:focus,
+.btn-custom.btn-secondary:active,
+.btn-custom.btn-secondary:focus-visible {
+  background-color: var(--gray-200) !important;
+  color: #000000 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.btn-custom.btn-trird {
+  background-color: var(--aqua-500) !important;
+  color: #000000 !important;
+  font-weight: 500;
+  border: none !important;
+}
+
+.btn-custom.btn-trird:hover,
+.btn-custom.btn-trird:focus,
+.btn-custom.btn-trird:active,
+.btn-custom.btn-trird:focus-visible {
+  background-color: var(--aqua-500) !important;
+  color: #000000 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.btn-custom.btn-cancel {
+  background-color: var(--red-500) !important;
+  color: #fff !important;
+  border-color: var(--red-500) !important;
+}
+
+.btn-custom.btn-cancel:hover,
+.btn-custom.btn-cancel:focus,
+.btn-custom.btn-cancel:active,
+.btn-custom.btn-cancel:focus-visible {
+  background-color: var(--red-600) !important;
+  color: #fff !important;
+  border-color: var(--red-600) !important;
+  box-shadow: none !important;
+}
+
+.btn-custom.btn-accept {
+  background-color: var(--green-500) !important;
+  color: #fff !important;
+  border-color: var(--green-500) !important;
+}
+
+.btn-custom.btn-accept:hover,
+.btn-custom.btn-accept:focus,
+.btn-custom.btn-accept:active,
+.btn-custom.btn-accept:focus-visible {
+  background-color: var(--green-600) !important;
+  color: #fff !important;
+  border-color: var(--green-600) !important;
+  box-shadow: none !important;
+}
