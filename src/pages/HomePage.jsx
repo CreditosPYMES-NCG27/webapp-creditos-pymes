@@ -34,7 +34,7 @@ const HomePage = () => {
           </div>
           <div className="col-md-4">
             <Comments 
-              rating={3}
+              rating={5}
               title="Fácil y rápido"
               body="Pude gestionar todo online sin problemas."
               reviewer="Carlos López"
