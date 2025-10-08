@@ -68,6 +68,22 @@
   border-color: var(--red-500) !important;
 }
 
+.btn-custom.btn-teal {
+  background-color: var(--teal-700) !important;
+  color: #ffffff !important;
+  border-color: var(--teal-700) !important;
+}
+
+.btn-custom.btn-teal:hover,
+.btn-custom.btn-teal:focus,
+.btn-custom.btn-teal:active,
+.btn-custom.btn-teal:focus-visible {
+  background-color: var(--teal-700) !important;
+  color: #ffffff !important;
+  border-color: var(--teal-700) !important;
+  box-shadow: none !important;
+}
+
 .btn-custom.btn-cancel:hover,
 .btn-custom.btn-cancel:focus,
 .btn-custom.btn-cancel:active,

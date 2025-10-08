@@ -1,25 +1,30 @@
 import "./Button.css";
 import { useNavigate } from "react-router-dom";
 import { ButtonActions } from "./ButtonActions";
-
 export default function Button({
-  text,                     // 🔹 Texto que se muestra dentro del botón
-  color = "primary",        // 🔹 Color / variante: "primary" | "secondary" | "trird" | "accept" | "cancel"
-  size = "md",              // 🔹 Tamaño: "sm" | "md" | "lg"
-  className = "",           // 🔹 Clases adicionales de Bootstrap o personalizadas
-  action = "alert",         // 🔹 Acción a ejecutar al hacer click, definida en ButtonActions
+  text,
+  color = "primary",
+  size = "md",
+  className = "",
+  action = "alert",
 }) {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    if (action && ButtonActions[action]) {
+  const handleClick = (e) => {
+    e.preventDefault();
+
+    if (typeof action === "string" && ButtonActions[action]) {
       ButtonActions[action](navigate);
+    }
+    if (typeof action === "function") {
+      action(navigate);
     }
   };
 
   return (
     <button
-      className={`btn btn-${color} btn-${size} btn-custom ${className}`}
+      type="button"
+      className={`btn btn-${size} btn-custom btn-${color} ${className}`}
       onClick={handleClick}
     >
       {text}

@@ -4,14 +4,18 @@ export const ButtonActions = {
   loginPartner: (navigate) => navigate("/login/partner"),
   register: (navigate) => navigate("/register"),
   alert: () => alert("Ejemplo"),
-  // validateForm: () => {
-  //   const campo1 = "valor1"; 
-  //   const campo2 = "";       
-  //   const campo3 = "valor3"; 
-  //   if (campo1 && campo2 && campo3) {
-  //     alert("Todos los campos completados ✅");
-  //   } else {
-  //     alert("Faltan campos ❌");
-  //   }
-  // }
+
+  login: (navigate, email, password) => {
+    if (!email || !password) {
+      alert("Por favor complete usuario y contraseña ❌");
+      return;
+    }
+
+    if (email === "admin@test.com" && password === "1234") {
+      alert("✅ Login correcto");
+      navigate("/");
+    } else {
+      alert("Credenciales incorrectas ❌");
+    }
+  },
 };

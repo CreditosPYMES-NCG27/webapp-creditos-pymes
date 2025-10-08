@@ -7,7 +7,6 @@ const HomePage = () => {
     <div className="container-fluid p-0 m-0 bg-light"> 
       <HeroSection /> 
       <LoanAmount /> 
-
       {/* Sección de reseñas */}
       <div className="container my-5">
         <h5 className="mb-4 fw-bold">Opinión de nuestros clientes</h5>
