@@ -1,20 +1,23 @@
 import "./Button.css";
 import { useNavigate } from "react-router-dom";
 import { ButtonActions } from "./ButtonActions";
-
 export default function Button({
-  text,                     
-  color = "primary",       
-  size = "md",              
-  className = "",           
-  action = "alert",         
+  text,
+  color = "primary",
+  size = "md",
+  className = "",
+  action = "alert",
 }) {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    e.preventDefault(); 
-    if (action && ButtonActions[action]) {
+    e.preventDefault();
+
+    if (typeof action === "string" && ButtonActions[action]) {
       ButtonActions[action](navigate);
+    }
+    if (typeof action === "function") {
+      action(navigate);
     }
   };
 

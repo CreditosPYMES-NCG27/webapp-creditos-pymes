@@ -1,7 +1,18 @@
 import "./Login.css";
 import Button from "../Button/Button";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ButtonActions } from "../Button/ButtonActions";
 
 const Login = () => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleLogin = () => {
+        ButtonActions.login(navigate, email, password);
+    };
+
     return (
         <div className="login-card shadow p-4 rounded bg-white">
             <div className="text-center mb-4">
@@ -23,7 +34,7 @@ const Login = () => {
                 <h4 className="mt-2">Iniciar Sesión</h4>
             </div>
 
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Usuario</label>
                     <input
@@ -31,6 +42,8 @@ const Login = () => {
                         className="form-control"
                         id="email"
                         placeholder="Correo electrónico"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 
@@ -41,24 +54,22 @@ const Login = () => {
                         className="form-control"
                         id="password"
                         placeholder="********"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-
 
                 <div className="mb-3 text-center">
                     <a href="#" className="forgot-link small">¿Olvidó su contraseña?</a>
                 </div>
 
-
-
                 <Button
                     text="Iniciar Sesión"
                     color="teal"
                     size="md"
-                    action="login"
                     className="w-100"
+                    action={handleLogin}  
                 />
-
             </form>
         </div>
     );
