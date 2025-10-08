@@ -1,18 +1,17 @@
 import Login from "../components/Login/Login";
+import "@/components/Login/Login.css";
 
 const LoginPartners = () => {
   return (
-    <div className="d-flex flex-column min-vh-100">
-      {/* Header lo hace tu compañero */}
-
-      <div className="container-fluid flex-grow-1">
-        <div className="row h-100">
+    <div className="d-flex flex-column login-root">
+      <div className="container-fluid">
+        <div className="row">
           {/* Columna izquierda con imagen */}
-          <div className="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-light">
+          <div className="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-light p-0">
             <img
               src="/src/assets/images/login2.webp"
               alt="Login ilustración"
-              className="img-fluid"
+              className="img-fluid w-100 h-100 object-fit-cover"
             />
           </div>
 
@@ -24,10 +23,11 @@ const LoginPartners = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-light text-center py-3 mt-auto">
+      <footer className="footer-custom">
         <p className="mb-0">&copy; 2025 Todos los derechos reservados</p>
       </footer>
     </div>
+
   );
 };
 
