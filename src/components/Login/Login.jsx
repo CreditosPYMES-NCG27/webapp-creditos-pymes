@@ -1,4 +1,5 @@
 import "./Login.css";
+import Button from "../Button/Button";
 
 const Login = () => {
     return (
@@ -50,9 +51,14 @@ const Login = () => {
 
 
 
-                <button type="submit" className="btn-login w-100">
-                    Iniciar Sesión
-                </button>
+                <Button
+                    text="Iniciar Sesión"
+                    color="teal"
+                    size="md"
+                    action="login"
+                    className="w-100"
+                />
+
             </form>
         </div>
     );
