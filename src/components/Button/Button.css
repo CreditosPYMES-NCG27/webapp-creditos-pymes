@@ -11,6 +11,21 @@
 
 /* ============================== BUTTON COLORS (SOBREESCRIBEN BOOTSTRAP) ============================== */
 
+.btn-custom.btn-default {
+  background-color: #ffffff00 !important;
+  color: #000000 !important;
+  border-color: var(--blue-500) !important;
+}
+
+.btn-custom.btn-default:hover,
+.btn-custom.btn-default:focus,
+.btn-custom.btn-default:active,
+.btn-custom.btn-default:focus-visible {
+  background-color: #ffffff00 !important;
+  color: #000000 !important;
+  border-color: var(--blue-700) !important;
+  box-shadow: none !important;
+}
 
 .btn-custom.btn-primary {
   background-color: var(--blue-500) !important;

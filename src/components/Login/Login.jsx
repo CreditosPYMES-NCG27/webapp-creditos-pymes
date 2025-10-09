@@ -67,6 +67,13 @@ const Login = () => {
                     text="Iniciar Sesión"
                     color="teal"
                     size="md"
+                    className="w-100 mb-1"
+                    action={handleLogin}  
+                />
+                   <Button
+                    text="Crear una cuenta"
+                    color="default"
+                    size="md"
                     className="w-100"
                     action={handleLogin}  
                 />

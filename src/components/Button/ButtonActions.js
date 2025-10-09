@@ -1,7 +1,7 @@
 export const ButtonActions = {
   goHome: (navigate) => navigate("/"),
-  loginUser: (navigate) => navigate("/login/user"),
-  loginPartner: (navigate) => navigate("/login/partner"),
+  loginUser: (navigate) => navigate("/login-users"),
+  loginPartner: (navigate) => navigate("/login-partners"),
   register: (navigate) => navigate("/register"),
   alert: () => alert("Ejemplo"),
 
