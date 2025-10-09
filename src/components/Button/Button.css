@@ -124,3 +124,27 @@
   border-color: var(--green-600) !important;
   box-shadow: none !important;
 }
+
+/* ==============================
+   BUTTON SIZES (SOBREESCRIBEN BOOTSTRAP)
+   ============================== */
+.btn-custom.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-custom.btn-md {
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+}
+
+.btn-custom.btn-lg {
+  padding: 0.75rem 1.25rem;
+  font-size: 1.25rem;
+}
+
+.btn-custom.btn-xl {
+  padding: 1rem 1.25rem;
+  font-size: 1.5rem;
+
+}

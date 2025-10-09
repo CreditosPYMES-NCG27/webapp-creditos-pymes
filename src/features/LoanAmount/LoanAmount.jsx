@@ -10,7 +10,7 @@ export default function LoanAmount() {
     <div className="loan-wrapper my-5">
       <div className="d-flex align-items-center">
         {/* Tarjeta */}
-        <div className="card loan-card p-4 me-5">
+        <div className="card loan-card p-4 me-custom">
           {/* Monto */}
           <div className="mb-4">
             <div className="d-flex justify-content-between align-items-center">
@@ -72,12 +72,12 @@ export default function LoanAmount() {
           </div>
         </div>
 
-        {/* Botón a la derecha */}
-        <Button 
-          text="Solicitar ahora mismo" 
-          color="teal" 
-          size="md" 
-          action="alert" 
+        
+        <Button
+          text="Solicitar ahora mismo"
+          color="teal"
+          size="xl"
+          action="alert"
         />
       </div>
     </div>
