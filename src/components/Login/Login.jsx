@@ -75,7 +75,7 @@ const Login = () => {
                     color="default"
                     size="md"
                     className="w-100"
-                    action={handleLogin}  
+                    action="register"  
                 />
             </form>
         </div>
