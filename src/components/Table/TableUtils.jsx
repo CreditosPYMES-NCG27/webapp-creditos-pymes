@@ -1,7 +1,6 @@
-// Funciones helper para renderizar diferentes tipos de celdas
 
 export const TableRenderers = {
-  // Renderiza un badge de estado con colores dinámicos
+
   estado: (value) => {
     const getEstadoClass = (estado) => {
       switch (estado) {
@@ -23,17 +22,15 @@ export const TableRenderers = {
     );
   },
 
-  // Renderiza un ID con el prefijo ##
+
   idSolicitud: (value) => {
     return <span className="fw-semibold">## {value}</span>;
   },
 
-  // Renderiza un monto con formato de moneda
   monto: (value) => {
     return `${value}$`;
   },
 
-  // Renderiza un botón de acciones
   acciones: (value, item) => {
     return (
       <button 
@@ -46,12 +43,11 @@ export const TableRenderers = {
     );
   },
 
-  // Renderiza texto normal
   texto: (value) => {
     return value;
   },
 
-  // Renderiza un número
+
   numero: (value) => {
     return value;
   }

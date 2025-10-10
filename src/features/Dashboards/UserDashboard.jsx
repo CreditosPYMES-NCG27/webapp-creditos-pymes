@@ -1,58 +1,72 @@
-// Funciones helper para renderizar diferentes tipos de celdas
+import './UserDashboard.css';
+import Table from '@/components/Table/Table';
+import { TableRenderers } from '@/components/Table/TableUtils';
 
-export const TableRenderers = {
-  // Renderiza un badge de estado con colores dinámicos
-  estado: (value) => {
-    const getEstadoClass = (estado) => {
-      switch (estado) {
-        case 'Pendiente':
-          return 'badge-pendiente';
-        case 'Aprobado':
-          return 'badge-aprobado';
-        case 'Rechazado':
-          return 'badge-rechazado';
-        default:
-          return 'bg-secondary';
-      }
-    };
+export default function UserDashboard() {
+  const solicitudes = [
+    {
+      id: '1234456',
+      monto: '10.000',
+      estado: 'Pendiente',
+      fecha: '01/09/25'
+    },
+    {
+      id: '1234457',
+      monto: '15.500',
+      estado: 'Aprobado',
+      fecha: '15/08/25'
+    },
+    {
+      id: '1234458',
+      monto: '8.000',
+      estado: 'Rechazado',
+      fecha: '20/07/25'
+    },
+    {
+      id: '1234459',
+      monto: '12.300',
+      estado: 'Pendiente',
+      fecha: '05/09/25'
+    }
+  ];
 
-    return (
-      <span className={`badge badge-estado ${getEstadoClass(value)}`}>
-        {value}
-      </span>
-    );
-  },
+  const columns = [
+    {
+      key: 'id',
+      label: 'ID Solicitud',
+      render: TableRenderers.idSolicitud
+    },
+    {
+      key: 'monto',
+      label: 'Monto',
+      render: TableRenderers.monto
+    },
+    {
+      key: 'estado',
+      label: 'Estado',
+      render: TableRenderers.estado
+    },
+    {
+      key: 'fecha',
+      label: 'Fecha',
+      render: TableRenderers.texto
+    },
+    {
+      key: 'acciones',
+      label: 'Acciones',
+      headerClassName: 'text-center',
+      cellClassName: 'text-center',
+      render: TableRenderers.acciones
+    }
+  ];
 
-  // Renderiza un ID con el prefijo ##
-  idSolicitud: (value) => {
-    return <span className="fw-semibold">## {value}</span>;
-  },
+  return (
+    <div className="container my-5">
+      <div className="dashboard-header mb-4">
+        <h2 className="text-primary">Mis Solicitudes</h2>
+      </div>
 
-  // Renderiza un monto con formato de moneda
-  monto: (value) => {
-    return `${value}$`;
-  },
-
-  // Renderiza un botón de acciones
-  acciones: (value, item) => {
-    return (
-      <button 
-        className="btn btn-sm btn-outline-secondary"
-        title="Ver más opciones"
-        onClick={() => console.log('Acción para:', item)}
-      >
-        ☰
-      </button>
-    );
-  },
-
-  // Renderiza texto normal
-  texto: (value) => {
-    return value;
-  },
-
-  // Renderiza un número
-  numero: (value) => {
-    return value;
-  }
-};
+      <Table columns={columns} data={solicitudes} />
+    </div>
+  );
+}

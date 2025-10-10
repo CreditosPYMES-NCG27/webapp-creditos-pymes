@@ -1,17 +1,12 @@
 import './Table.css';
-
 export default function Table({ columns = [], data = [], className = "" }) {
-  
-  // Renderiza el contenido de cada celda según el tipo de columna
+
   const renderCell = (item, column) => {
     const value = item[column.key];
 
-    // Si la columna tiene un render personalizado, usarlo
     if (column.render) {
       return column.render(value, item);
     }
-
-    // Por defecto, mostrar el valor tal cual
     return value;
   };
 
