@@ -11,6 +11,21 @@
 
 /* ============================== BUTTON COLORS (SOBREESCRIBEN BOOTSTRAP) ============================== */
 
+.btn-custom.btn-default {
+  background-color: #ffffff00 !important;
+  color: #000000 !important;
+  border-color: var(--blue-500) !important;
+}
+
+.btn-custom.btn-default:hover,
+.btn-custom.btn-default:focus,
+.btn-custom.btn-default:active,
+.btn-custom.btn-default:focus-visible {
+  background-color: #ffffff00 !important;
+  color: #000000 !important;
+  border-color: var(--blue-700) !important;
+  box-shadow: none !important;
+}
 
 .btn-custom.btn-primary {
   background-color: var(--blue-500) !important;
@@ -108,4 +123,28 @@
   color: #fff !important;
   border-color: var(--green-600) !important;
   box-shadow: none !important;
+}
+
+/* ==============================
+   BUTTON SIZES (SOBREESCRIBEN BOOTSTRAP)
+   ============================== */
+.btn-custom.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.btn-custom.btn-md {
+  padding: 0.5rem 1rem;
+  font-size: 1.05rem;
+}
+
+.btn-custom.btn-lg {
+  padding: 0.75rem 1.25rem;
+  font-size: 1.25rem;
+}
+
+.btn-custom.btn-xl {
+  padding: 1rem 1.25rem;
+  font-size: 1.5rem;
+
 }
