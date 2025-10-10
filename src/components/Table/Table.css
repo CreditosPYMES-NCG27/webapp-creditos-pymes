@@ -1,0 +1,46 @@
+.table-custom thead th {
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-300);
+}
+
+.table-custom tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.table-custom tbody tr:hover {
+  background-color: var(--gray-100);
+}
+
+.table-custom tbody td {
+  vertical-align: middle;
+  padding: 1rem;
+}
+
+.table-custom .card {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+/* Estilos para badges de estado */
+.badge-estado {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+}
+
+.badge-pendiente {
+  background-color: var(--yellow-500);
+  color: #000;
+}
+
+.badge-aprobado {
+  background-color: var(--green-500);
+  color: #fff;
+}
+
+.badge-rechazado {
+  background-color: var(--red-500);
+  color: #fff;
+}

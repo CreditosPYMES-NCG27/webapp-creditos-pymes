@@ -9,7 +9,7 @@ export default function AppRoutes() {
       <Route path="/" element={<HomePage />} />
       <Route path="/login-partners" element={<LoginPartners />} />
       <Route path="/login-users" element={<LoginUsers />} />
-       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
     </Routes>
   );
 }

@@ -21,6 +21,6 @@ export const ButtonActions = {
     }
 
     alert(`✅ Bienvenido ${user.email}`);
-    navigate("/");
+    navigate("/dashboard");
   },
 };
