@@ -1,6 +1,7 @@
 import HeroSection from "../features/HeroSection/HeroSection";
 import LoanAmount from "../features/LoanAmount/LoanAmount";
 import Comments from "../components/Comments/Comments";
+import { NewLoanBtn } from "../features/CreateNewLoan/NewLoanBtn";
 
 const HomePage = () => {
   return (
