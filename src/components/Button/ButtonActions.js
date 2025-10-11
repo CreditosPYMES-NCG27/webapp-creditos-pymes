@@ -1,3 +1,5 @@
+import { loginUser } from "@/auth/authService";
+
 export const ButtonActions = {
   goHome: (navigate) => navigate("/"),
   loginUser: (navigate) => navigate("/login-users"),
@@ -5,17 +7,20 @@ export const ButtonActions = {
   register: (navigate) => navigate("/register"),
   alert: () => alert("Ejemplo"),
 
-  login: (navigate, email, password) => {
+  login: async (navigate, email, password) => {
     if (!email || !password) {
       alert("Por favor complete usuario y contraseña ❌");
       return;
     }
 
-    if (email === "admin@test.com" && password === "1234") {
-      alert("✅ Login correcto");
-      navigate("/");
-    } else {
-      alert("Credenciales incorrectas ❌");
+    const { user, session, error } = await loginUser(email, password);
+
+    if (error) {
+      alert(`❌ Error: ${error.message}`);
+      return;
     }
+
+    alert(`✅ Bienvenido ${user.email}`);
+    navigate("/dashboard");
   },
 };
