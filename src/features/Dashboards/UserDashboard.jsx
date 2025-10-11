@@ -62,7 +62,7 @@ export default function UserDashboard() {
       />
 
       <div className="mb-4">
-        <Button text="Crear Solicitud" color="trird" size="md" className="rounded-pill" action="createApplication "
+        <Button text="Crear Solicitud" color="trird" size="md" className="rounded-pill" action="alert"
         >
         </Button>
       </div>
