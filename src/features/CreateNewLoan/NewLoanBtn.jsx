@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "./NewLoanBtn.css";
 
+import "./NewLoanBtn.css";
 
 export const NewLoanBtn = () => {
 
