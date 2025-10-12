@@ -1,11 +1,30 @@
-import "./ProfileClient.css";
+import "./PartnerProfile.css";
 
-export const UserDetails = () => {
-
-    return (
+export const ProfilePartnerForm = () =>{
+    
+    return(
         <div className="container">
-            <h2 className="py-4 text-center profile_form_title">Información Usuario</h2>
             <form className="p-5 border border-2 mx-auto rounded client_profile_form">
+
+                <img
+                    src="https://randomuser.me/api/portraits/lego/4.jpg"
+                    alt="user"
+                    className="user_img mb-3 border border-2 mx-auto"
+                    style={{ cursor: 'pointer' }}
+                />
+
+                <div className="mb-4">
+                    <label htmlFor="name" className="form-label">
+                        ID Usuario
+                    </label>
+                    <input
+                        className="form-control"
+                        type="text"
+                        id="name"
+                        placeholder="Nombre"
+                        aria-label="user name" />
+                </div>
+
                 <div className="mb-4">
                     <label htmlFor="name" className="form-label">
                         Nombre
