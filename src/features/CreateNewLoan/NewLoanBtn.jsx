@@ -154,13 +154,13 @@ export const NewLoanBtn = () => {
                                 </div>
 
                                 <div className="mb-4">
-                                    <label htmlFor="companyAddress" className="form-label">
+                                    <label htmlFor="companyAddress2" className="form-label">
                                         Dirección de la empresa 2 (opcional)
                                     </label>
                                     <input
                                         className="form-control"
                                         type="email"
-                                        id="companyAddress"
+                                        id="companyAddress2"
                                         placeholder="e.g. Piso 3, Puerta B"
                                         aria-label="Disabled input companyAddress"
                                         disabled />
