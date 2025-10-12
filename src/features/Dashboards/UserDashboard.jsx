@@ -4,7 +4,7 @@ import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { TableRenderers } from '@/components/Table/TableUtils';
 import { fetchCreditApplications } from '@/services/creditService';
-import Button from '@/components/Button/Button';
+import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
@@ -62,9 +62,7 @@ export default function UserDashboard() {
       />
 
       <div className="mb-4">
-        <Button text="Crear Solicitud" color="trird" size="md" className="rounded-pill" action="alert"
-        >
-        </Button>
+        <NewLoanBtn />
       </div>
 
       <div className="dashboard-header mb-3">
