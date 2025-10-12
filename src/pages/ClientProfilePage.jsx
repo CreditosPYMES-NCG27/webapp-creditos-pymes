@@ -18,7 +18,7 @@ export const ClientProfilePage = () => {
     const [userForm, setUserForm] = useState(false);
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid p-5">
             <div className="d-flex justify-content-center mt-4 mb-2">
                 <div className="btn-group" role="group" aria-label="Basic example">
                     <button 
