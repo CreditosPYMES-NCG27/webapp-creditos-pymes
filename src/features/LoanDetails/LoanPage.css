@@ -1,0 +1,79 @@
+.subtitle_loan_details_page{
+    color: var(--teal-700);
+    font-weight: 700;
+}
+
+p.loan_details_text{
+    color: black;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.button_status_size{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+}
+
+button.pending_status_dropdown{
+    color: white;
+    background-color: var(--aqua-600);
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+}
+
+button.pending_status_dropdown:hover,
+button.pending_status_dropdown:focus,
+button.pending_status_dropdown:active {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: var(--aqua-700);
+  border: none;
+}
+
+button.approved_status_dropdown{
+    color: white;
+    background-color: var(--green-500);
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+}
+
+button.approved_status_dropdown:hover,
+button.approved_status_dropdown:focus,
+button.approved_status_dropdown:active {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: var(--green-600);
+  border: none;
+}
+
+button.declined_status_dropdown{
+    color: white;
+    background-color: var(--red-500);
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: none;
+}
+
+button.declined_status_dropdown:hover,
+button.declined_status_dropdown:focus,
+button.declined_status_dropdown:active {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: var(--red-600);
+  border: none;
+}
+
+.return_to_home_btn{
+    color: var(--aqua-600);
+    font-size: 1.3rem;
+    font-weight: 600;
+}

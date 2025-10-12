@@ -1,0 +1,39 @@
+import { useNavigate } from "react-router-dom";
+
+//Components
+import { UserDetailSection } from "../features/LoanDetails/UserDetailSection";
+
+//Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+
+export const LoanDetailsPage = () => {
+
+    const navigate = useNavigate()
+
+    return (
+        <div className="container-fluid p-4">
+            <button type="button"
+                className="btn border-0 m-4"
+                onClick={() => {navigate("/dashboard")}}>
+                <FontAwesomeIcon icon={faArrowLeft} className="me-2 return_to_home_btn"/>
+                <span className="return_to_home_btn">Volver atrás</span> 
+            </button>
+
+            <div className="d-flex me-5">
+                <img
+                    src="https://randomuser.me/api/portraits/lego/4.jpg"
+                    alt="user"
+                    className="partner_user_img mb-3 border border-2 ms-auto"
+                    style={{ cursor: 'pointer' }}
+                />
+                <div className="ms-4 mt-4">
+                    <p className="m-0">Operador1</p>
+                    <p className="m-0">Status</p>
+                </div>
+            </div>
+
+            <UserDetailSection />
+        </div>
+    );
+}
