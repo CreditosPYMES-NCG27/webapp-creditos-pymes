@@ -4,12 +4,12 @@ export const ProfilePartnerForm = () =>{
     
     return(
         <div className="container">
-            <form className="p-5 border border-2 mx-auto rounded client_profile_form">
+            <form className="p-5 border border-2 mx-auto rounded partner_profile_form">
 
                 <img
                     src="https://randomuser.me/api/portraits/lego/4.jpg"
                     alt="user"
-                    className="user_img mb-3 border border-2 mx-auto"
+                    className="partner_user_img mb-3 border border-2 mx-auto"
                     style={{ cursor: 'pointer' }}
                 />
 
@@ -20,9 +20,9 @@ export const ProfilePartnerForm = () =>{
                     <input
                         className="form-control"
                         type="text"
-                        id="name"
-                        placeholder="Nombre"
-                        aria-label="user name" />
+                        id="userID"
+                        placeholder="ID Usuario"
+                        aria-label="userID" />
                 </div>
 
                 <div className="mb-4">
@@ -87,7 +87,7 @@ export const ProfilePartnerForm = () =>{
                 </div>
 
                 <button type="submit"
-                    className="btn p-2 w-75 d-flex mx-auto justify-content-center profile_form_submit_btn">
+                    className="btn p-2 w-75 d-flex mx-auto justify-content-center partner_form_submit_btn">
                     Guardar
                 </button>
             </form>
