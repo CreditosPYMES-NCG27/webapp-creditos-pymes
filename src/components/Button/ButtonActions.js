@@ -7,7 +7,7 @@ export const ButtonActions = {
   register: (navigate) => navigate("/register"),
   alert: () => alert("Ejemplo"),
 
-  login: async (navigate, email, password) => {
+  login: async (navigate, email, password, isPartner = false) => {
     if (!email || !password) {
       alert("Por favor complete usuario y contraseña ❌");
       return;
@@ -21,6 +21,11 @@ export const ButtonActions = {
     }
 
     alert(`✅ Bienvenido ${user.email}`);
-    navigate("/dashboard");
+    
+    if (isPartner) {
+      navigate("/partner-dashboard");
+    } else {
+      navigate("/dashboard");
+    }
   },
 };
