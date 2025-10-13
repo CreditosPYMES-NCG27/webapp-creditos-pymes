@@ -43,3 +43,20 @@
   background-color: var(--red-500);
   color: #fff;
 }
+
+
+.table-custom .text-success {
+  color: var(--green-500) !important;
+}
+
+.table-custom .text-warning {
+  color: var(--yellow-500) !important;
+}
+
+.table-custom .text-danger {
+  color: var(--red-500) !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

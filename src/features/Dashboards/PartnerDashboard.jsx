@@ -65,7 +65,7 @@ export default function PartnerDashboard() {
       label: 'Verificación', 
       headerClassName: 'text-center', 
       cellClassName: 'text-center',
-      render: () => '' // Campo vacío por ahora
+      render: TableRenderers.verificacion
     }
   ];
 
