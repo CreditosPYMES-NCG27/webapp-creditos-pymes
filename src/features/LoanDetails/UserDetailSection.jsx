@@ -1,13 +1,9 @@
 
-//Components
-import { ReviewDocumentModal } from "./ReviewDocumentModal";
-import { StatusDropDown } from "./StatusDropDown";
-
 
 export const UserDetailSection = () => {
 
     return (
-        <div className="row">
+        <div className="row m-4">
             <div className="col-6 mt-3 lh-sm">
                 <h3 className="mb-4 subtitle_loan_details_page">Detalles Empresa:</h3>
                 <p className="loan_details_text">Nombre de la empresa:</p>

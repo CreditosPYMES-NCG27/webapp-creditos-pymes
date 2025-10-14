@@ -86,3 +86,9 @@ button.review_document_btn{
     height: 900px;
     border: none;
 }
+
+.files_list{
+    font-size: 1.1rem;
+    font-weight: 500;
+    width: 350px;
+}
