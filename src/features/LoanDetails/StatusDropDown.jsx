@@ -29,7 +29,7 @@ export const StatusDropDown = () => {
             </button>
             {open && (
                 <ul
-                    className="dropdown-menu dropdown-menu-end show mt-5 p-0">
+                    className={`dropdown-menu dropdown-menu-end mt-5 p-0 ${open ? "show" : ""}`}>
                     <li>
                         <button
                             className="dropdown-item pending_status_dropdown py-2"

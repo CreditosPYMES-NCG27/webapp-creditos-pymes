@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 //Components
 import { UserDetailSection } from "../features/LoanDetails/UserDetailSection";
+import { StatusDropDown } from "../features/LoanDetails/StatusDropDown";
+import { DocumentSection } from "../features/LoanDetails/DocumentSection";
 
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -33,7 +35,16 @@ export const LoanDetailsPage = () => {
                 </div>
             </div>
 
+            <h1 className="text-center m-4 text-secondary fw-bold">
+                Solicitud ID ##12346
+            </h1>
+
+            <StatusDropDown />
+
             <UserDetailSection />
+
+            <DocumentSection />
+            
         </div>
     );
 }

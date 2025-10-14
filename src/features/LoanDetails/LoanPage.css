@@ -13,9 +13,9 @@ p.loan_details_text{
     min-width: 5rem;
     max-width: 10rem;
     color: white;
+    background-color: var(--aqua-600);
     font-size: 1.1rem;
     font-weight: 500;
-    border: none;
 }
 
 button.pending_status_dropdown{
@@ -23,7 +23,6 @@ button.pending_status_dropdown{
     background-color: var(--aqua-600);
     font-size: 1.1rem;
     font-weight: 500;
-    border: none;
 }
 
 button.pending_status_dropdown:hover,
@@ -33,7 +32,6 @@ button.pending_status_dropdown:active {
   font-size: 1.1rem;
   font-weight: 500;
   background-color: var(--aqua-700);
-  border: none;
 }
 
 button.approved_status_dropdown{
@@ -41,7 +39,6 @@ button.approved_status_dropdown{
     background-color: var(--green-500);
     font-size: 1.1rem;
     font-weight: 500;
-    border: none;
 }
 
 button.approved_status_dropdown:hover,
@@ -76,4 +73,16 @@ button.declined_status_dropdown:active {
     color: var(--aqua-600);
     font-size: 1.3rem;
     font-weight: 600;
+}
+
+button.review_document_btn{
+    color: var(--aqua-600);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.documentView{
+    width: 100%;
+    height: 900px;
+    border: none;
 }
