@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
+//CSS files
+import '../features/LoanDetails/LoanPage.css';
+
 //Components
 import { UserDetailSection } from "../features/LoanDetails/UserDetailSection";
 import { StatusDropDown } from "../features/LoanDetails/StatusDropDown";

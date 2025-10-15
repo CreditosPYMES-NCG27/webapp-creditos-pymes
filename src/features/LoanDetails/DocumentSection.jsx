@@ -1,3 +1,5 @@
+//CSS files
+import './LoanPage.css';
 
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -6,6 +8,8 @@ import { faSquareXmark } from '@fortawesome/free-solid-svg-icons'
 
 //Components
 import { ReviewDocumentModal } from "./ReviewDocumentModal";
+import { RequestDocumentBtn } from './RequestDocumentBtn';
+import { RequestSignatureBtn } from './RequestSignatureBtn';
 
 export const DocumentSection = () => {
 
@@ -42,12 +46,8 @@ export const DocumentSection = () => {
             </div>
             <div className="col-6 d-flex justify-content-center">
                 <div className="d-grid gap-2">
-                    <button className="btn btn-primary" type="button">
-                        Solicitar Documento
-                    </button>
-                    <button className="btn btn-primary" type="button">
-                        Solicitar Firma
-                    </button>
+                    <RequestDocumentBtn />
+                    <RequestSignatureBtn />
                     <button className="btn btn-primary" type="button">
                         Enviar Justificante
                     </button>

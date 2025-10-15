@@ -1,4 +1,5 @@
-
+//CSS files
+import './LoanPage.css';
 
 export const UserDetailSection = () => {
 

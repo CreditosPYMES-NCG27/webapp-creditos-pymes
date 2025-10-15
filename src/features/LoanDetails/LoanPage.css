@@ -92,3 +92,43 @@ button.review_document_btn{
     font-weight: 500;
     width: 350px;
 }
+
+button.request_document_btn{
+    color: var(--teal-700);
+    border: 2px solid var(--teal-700);
+    font-weight: 500;
+}
+
+button.request_document_btn:hover,
+button.request_document_btn:active{
+    color: white;
+    background-color: var(--teal-700);
+    border: 2px solid var(--teal-700);
+    font-weight: 500;
+}
+
+button.request_signature_btn{
+    color: var(--green-700);
+    border: 2px solid var(--green-700);
+    font-weight: 500;
+}
+
+button.request_signature_btn:hover,
+button.request_signature_btn:active{
+    color: white;
+    background-color: var(--green-700);
+    border: 2px solid var(--green-700);
+    font-weight: 500;
+}
+
+button.submit_send_btn{
+    background-color: var(--teal-600);
+    color: white;
+}
+
+button.submit_send_btn:hover,
+button.submit_send_btn:active{
+    background-color: var(--teal-700);
+    color: white;
+}
+
