@@ -6,6 +6,7 @@ import DashboardPage from '../pages/DashboardPage';
 import { ClientProfilePage } from "../pages/ClientProfilePage";
 import { PartnerProfilePage } from "../pages/PartnerProfilePage";
 import PartnerDashboardPage from '../pages/PartnerDashboardPage';
+import NotificationsDemo from '../pages/NotificationsDemo';
 
 export default function AppRoutes() {
   return (
@@ -17,6 +18,7 @@ export default function AppRoutes() {
       <Route path="/partner-dashboard" element={<PartnerDashboardPage />} />
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
+      <Route path="/notifications" element={<NotificationsDemo />} />
     </Routes>
   );
 }

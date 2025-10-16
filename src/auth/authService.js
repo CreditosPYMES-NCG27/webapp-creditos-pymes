@@ -12,7 +12,7 @@ export async function loginUser(email, password, showNotification = null) {
       
       // Mostrar notificación de error si se proporciona la función
       if (showNotification) {
-        showNotification.showLoginError(error.message);
+        showNotification.showError(`Error al iniciar sesión: ${error.message}`);
       }
       
       return { error };
@@ -25,7 +25,7 @@ export async function loginUser(email, password, showNotification = null) {
     // Mostrar notificación de éxito si se proporciona la función
     if (showNotification) {
       const userName = data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'Usuario';
-      showNotification.showLoginSuccess(userName);
+      showNotification.showSuccess(`¡Bienvenido, ${userName}! Has iniciado sesión correctamente.`);
     }
 
     return { user: data.user, session: data.session };
@@ -34,7 +34,7 @@ export async function loginUser(email, password, showNotification = null) {
     
     // Mostrar notificación de error si se proporciona la función
     if (showNotification) {
-      showNotification.showNetworkError();
+      showNotification.showError('Error de conexión. Verifica tu internet e inténtalo de nuevo.');
     }
     
     return { error: err };
@@ -52,7 +52,7 @@ export async function logoutUser(showNotification = null) {
     
     // Mostrar notificación de éxito si se proporciona la función
     if (showNotification) {
-      showNotification.showLogoutSuccess();
+      showNotification.showSuccess('Has cerrado sesión correctamente.');
     }
   } catch (err) {
     console.error("⚠️ Error al cerrar sesión:", err);

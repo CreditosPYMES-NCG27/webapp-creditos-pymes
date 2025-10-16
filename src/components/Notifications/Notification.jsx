@@ -14,17 +14,7 @@ const ErrorIcon = () => (
   </svg>
 );
 
-const InfoIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-  </svg>
-);
-
-const WarningIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor">
-    <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-  </svg>
-);
+// Eliminados InfoIcon y WarningIcon para dejar solo éxito y error
 
 const CloseIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor">
@@ -34,37 +24,28 @@ const CloseIcon = () => (
 
 const Notification = ({ 
   id,
-  type = 'info',
+  type = 'success',
   title,
   message,
-  duration = 5000,
   onClose,
-  showProgress = true
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const DURATION_MS = 5000;
 
   useEffect(() => {
-    // Mostrar notificación con delay para animación
     const showTimer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
 
-    // Auto-close si no está en hover
-    let hideTimer;
-    if (duration > 0) {
-      hideTimer = setTimeout(() => {
-        if (!isHovered) {
-          handleClose();
-        }
-      }, duration);
-    }
+    const hideTimer = setTimeout(() => {
+      handleClose();
+    }, DURATION_MS);
 
     return () => {
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
     };
-  }, [duration, isHovered]);
+  }, []);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -74,17 +55,8 @@ const Notification = ({
   };
 
   const getIcon = () => {
-    switch (type) {
-      case 'success':
-        return <CheckIcon />;
-      case 'error':
-        return <ErrorIcon />;
-      case 'warning':
-        return <WarningIcon />;
-      case 'info':
-      default:
-        return <InfoIcon />;
-    }
+    if (type === 'error') return <ErrorIcon />;
+    return <CheckIcon />;
   };
 
   const notificationClass = `notification notification--${type} ${isVisible ? 'show' : 'hide'}`;
@@ -92,9 +64,6 @@ const Notification = ({
   return (
     <div
       className={notificationClass}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ '--duration': `${duration}ms` }}
     >
       <div className="notification__icon">
         {getIcon()}
@@ -113,14 +82,9 @@ const Notification = ({
         <CloseIcon />
       </button>
       
-      {showProgress && duration > 0 && (
-        <div className="notification__progress">
-          <div 
-            className={`notification__progress-bar ${!isHovered ? 'animate' : ''}`}
-            style={{ '--duration': `${duration}ms` }}
-          />
-        </div>
-      )}
+      <div className="notification__progress">
+        <div className="notification__progress-bar" />
+      </div>
     </div>
   );
 };

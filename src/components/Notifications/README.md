@@ -6,8 +6,7 @@ Este sistema proporciona notificaciones elegantes y reutilizables basadas en el 
 
 - ✅ **Notificaciones de éxito** - Para procesos completados exitosamente
 - ❌ **Notificaciones de error** - Para procesos fallidos
-- ℹ️ **Notificaciones informativas** - Para información general
-- ⚠️ **Notificaciones de advertencia** - Para alertas importantes
+  
 - 🎨 **Diseño basado en branding** - Usa la paleta de colores del proyecto
 - 📱 **Responsive** - Se adapta a dispositivos móviles
 - ⏱️ **Auto-cierre** - Se cierran automáticamente después de un tiempo
@@ -44,24 +43,10 @@ const MiComponente = () => {
 ### 2. Métodos disponibles
 
 #### Métodos básicos
-- `showSuccess(message, options)` - Notificación de éxito
-- `showError(message, options)` - Notificación de error
-- `showInfo(message, options)` - Notificación informativa
-- `showWarning(message, options)` - Notificación de advertencia
+- `showSuccess(message)` - Notificación de éxito
+- `showError(message)` - Notificación de error
 
-#### Métodos específicos para autenticación
-- `showLoginSuccess(userName)` - Éxito al iniciar sesión
-- `showLoginError(errorMessage)` - Error al iniciar sesión
-- `showLogoutSuccess()` - Éxito al cerrar sesión
-
-#### Métodos específicos para operaciones CRUD
-- `showSaveSuccess(itemName)` - Éxito al guardar
-- `showSaveError(itemName)` - Error al guardar
-- `showDeleteSuccess(itemName)` - Éxito al eliminar
-- `showDeleteError(itemName)` - Error al eliminar
-
-#### Métodos para errores comunes
-- `showNetworkError()` - Error de conexión
+API mínima: no hay métodos de conveniencia; usa `showSuccess` y `showError`.
 
 #### Métodos de control
 - `clearAll()` - Limpiar todas las notificaciones
@@ -69,23 +54,15 @@ const MiComponente = () => {
 
 ### 3. Opciones personalizadas
 
-```jsx
-notifications.showSuccess('Mensaje', {
-  title: 'Título personalizado',
-  duration: 3000, // 3 segundos
-  showProgress: false, // Sin barra de progreso
-});
-```
+API simplificada sin opciones: las notificaciones tienen duración y barra de progreso por defecto.
 
 ### 4. Notificación personalizada
 
 ```jsx
 notifications.addCustom({
-  type: 'info',
+  type: 'success', // o 'error'
   title: 'Título',
-  message: 'Mensaje',
-  duration: 5000,
-  showProgress: true
+  message: 'Mensaje'
 });
 ```
 
@@ -112,8 +89,7 @@ Las notificaciones usan las variables CSS del proyecto:
 
 - **Éxito**: Verde (`--green-*`)
 - **Error**: Rojo (`--red-*`)
-- **Info**: Azul (`--blue-*`)
-- **Advertencia**: Amarillo (`--yellow-*`)
+  
 
 ## Posicionamiento
 
