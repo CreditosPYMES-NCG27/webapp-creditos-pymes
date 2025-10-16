@@ -35,37 +35,43 @@ export default function PartnerDashboard() {
 
   // Columnas para partners
   const columns = [
-    { 
-      key: 'applicant_name', 
-      label: 'Solicitante', 
-      render: TableRenderers.texto 
+    {
+      key: 'applicant_name',
+      label: 'Solicitante',
+      render: TableRenderers.texto,
+      sortable: true // ⚠️ FALTA 
     },
-    { 
-      key: 'id', 
-      label: 'Solicitud', 
-      render: TableRenderers.idSolicitud 
+    {
+      key: 'id',
+      label: 'Solicitud',
+      render: TableRenderers.idSolicitud,
+      sortable: false 
     },
-    { 
-      key: 'requested_amount', 
-      label: 'Monto', 
-      render: TableRenderers.monto 
+    {
+      key: 'requested_amount',
+      label: 'Monto',
+      render: TableRenderers.monto,
+      sortable: true 
     },
-    { 
-      key: 'status', 
-      label: 'Estado', 
-      render: TableRenderers.estado 
+    {
+      key: 'status',
+      label: 'Estado',
+      render: TableRenderers.estado,
+      sortable: true 
     },
-    { 
-      key: 'created_at', 
-      label: 'Fecha de Creación', 
-      render: TableRenderers.texto 
+    {
+      key: 'created_at',
+      label: 'Fecha de Creación',
+      render: TableRenderers.texto,
+      sortable: true 
     },
-    { 
-      key: 'verification', 
-      label: 'Verificación', 
-      headerClassName: 'text-center', 
+    {
+      key: 'verification',
+      label: 'Verificación',
+      headerClassName: 'text-center',
       cellClassName: 'text-center',
-      render: TableRenderers.verificacion
+      render: TableRenderers.verificacion,
+      sortable: false 
     }
   ];
 

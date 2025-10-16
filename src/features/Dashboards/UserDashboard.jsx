@@ -11,7 +11,6 @@ export default function UserDashboard() {
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('sb-user'));
     if (!user) return;
@@ -36,13 +35,40 @@ export default function UserDashboard() {
     );
   });
 
-  // Columnas
+  // Columnas 
   const columns = [
-    { key: 'id', label: 'ID Solicitud', render: TableRenderers.idSolicitud },
-    { key: 'requested_amount', label: 'Monto', render: TableRenderers.monto },
-    { key: 'status', label: 'Estado', render: TableRenderers.estado },
-    { key: 'created_at', label: 'Fecha', render: TableRenderers.texto },
-    { key: 'acciones', label: 'Acciones', headerClassName: 'text-center', cellClassName: 'text-center', render: TableRenderers.acciones }
+    {
+      key: 'id',
+      label: 'ID Solicitud',
+      render: TableRenderers.idSolicitud,
+      sortable: false
+    },
+    {
+      key: 'requested_amount',
+      label: 'Monto',
+      render: TableRenderers.monto,
+      sortable: true
+    },
+    {
+      key: 'status',
+      label: 'Estado',
+      render: TableRenderers.estado,
+      sortable: true
+    },
+    {
+      key: 'created_at',
+      label: 'Fecha',
+      render: TableRenderers.texto,
+      sortable: true
+    },
+    {
+      key: 'acciones',
+      label: 'Acciones',
+      headerClassName: 'text-center',
+      cellClassName: 'text-center',
+      render: TableRenderers.acciones,
+      sortable: false
+    }
   ];
 
   if (loading) {

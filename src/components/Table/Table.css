@@ -44,7 +44,6 @@
   color: #fff;
 }
 
-
 .table-custom .text-success {
   color: var(--green-500) !important;
 }
@@ -59,4 +58,45 @@
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* Estilos para ordenamiento */
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.sortable-header:hover {
+  background-color: rgba(13, 110, 253, 0.08) !important;
+  color: var(--blue-600);
+}
+
+.sortable-header:hover .sort-indicator .sort-circle {
+  opacity: 1;
+  transform: scale(1.2);
+  background-color: var(--blue-500);
+}
+
+.sort-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.sort-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--gray-400);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+/* Círculo cuando está activo (columna ordenada) */
+.sort-indicator.active .sort-circle {
+  opacity: 1;
+  background-color: var(--blue-600);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
 }
