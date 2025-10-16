@@ -168,22 +168,4 @@
   }
 }
 
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .notification {
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .notification--success {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.2) 100%);
-    color: var(--green-300);
-  }
-  
-  .notification--error {
-    background: linear-gradient(135deg, rgba(248, 11, 11, 0.1) 0%, rgba(248, 11, 11, 0.2) 100%);
-    color: var(--red-300);
-  }
-  
-  /* Eliminados estilos info y warning para dark mode */
-}
+/* Dark mode eliminado por simplificación: solo manejamos success y error base */

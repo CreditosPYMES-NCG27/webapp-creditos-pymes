@@ -1,4 +1,4 @@
-import { loginUser } from "@/auth/authService";
+import { loginUser, setAppRole } from "@/auth/authService";
 
 export const ButtonActions = {
   goHome: (navigate) => navigate("/"),
@@ -33,8 +33,10 @@ export const ButtonActions = {
     }
     
     if (isPartner) {
+      setAppRole("partner");
       navigate("/partner-dashboard");
     } else {
+      setAppRole("user");
       navigate("/dashboard");
     }
   },
