@@ -1,4 +1,4 @@
-/* ============================== NOTIFICATION COMPONENT ============================== */
+
 
 .notification-container {
   position: fixed;
@@ -37,7 +37,6 @@
   opacity: 0;
 }
 
-/* Notification Types */
 .notification--success {
   background: linear-gradient(135deg, var(--green-100) 0%, var(--green-200) 100%);
   border-left: 4px solid var(--green-500);
@@ -50,9 +49,7 @@
   color: var(--red-800);
 }
 
-/* Eliminados estilos info y warning */
 
-/* Icon Styles */
 .notification__icon {
   display: flex;
   align-items: center;
@@ -90,7 +87,7 @@
   opacity: 0.9;
 }
 
-/* Close Button */
+
 .notification__close {
   background: none;
   border: none;
@@ -114,7 +111,7 @@
   height: 16px;
 }
 
-/* Progress Bar */
+
 .notification__progress {
   position: absolute;
   bottom: 0;
@@ -134,7 +131,7 @@
   animation: progress var(--duration, 5000ms) linear forwards;
 }
 
-/* Animation for progress bar */
+
 @keyframes progress {
   from {
     width: 100%;
@@ -144,9 +141,7 @@
   }
 }
 
-/* Se anima siempre, no hay alternancia por hover */
 
-/* Responsive Design */
 @media (max-width: 480px) {
   .notification-container {
     top: 10px;
@@ -168,4 +163,21 @@
   }
 }
 
-/* Dark mode eliminado por simplificación: solo manejamos success y error base */
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .notification {
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .notification--success {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.2) 100%);
+    color: var(--green-300);
+  }
+  
+  .notification--error {
+    background: linear-gradient(135deg, rgba(248, 11, 11, 0.1) 0%, rgba(248, 11, 11, 0.2) 100%);
+    color: var(--red-300);
+  }
+  
+}
