@@ -6,7 +6,6 @@ import DashboardPage from '../pages/DashboardPage';
 import { ClientProfilePage } from "../pages/ClientProfilePage";
 import { PartnerProfilePage } from "../pages/PartnerProfilePage";
 import PartnerDashboardPage from '../pages/PartnerDashboardPage';
-import NotificationsDemo from '../pages/NotificationsDemo';
 import { getStoredSession, getStoredRole } from "@/auth/authService";
 
 function ProtectedRoute({ children }) {
@@ -45,7 +44,6 @@ export default function AppRoutes() {
       } />
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
-      <Route path="/notifications" element={<NotificationsDemo />} />
     </Routes>
   );
 }
