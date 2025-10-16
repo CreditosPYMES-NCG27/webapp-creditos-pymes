@@ -5,19 +5,20 @@ import {
   faCircleExclamation,
   faEye,
 } from "@fortawesome/free-solid-svg-icons";
+import "./Table.css"; // estilos del dropdown
 
 export const TableRenderers = {
   estado: (value) => {
     const getEstadoClass = (estado) => {
       switch (estado) {
-        case 'Pendiente':
-          return 'badge-pendiente';
-        case 'Aprobado':
-          return 'badge-aprobado';
-        case 'Rechazado':
-          return 'badge-rechazado';
+        case "Pendiente":
+          return "badge-pendiente";
+        case "Aprobado":
+          return "badge-aprobado";
+        case "Rechazado":
+          return "badge-rechazado";
         default:
-          return 'bg-secondary';
+          return "bg-secondary";
       }
     };
 
@@ -28,34 +29,59 @@ export const TableRenderers = {
     );
   },
 
-
   idSolicitud: (value) => {
     return <span className="fw-semibold">## {value}</span>;
   },
 
   monto: (value) => {
-    return `${value}$`;
+    return ` $${value}`;
   },
 
   acciones: (value, item) => {
     return (
-      <button
-        className="btn btn-sm btn-outline-secondary"
-        title="Ver más opciones"
-        onClick={() => console.log('Acción para:', item)}
-      >
-        ☰
-      </button>
+      <div className="dropdown text-center acciones-dropdown">
+        <button
+          className="btn btn-sm btn-outline-secondary dropdown-toggle border-0 shadow-none accion-btn"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+
+        <ul className="dropdown-menu dropdown-menu-end shadow-sm">
+          <li>
+            <button className="dropdown-item" onClick={() => handleDescargar(item)}>
+              Descargar justificante
+            </button>
+          </li>
+          <li>
+            <button className="dropdown-item" onClick={() => handleEditar(item)}>
+              Editar solicitud
+            </button>
+          </li>
+          <li>
+            <button className="dropdown-item" onClick={() => handleCancelar(item)}>
+              Cancelar solicitud
+            </button>
+          </li>
+          <li><hr className="dropdown-divider" /></li>
+          <li>
+            <button
+              className="dropdown-item text-danger"
+              onClick={() => handleBorrar(item)}
+            >
+              Borrar solicitud
+            </button>
+          </li>
+        </ul>
+      </div>
     );
   },
 
-  texto: (value) => {
-    return value;
-  },
+  texto: (value) => value,
 
-  numero: (value) => {
-    return value;
-  },
+  numero: (value) => value,
 
   verificacion: (value, item) => {
     const estado = item.status;
@@ -101,4 +127,21 @@ export const TableRenderers = {
       </div>
     );
   },
+};
+
+// --- Funciones de acción (puedes reemplazar con las reales) ---
+const handleDescargar = (item) => {
+  console.log("📄 Descargar justificante de:", item.id);
+};
+
+const handleEditar = (item) => {
+  console.log("✏️ Editar solicitud:", item.id);
+};
+
+const handleCancelar = (item) => {
+  console.log("⚠️ Cancelar solicitud:", item.id);
+};
+
+const handleBorrar = (item) => {
+  console.log("🗑️ Borrar solicitud:", item.id);
 };
