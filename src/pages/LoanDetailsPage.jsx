@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 //CSS files
 import '../features/LoanDetails/LoanPage.css';
@@ -14,15 +14,35 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
 export const LoanDetailsPage = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const loan_id = useParams();
+
+    const getLoanDetails = async () => {
+        try {
+            const loadLoan = await fetch("/api/v1/credit-applications/" + loan_id);
+            if (!loadLoan) return;
+
+            const data = await loadLoan.json();
+
+            if (!loadLoan.ok) {
+                return { error: data.error || "Could not fetch loan details" }
+            }
+
+            return data;
+
+        } catch (error) {
+            console.error("Error fetching loan details:", error);
+            return { error: "Request failed" };
+        }
+    };
 
     return (
         <div className="container-fluid p-4">
             <button type="button"
                 className="btn border-0 m-4"
-                onClick={() => {navigate("/dashboard")}}>
-                <FontAwesomeIcon icon={faArrowLeft} className="me-2 return_to_home_btn"/>
-                <span className="return_to_home_btn">Volver atrás</span> 
+                onClick={() => { navigate("/dashboard") }}>
+                <FontAwesomeIcon icon={faArrowLeft} className="me-2 return_to_home_btn" />
+                <span className="return_to_home_btn">Volver atrás</span>
             </button>
 
             <div className="d-flex me-5">
@@ -47,7 +67,7 @@ export const LoanDetailsPage = () => {
             <UserDetailSection />
 
             <DocumentSection />
-            
+
         </div>
     );
 }

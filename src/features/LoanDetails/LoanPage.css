@@ -97,6 +97,8 @@ button.request_document_btn{
     color: var(--teal-700);
     border: 2px solid var(--teal-700);
     font-weight: 500;
+    width: 15rem;
+    height: 60px;
 }
 
 button.request_document_btn:hover,
@@ -111,6 +113,8 @@ button.request_signature_btn{
     color: var(--green-700);
     border: 2px solid var(--green-700);
     font-weight: 500;
+    width: 15rem;
+    height: 60px;
 }
 
 button.request_signature_btn:hover,
