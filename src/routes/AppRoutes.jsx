@@ -5,6 +5,7 @@ import LoginUsers from "../pages/LoginUsers";
 import DashboardPage from '../pages/DashboardPage';
 import { ClientProfilePage } from "../pages/ClientProfilePage";
 import { PartnerProfilePage } from "../pages/PartnerProfilePage";
+import { LoanDetailsPage } from "../pages/LoanDetailsPage";
 
 export default function AppRoutes() {
   return (
@@ -15,6 +16,7 @@ export default function AppRoutes() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
+      <Route path="/partner/loan-details" element={<LoanDetailsPage />} />
     </Routes>
   );
 }
