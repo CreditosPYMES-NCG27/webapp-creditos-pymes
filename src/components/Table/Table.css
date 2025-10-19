@@ -43,3 +43,96 @@
   background-color: var(--red-500);
   color: #fff;
 }
+
+.table-custom .text-success {
+  color: var(--green-500) !important;
+}
+
+.table-custom .text-warning {
+  color: var(--yellow-500) !important;
+}
+
+.table-custom .text-danger {
+  color: var(--red-500) !important;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Estilos para ordenamiento */
+.sortable-header {
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+.sortable-header:hover {
+  background-color: rgba(13, 110, 253, 0.08) !important;
+  color: var(--blue-600);
+}
+
+.sortable-header:hover .sort-indicator .sort-circle {
+  opacity: 1;
+  transform: scale(1.2);
+  background-color: var(--blue-500);
+}
+
+.sort-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.sort-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--gray-400);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+
+.sort-indicator.active .sort-circle {
+  opacity: 1;
+  background-color: var(--blue-600);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
+}
+
+/* Dropdown de acciones */
+.acciones-dropdown .dropdown-toggle {
+  background: transparent;
+  color: var(--gray-700);
+  border: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+}
+
+.acciones-dropdown .dropdown-toggle::after {
+  display: none;
+}
+
+.acciones-dropdown .dropdown-menu {
+  min-width: 220px;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.acciones-dropdown .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.acciones-dropdown .dropdown-item:hover {
+  background-color: var(--gray-100);
+}
+
+.acciones-dropdown .dropdown-item.text-danger:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+}
