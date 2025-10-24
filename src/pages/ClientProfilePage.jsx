@@ -23,13 +23,13 @@ export const ClientProfilePage = () => {
                 <div className="btn-group" role="group" aria-label="Basic example">
                     <button 
                     type="button" 
-                    className="btn rounded-0 pb-2 profile_page_form"
+                    className="btn rounded-0 pb-2 profile_page_form border-0"
                     onClick={() => {setCompanyForm(true); setUserForm(false)}}>
                         <FontAwesomeIcon icon={faHouse} className="icons_profile_page" />
                     </button>
                     <button 
                     type="button" 
-                    className="btn rounded-0 pb-2 profile_page_form"
+                    className="btn rounded-0 pb-2 profile_page_form border-0"
                     onClick={() => {setCompanyForm(false); setUserForm(true)}}>
                         <FontAwesomeIcon icon={faUser} className="icons_profile_page"/>
                     </button>
