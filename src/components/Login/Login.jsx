@@ -3,14 +3,16 @@ import Button from "../Button/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonActions } from "../Button/ButtonActions";
+import { useNotifications } from "../../hooks/useNotifications";
 
-const Login = () => {
+const Login = ({ isPartner = false }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const notifications = useNotifications();
 
     const handleLogin = () => {
-        ButtonActions.login(navigate, email, password);
+        ButtonActions.login(navigate, email, password, isPartner, notifications);
     };
 
     return (
@@ -70,13 +72,15 @@ const Login = () => {
                     className="w-100 mb-1"
                     action={handleLogin}  
                 />
-                   <Button
-                    text="Crear una cuenta"
-                    color="default"
-                    size="md"
-                    className="w-100"
-                    action="register"  
-                />
+                {!isPartner && (
+                    <Button
+                        text="Crear una cuenta"
+                        color="default"
+                        size="md"
+                        className="w-100"
+                        action="register"  
+                    />
+                )}
             </form>
         </div>
     );
