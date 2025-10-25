@@ -11,6 +11,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 //Components
 import { CompanyDetails } from "../features/ProfileFormClient/CompanyDetails";
 import { UserDetails } from "../features/ProfileFormClient/UserDetails";
+import Footer from "../components/Footer/Footer";
 
 export const ClientProfilePage = () => {
 
@@ -37,6 +38,7 @@ export const ClientProfilePage = () => {
                 
             </div>
            {companyForm ?  <CompanyDetails/> : <UserDetails/>}
+           <Footer />
         </div>
     );
 }

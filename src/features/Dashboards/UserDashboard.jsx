@@ -5,6 +5,8 @@ import SearchBar from '@/components/SearchBar/SearchBar';
 import { TableRenderers } from '@/components/Table/TableUtils';
 import { fetchCreditApplications } from '@/services/creditService';
 import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
+import Navbar from '../../components/Navbar/Navbar';
+import Footer from '../../components/Footer/Footer';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
@@ -51,6 +53,7 @@ export default function UserDashboard() {
 
   return (
     <div className="container my-5">
+      <Navbar />
       <div className="dashboard-header text-center mb-4">
         <h2>Bienvenido {JSON.parse(localStorage.getItem('sb-user'))?.email}</h2>
       </div>

@@ -5,7 +5,7 @@ import LoginUsers from "../pages/LoginUsers";
 import DashboardPage from '../pages/DashboardPage';
 import { ClientProfilePage } from "../pages/ClientProfilePage";
 import { PartnerProfilePage } from "../pages/PartnerProfilePage";
-
+import SignInPage from "../pages/SignIn";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -15,6 +15,7 @@ export default function AppRoutes() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
+      <Route path="/sign-in" element={<SignInPage />} />
     </Routes>
   );
 }
