@@ -1,23 +1,46 @@
 import './UserDashboard.css';
 import { useState, useEffect } from 'react';
+
+//services
+import { fetchCreditApplications } from '@/services/creditService';
+import companyServices from '../../services/companyServices';
+
+//components
+import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
+import { TableRenderers } from '@/components/Table/TableUtils';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
-import { TableRenderers } from '@/components/Table/TableUtils';
-import { fetchCreditApplications } from '@/services/creditService';
-import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [company, setCompany] = useState("")
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('sb-user'));
     if (!user) return;
+
     const loadData = async () => {
       setLoading(true);
-      const data = await fetchCreditApplications(user.id);
-      setSolicitudes(data);
+
+      // Fetch credit applications separado de company details
+      //Esto permite que aún que uno de los fecth falle no afecte al otro
+      try {
+        const data = await fetchCreditApplications(user.id);
+        setSolicitudes(data);
+      } catch (err) {
+        console.error("Error fetching credit applications:", err);
+      }
+
+      //se llama company details desde el parent para evitar demoras en cargar el modal
+      try {
+        const company = await companyServices.getMyCompanyDetails();
+        setCompany(company);
+      } catch (err) {
+        console.error("Error fetching company details:", err);
+      }
+
       setLoading(false);
     };
 
@@ -88,7 +111,7 @@ export default function UserDashboard() {
       />
 
       <div className="mb-4">
-        <NewLoanBtn />
+        <NewLoanBtn company={company}/>
       </div>
 
       <div className="dashboard-header mb-3">

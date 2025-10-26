@@ -6,7 +6,7 @@ import "./NewLoanBtn.css";
 //services
 import { createNewLoan } from "../../services/creditService";
 
-export const NewLoanBtn = () => {
+export const NewLoanBtn = ({company}) => {
 
     const [newLoanForm, setNewLoan] = useState({
         requested_amount: "",
@@ -41,7 +41,7 @@ export const NewLoanBtn = () => {
     const maxMonths = 360;
 
     const loanReason = [
-        {label: "Elige una opción", value: ""},
+        { label: "Elige una opción", value: "" },
         { label: "Capital de trabajo", value: "working_capital" },
         { label: "Equipos", value: "equipment" },
         { label: "Expansión", value: "expansion" },
@@ -96,15 +96,13 @@ export const NewLoanBtn = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(newLoanForm);
-
         const createdLoan = await createNewLoan(newLoanForm);
         if (createdLoan) {
             window.alert("Loan created:", createdLoan);
             closeModal();
             setNewLoan({
-                requested_amount: 0,
-                term_months: 0,
+                requested_amount: "",
+                term_months: "",
                 purpose: "",
                 purpose_other: ""
             })
@@ -161,7 +159,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         type="text"
                                         id="companyName"
-                                        placeholder="Empresa1"
+                                        value={company.legal_name}
                                         aria-label="Disabled input companyName"
                                         disabled />
                                 </div>
@@ -174,7 +172,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         type="text"
                                         id="companyIdNumber"
-                                        placeholder="R1234567"
+                                        value={company.tax_id}
                                         aria-label="Disabled input companyIdNumber"
                                         disabled />
                                 </div>
@@ -187,7 +185,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         type="tel"
                                         id="companyPhoneNumber"
-                                        placeholder="+34 123 456 789"
+                                        value={company.contact_phone}
                                         aria-label="Disabled input companyPhoneNumber"
                                         disabled />
                                 </div>
@@ -200,7 +198,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         type="email"
                                         id="companyEmail"
-                                        placeholder="empresa1@example.com"
+                                        value={company.contact_email}
                                         aria-label="Disabled input companyEmail"
                                         disabled />
                                 </div>
@@ -213,7 +211,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         type="text"
                                         id="companyAddress"
-                                        placeholder="C/ Falsa 124, 28080 Madrid"
+                                        value={`${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`}
                                         aria-label="Disabled input companyAddress"
                                         disabled />
                                 </div>
@@ -280,7 +278,7 @@ export const NewLoanBtn = () => {
                                         Debe introducir solo números, sin letras.
                                     </div>
 
-                                    <div class="input-group">
+                                    <div className="input-group">
                                         <input
                                             className={`form-control ${errors.term_months ? "is-invalid" : ""}`}
                                             type="number"
@@ -294,7 +292,7 @@ export const NewLoanBtn = () => {
                                             required
                                             aria-describedby="payment_motnhly"
                                             onChange={handleLoanForm} />
-                                        <span class="input-group-text" id="payment_motnhly">Meses</span>
+                                        <span className="input-group-text" id="payment_motnhly">Meses</span>
                                     </div>
                                     <div className="invalid-feedback">{errors.term_months}</div>
                                 </div>
@@ -346,7 +344,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         id="financeStatement"
                                         name="estadosFinancieros"
-
+                                        required
                                     />
                                 </div>
 
@@ -359,7 +357,7 @@ export const NewLoanBtn = () => {
                                         className="form-control"
                                         id="bankStatements"
                                         name="extractosBancarios"
-
+                                        required
                                     />
                                 </div>
 
