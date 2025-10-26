@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../auth/supabaseClient.js";
+
+//services
 import { requestSignature } from "../../services/helloSignServices.js";
 
 export const RequestSignatureBtn = ({ client }) => {
@@ -43,7 +45,7 @@ export const RequestSignatureBtn = ({ client }) => {
         //estrutura del email en helloSign
         // se rellena con datos del cliente
         try {
-            const response = await requestSignature({
+            const response = await helloSignServices.requestSignature({
                 signerEmail: client.email,
                 signerName: client.name,
                 fileUrl: url,
@@ -62,6 +64,8 @@ export const RequestSignatureBtn = ({ client }) => {
 
         setLoading(false);
     };
+
+    if (loading) return <p className="text-center mt-5 fs-5">Cargando...</p>;
 
     return (
         <>

@@ -8,11 +8,12 @@ export const UserDetails = (props) => {
         email: props.email || "",
         first_name: props.name || "",
         last_name: props.lastname || "",
-        contact_phone:"",
-        contact_email:"",
         role: props.role || "",
+        password: "",
         updated_at: props.updated_at || ""
     })
+
+    const [repeatPassword, setRepeatPassword] = useState("")
 
     const handleChange = e => {
         setFormData({
@@ -27,36 +28,32 @@ export const UserDetails = (props) => {
             if (userData.password === repeatPassword) {
 
                 //Makes copy of the formData
-                const dataToSend = { ...formData };
+                const dataToSend = { ...userData };
 
                 //If password field is blank will not send it
                 if (!dataToSend.password.trim()) {
                     delete dataToSend.password;
                 }
-                const data = await userServices.editUser(dataToSend);
+                const data = "need to add API service"
 
                 if (data.success) {
-                    dispatch({ type: "edit_profile", payload: data.user });
-                    showSuccess("Your profile has been updated.")
                     setRepeatPassword("");
                 } else {
-                    showError(data.error || "Could not update profile, try again.");
+                    window.alert(data.error || "Perfil no actualizado, intente nuevamente.");
                 }
             } else {
-                showError("Passwords do not match. Please try again.");
+                window.alert("Contraseñas no son iguales. Intente nuevamente.");
             }
 
         } catch (error) {
-            showError("An unexpected error occurred. Please try again.");
+            window.alert("Error al actulizar, por favor intente nuevamente.");
         }
     }
 
     return (
         <div className="container">
             <h2 className="py-4 text-center profile_form_title">Información Usuario</h2>
-            <form 
-            className="p-5 border border-2 mx-auto rounded client_profile_form"
-            onSubmit={handleSubmit}>
+            <form className="p-5 border border-2 mx-auto rounded client_profile_form">
                 <div className="mb-4">
                     <label htmlFor="name" className="form-label">
                         Nombre
@@ -82,20 +79,6 @@ export const UserDetails = (props) => {
                         value={userData.last_name}
                         placeholder="Apellidos"
                         aria-label="user lastname" 
-                        onChange={handleChange}/>
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="userPhoneNumber" className="form-label">
-                        Teléfono contacto (opcional)
-                    </label>
-                    <input
-                        className="form-control"
-                        type="tel"
-                        id="userPhoneNumber"
-                        value={userData.contact_phone}
-                        placeholder="+34 123 456 789"
-                        aria-label="userPhoneNumber" 
                         onChange={handleChange}/>
                 </div>
 
@@ -127,7 +110,7 @@ export const UserDetails = (props) => {
                 </div>
 
                 <button type="submit"
-                    className="btn p-2 w-75 d-flex mx-auto justify-content-center profile_form_submit_btn">
+                    className="rounded-2 border-0 p-2 w-75 d-flex mx-auto justify-content-center profile_form_submit_btn">
                     Guardar
                 </button>
             </form>

@@ -30,10 +30,6 @@ export const ClientProfilePage = () => {
         if(profile){
             setUserDetails(profile)
         }
-
-        console.log(profile);
-        
-
         if (!profile) {
             navigate("/");
             return;

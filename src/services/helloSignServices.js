@@ -5,7 +5,7 @@ export async function requestSignature({ signerEmail, signerName, fileUrl, title
   }
 
   const res = await fetch(
-    "https://mughbbnyrizlbhnwypqb.supabase.co/functions/v1/send-signature",
+    "https://danuifqoflrazbmodggw.supabase.co/functions/v1/request-signature",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
