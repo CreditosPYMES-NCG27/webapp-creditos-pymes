@@ -6,7 +6,7 @@ import "./NewLoanBtn.css";
 //services
 import { createNewLoan } from "../../services/creditService";
 
-export const NewLoanBtn = ({company}) => {
+export const NewLoanBtn = ({ company }) => {
 
     const [newLoanForm, setNewLoan] = useState({
         requested_amount: "",
@@ -78,9 +78,12 @@ export const NewLoanBtn = ({company}) => {
 
         setNewLoan({
             ...newLoanForm,
-            [name]: (name === "requested_amount" || name === "term_months") ? Number(value) : value,
+            [name]: (name === "requested_amount" || name === "term_months")
+                ? value === "" ? "" : Number(value)
+                : value,
         });
     };
+
 
     const closeModal = () => {
         // Forzar blur del elemento enfocado
@@ -292,7 +295,9 @@ export const NewLoanBtn = ({company}) => {
                                             required
                                             aria-describedby="payment_motnhly"
                                             onChange={handleLoanForm} />
-                                        <span className="input-group-text" id="payment_motnhly">Meses</span>
+                                        <span className="input-group-text" id="payment_motnhly">
+                                            {newLoanForm.term_months <= 1 ? "Mes" : "Meses"}
+                                        </span>
                                     </div>
                                     <div className="invalid-feedback">{errors.term_months}</div>
                                 </div>
