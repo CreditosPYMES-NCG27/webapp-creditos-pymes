@@ -112,6 +112,12 @@ export const UserDetailSection = ({ loan_id, role }) => {
                     </p>
                 </div>
                 <div className='d-flex'>
+                    <h5 className='loan_fields_text'>Email representante:</h5>
+                    <p className='ms-2 loan_details_text'>
+                        "FALTA FETCH"
+                    </p>
+                </div>
+                <div className='d-flex'>
                     <h5 className='loan_fields_text'>Teléfono de la empresa:</h5>
                     <p className='ms-2 loan_details_text'>
                         {companyDetails.contact_phone}
