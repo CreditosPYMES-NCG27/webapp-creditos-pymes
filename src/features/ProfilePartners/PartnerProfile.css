@@ -1,13 +1,8 @@
-.partner_user_img {
-  border-radius: 50%;
-  min-width: 5rem;
-  max-width: 7rem;
-  min-height: 5rem;
-  max-height: 7rem;
-  object-fit: cover;
-  display: block;
+.partner_profile_title{
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--aqua-600)
 }
-
 .partner_profile_form{
     font-size: 1rem;
     font-weight: 500;
