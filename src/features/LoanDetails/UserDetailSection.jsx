@@ -85,7 +85,7 @@ export const UserDetailSection = ({ loan_id, role }) => {
 
     return (
         <div className="row m-4">
-            <div className="col-6 mt-3 lh-sm p-2">
+            <div className="col-md-6 mt-3 lh-sm p-2">
                 <h3 className="mb-4 subtitle_loan_details_page">Detalles Empresa:</h3>
 
                 <div className='d-flex'>
@@ -108,13 +108,22 @@ export const UserDetailSection = ({ loan_id, role }) => {
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Representante:</h5>
                     <p className='ms-2 loan_details_text'>
-                        { }
+                        "FALTA FETCH"
                     </p>
                 </div>
-                <p className="loan_details_text"></p>
-                <p className="loan_details_text">Teléfono de la empresa:</p>
-                <p className="loan_details_text">Email de la empresa:</p>
-                <h5 className="mt-4">Verificación:</h5>
+                <div className='d-flex'>
+                    <h5 className='loan_fields_text'>Teléfono de la empresa:</h5>
+                    <p className='ms-2 loan_details_text'>
+                        {companyDetails.contact_phone}
+                    </p>
+                </div>
+                <div className='d-flex'>
+                    <h5 className='loan_fields_text'>Email de la empresa:</h5>
+                    <p className='ms-2 loan_details_text'>
+                        {companyDetails.contact_email}
+                    </p>
+                </div>
+                <h5 className="mt-4">Verificación: FALTA</h5>
             </div>
 
             <div className="col-6 align-self-end mt-5">
