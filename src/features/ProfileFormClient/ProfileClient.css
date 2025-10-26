@@ -12,7 +12,18 @@
 }
 
 button.profile_form_submit_btn{
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     background-color: var(--teal-600);
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+button.profile_form_submit_btn:focus,
+button.profile_form_submit_btn:active{
+    background-color: var(--teal-700);
     color: white;
     font-weight: 500;
     font-size: 1rem;
@@ -24,5 +35,5 @@ button.profile_form_submit_btn{
 }
 
 button.profile_page_form:focus{
-    border-bottom: 2px solid var(--teal-600);
+    border-bottom: 2px solid var(--teal-600) !important;
 }
