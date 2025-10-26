@@ -162,7 +162,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyName"
-                                        value={company.legal_name}
+                                        value={company.legal_name || ""}
                                         aria-label="Disabled input companyName"
                                         disabled />
                                 </div>
@@ -175,7 +175,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyIdNumber"
-                                        value={company.tax_id}
+                                        value={company.tax_id || ""}
                                         aria-label="Disabled input companyIdNumber"
                                         disabled />
                                 </div>
@@ -188,7 +188,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="tel"
                                         id="companyPhoneNumber"
-                                        value={company.contact_phone}
+                                        value={company.contact_phone || ""}
                                         aria-label="Disabled input companyPhoneNumber"
                                         disabled />
                                 </div>
@@ -201,7 +201,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="email"
                                         id="companyEmail"
-                                        value={company.contact_email}
+                                        value={company.contact_email || ""}
                                         aria-label="Disabled input companyEmail"
                                         disabled />
                                 </div>
@@ -214,7 +214,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyAddress"
-                                        value={`${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`}
+                                        value={`${company?.address?.street || ""}, ${company?.address?.city || ""}, ${company?.address?.state || ""}, ${company?.address?.zip_code || ""}, ${company?.address?.country || ""}`}
                                         aria-label="Disabled input companyAddress"
                                         disabled />
                                 </div>
@@ -310,7 +310,6 @@ export const NewLoanBtn = ({ company }) => {
                                         id="loanReason"
                                         name="purpose"
                                         value={newLoanForm.purpose}
-                                        defaultValue={""}
                                         className={`form-select w-75 ${errors.purpose ? "is-invalid" : ""}`}
                                         aria-label=".form-select-sm loanReason"
                                         required
@@ -349,7 +348,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         id="financeStatement"
                                         name="estadosFinancieros"
-                                        required
+                                        
                                     />
                                 </div>
 
@@ -362,7 +361,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         id="bankStatements"
                                         name="extractosBancarios"
-                                        required
+                                        
                                     />
                                 </div>
 

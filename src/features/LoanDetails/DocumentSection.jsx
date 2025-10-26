@@ -19,6 +19,8 @@ export const DocumentSection = () => {
         { value: 3, label: "Informes contables (opcional)", status: "Pendiente" },
     ]
 
+    
+
     return (
         <div className="row m-4">
             <div className="col-6">

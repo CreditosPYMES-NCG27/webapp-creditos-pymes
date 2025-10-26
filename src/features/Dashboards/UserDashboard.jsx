@@ -29,6 +29,8 @@ export default function UserDashboard() {
       try {
         const data = await fetchCreditApplications(user.id);
         setSolicitudes(data);
+        console.log(data);
+        
       } catch (err) {
         console.error("Error fetching credit applications:", err);
       }
@@ -94,9 +96,9 @@ export default function UserDashboard() {
     }
   ];
 
-  if (loading) {
-    return <p className="text-center my-5">Cargando solicitudes...</p>;
-  }
+  // if (loading) {
+  //   return <p className="text-center my-5">Cargando solicitudes...</p>;
+  // }
 
   return (
     <div className="container my-5">

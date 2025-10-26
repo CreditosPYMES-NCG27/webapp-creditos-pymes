@@ -149,7 +149,9 @@ export const UserDetailSection = ({ loan_id }) => {
             <div className="col-6 align-self-end mt-3">
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Montón solicitado:</h5>
-                    <p className='ms-2 loan_details_text'>{loanData.requested_amount}</p>
+                    <p className='ms-2 loan_details_text text-success fw-bold'>
+                        {loanData.requested_amount}
+                    </p>
                 </div>
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Finalidad del crédito:</h5>
