@@ -1,87 +1,101 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-//CSS files
+//CSS
 import './LoanPage.css';
 
 //services
 import { getLoanById } from "../../services/creditService.js";
 import companyServices from '../../services/companyServices.js';
+import userServices from '../../services/userServices.js';
 
-export const UserDetailSection = ({ loan_id, role }) => {
+export const UserDetailSection = ({ loan_id }) => {
+    const navigate = useNavigate();
+    const loanId = loan_id?.loan_id || loan_id;
 
-    const [loanData, setloanData] = useState({
-        id: "",
-        company_id: "",
-        requested_amount: "",
-        purpose: "",
-        purpose_other: "",
-        term_months: "",
-        status: "",
-        risk_score: "",
-        approved_amount: "",
-        interest_rate: "",
-        created_at: "",
-        updated_at: ""
-    })
+    const [loanData, setloanData] = useState({});
+    const [companyDetails, setCompanyDetails] = useState({});
+    const [representative, setRepresentative] = useState({});
 
-    const [companyDetails, setCompanyDetails] = useState({
-        id: "",
-        user_id: "",
-        legal_name: "",
-        tax_id: "",
-        contact_email: "",
-        contact_phone: "",
-        address: "",
-        created_at: "",
-        updated_at: ""
-    });
+    const capitalizeFirstLetter = (text) => text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 
-    const capitalizeFirstLetter = (text) => {
-        if (!text) return "";
-        return text.charAt(0).toUpperCase() + text.slice(1);
+    const loadLoan = async (application_id) => {
+        const loan = await getLoanById(application_id);
+        if (!loan) return null;
+
+        setloanData({
+            id: loan.id,
+            company_id: loan.company_id,
+            requested_amount: loan.requested_amount,
+            purpose: loan.purpose,
+            purpose_other: loan.purpose_other,
+            term_months: loan.term_months,
+            status: loan.status,
+            risk_score: loan.risk_score,
+            approved_amount: loan.approved_amount,
+            interest_rate: loan.interest_rate,
+            created_at: loan.created_at,
+            updated_at: loan.updated_at
+        });
+
+        return loan;
     };
 
-    const getLoanDetails = async () => {
+    const loadCompany = async (company_id) => {
+        const company = await companyServices.getCompanyById(company_id);
+        if (!company) return null;
 
-        const loan = await getLoanById(loan_id.loan_id || loan_id);
+        setCompanyDetails({
+            id: company.id,
+            user_id: company.user_id,
+            legal_name: company.legal_name,
+            tax_id: company.tax_id,
+            contact_email: company.contact_email,
+            contact_phone: company.contact_phone,
+            address: `${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`,
+            created_at: company.created_at,
+            updated_at: company.updated_at
+        });
 
-        if (loan) {
-            const company = await companyServices.getCompanyById(loan.company_id);
+        return company;
+    };
 
-            if (company) {
-                setloanData({
-                    id: loan.id,
-                    company_id: loan.company_id,
-                    requested_amount: loan.requested_amount,
-                    purpose: loan.purpose,
-                    purpose_other: loan.purpose_other,
-                    term_months: loan.term_months,
-                    status: loan.status,
-                    risk_score: loan.risk_score,
-                    approved_amount: loan.approved_amount,
-                    interest_rate: loan.interest_rate,
-                    created_at: loan.created_at,
-                    updated_at: loan.updated_at
-                })
+    const loadClient = async (user_id) => {
+        const profile = await userServices.getProfileById(user_id);
+        if (!profile) return null;
 
-                setCompanyDetails({
-                    id: company.id,
-                    user_id: company.user_id,
-                    legal_name: company.legal_name,
-                    tax_id: company.tax_id,
-                    contact_email: company.contact_email,
-                    contact_phone: company.contact_phone,
-                    address: `${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`,
-                    created_at: company.created_at,
-                    updated_at: company.updated_at
-                })
+        setRepresentative({
+            name: `${profile.first_name} ${profile.last_name}`,
+            email: profile.email
+        });
+
+        return profile;
+    };
+
+    // Función que organiza el flujo
+    const loadLoanDetailsSequence = async (loanId) => {
+        try {
+            const loan = await loadLoan(loanId);
+            if (!loan) {
+                navigate("/partner-dashboard");
+                return;
             }
+
+            const company = await loadCompany(loan.company_id);
+            if (!company) return;
+
+            await loadClient(company.user_id);
+        } catch (err) {
+            console.error("Error obteniendo detalles del préstamo:", err);
+            navigate("/partner-dashboard");
         }
     };
 
+    // En useEffect
     useEffect(() => {
-        getLoanDetails();
+        loadLoanDetailsSequence(loanId);
     }, []);
+
 
     return (
         <div className="row m-4">
@@ -108,13 +122,13 @@ export const UserDetailSection = ({ loan_id, role }) => {
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Representante:</h5>
                     <p className='ms-2 loan_details_text'>
-                        "FALTA FETCH"
+                        {representative.name}
                     </p>
                 </div>
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Email representante:</h5>
                     <p className='ms-2 loan_details_text'>
-                        "FALTA FETCH"
+                        {representative.email}
                     </p>
                 </div>
                 <div className='d-flex'>
@@ -132,7 +146,7 @@ export const UserDetailSection = ({ loan_id, role }) => {
                 <h5 className="mt-4">Verificación: FALTA</h5>
             </div>
 
-            <div className="col-6 align-self-end mt-5">
+            <div className="col-6 align-self-end mt-3">
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Montón solicitado:</h5>
                     <p className='ms-2 loan_details_text'>{loanData.requested_amount}</p>
