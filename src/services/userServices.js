@@ -1,19 +1,24 @@
-// services/profileServices.js
-import { supabase } from "../auth/supabaseClient";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+export async function getAccessToken() {
+  const token = localStorage.getItem("sb-token");
+  if (!token) throw new Error("Usuario no autenticado");
+  return token;
+}
 
 const userServices = {};
 
 userServices.getMyProfile = async () => {
     try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.access_token) throw new Error("Usuario no autenticado");
-
+        
+        const token = await getAccessToken();
+        console.log(token);
+        
         const response = await fetch(`${BACKEND_URL}/api/v1/profiles/me`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${session.access_token}`
+                "Authorization": `Bearer ${token}`
             }
         });
 

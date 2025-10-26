@@ -1,24 +1,26 @@
 
-//auth services
-import { supabase } from '@/auth/supabaseClient';
-
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const companyServices = {};
 
+export async function getAccessToken() {
+  const token = localStorage.getItem("sb-token");
+  if (!token) throw new Error("Usuario no autenticado");
+  return token;
+}
+
 //Fetch de los datos de la empresa dek usuario
 companyServices.getMyCompanyDetails = async () => {
     try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.access_token) throw new Error('Usuario no encontrado');
+        const token = await getAccessToken();
 
-        console.log(session.access_token);
+        console.log(token);
 
         const response = await fetch(`${BACKEND_URL}/api/v1/companies/me`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`
+                'Authorization': `Bearer ${token}`
             }
         });
 
@@ -36,17 +38,43 @@ companyServices.getMyCompanyDetails = async () => {
     }
 }
 
+// Fetch datos empresa por ID (para operatoradores)
+companyServices.getCompanyById = async (companyId) => {
+  try {
+    const token = await getAccessToken();
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/companies/${companyId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || 'Empresa no encontrada');
+    }
+
+    const company = response.status !== 204 ? await response.json() : null;
+    return company;
+
+  } catch (err) {
+    console.error('Error fetching company by ID:', err);
+    return null;
+  }
+};
+
 // Actualiza los datos de contacto de la empresa del usuario
 companyServices.updateCompanyContact = async (contactData) => {
     try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.access_token) throw new Error('Usuario no encontrado');
+        const token = await getAccessToken();
 
         const response = await fetch(`${BACKEND_URL}/api/v1/companies/me`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${session.access_token}`
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(contactData) // { contact_email, contact_phone }
         });

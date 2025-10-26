@@ -3,10 +3,16 @@
     font-weight: 700;
 }
 
-p.loan_details_text{
+p.loan_fields_text{
     color: black;
     font-weight: 600;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+}
+
+p.loan_details_text{
+    color: var(--teal-700);
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .button_status_size{

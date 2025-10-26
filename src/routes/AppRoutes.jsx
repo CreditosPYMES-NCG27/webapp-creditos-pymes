@@ -45,7 +45,7 @@ export default function AppRoutes() {
       } />
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
-      <Route path="/partner/loan-details" element={<LoanDetailsPage />} />
+      <Route path="/partner/loan-details/:loan_id" element={<LoanDetailsPage />} />
     </Routes>
   );
 }

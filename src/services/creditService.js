@@ -2,6 +2,11 @@
 import { supabase } from '@/auth/supabaseClient';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+export async function getAccessToken() {
+  const token = localStorage.getItem("sb-token");
+  if (!token) throw new Error("Usuario no autenticado");
+  return token;
+}
 
 // Obtiene las solicitudes del usuario logueado
 export async function fetchCreditApplications(userId) {
@@ -72,16 +77,44 @@ export async function fetchAllCreditApplications() {
 //   }
 // }
 
+export async function getLoanById(loan_id) {
+  try {
+    
+    const token = await getAccessToken();
+
+    // Fetch the loan by ID
+    const response = await fetch(`${BACKEND_URL}/api/v1/credit-applications/${loan_id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Error al obtener la solicitud de crédito");
+    }
+
+    const loanData = await response.json();
+    return loanData;
+
+  } catch (err) {
+    console.error("Error obteniendo la solicitud de crédito:", err);
+    return null;
+  }
+}
+
 export async function createNewLoan(newLoanData) {
   try {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session?.access_token) throw new Error("Usuario no autenticado");
+
+    const token = await getAccessToken();
 
     const response = await fetch(`${BACKEND_URL}/api/v1/credit-applications/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${session.access_token}`,
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(newLoanData),
     });
