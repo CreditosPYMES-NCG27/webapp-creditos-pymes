@@ -9,93 +9,13 @@ import { getLoanById } from "../../services/creditService.js";
 import companyServices from '../../services/companyServices.js';
 import userServices from '../../services/userServices.js';
 
-export const UserDetailSection = ({ loan_id }) => {
-    const navigate = useNavigate();
-    const loanId = loan_id?.loan_id || loan_id;
+export const UserDetailSection = ({ loan_details, company_details, client_details }) => {
 
-    const [loanData, setloanData] = useState({});
-    const [companyDetails, setCompanyDetails] = useState({});
-    const [representative, setRepresentative] = useState({});
+    const loanData = loan_details;
+    const companyDetails = company_details;
+    const representative = client_details;
 
     const capitalizeFirstLetter = (text) => text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
-
-    const loadLoan = async (application_id) => {
-        const loan = await getLoanById(application_id);
-        if (!loan) return null;
-
-        setloanData({
-            id: loan.id,
-            company_id: loan.company_id,
-            requested_amount: loan.requested_amount,
-            purpose: loan.purpose,
-            purpose_other: loan.purpose_other,
-            term_months: loan.term_months,
-            status: loan.status,
-            risk_score: loan.risk_score,
-            approved_amount: loan.approved_amount,
-            interest_rate: loan.interest_rate,
-            created_at: loan.created_at,
-            updated_at: loan.updated_at
-        });
-
-        return loan;
-    };
-
-    const loadCompany = async (company_id) => {
-        const company = await companyServices.getCompanyById(company_id);
-        if (!company) return null;
-
-        setCompanyDetails({
-            id: company.id,
-            user_id: company.user_id,
-            legal_name: company.legal_name,
-            tax_id: company.tax_id,
-            contact_email: company.contact_email,
-            contact_phone: company.contact_phone,
-            address: `${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`,
-            created_at: company.created_at,
-            updated_at: company.updated_at
-        });
-
-        return company;
-    };
-
-    const loadClient = async (user_id) => {
-        const profile = await userServices.getProfileById(user_id);
-        if (!profile) return null;
-
-        setRepresentative({
-            name: `${profile.first_name} ${profile.last_name}`,
-            email: profile.email
-        });
-
-        return profile;
-    };
-
-    // Función que organiza el flujo
-    const loadLoanDetailsSequence = async (loanId) => {
-        try {
-            const loan = await loadLoan(loanId);
-            if (!loan) {
-                navigate("/partner-dashboard");
-                return;
-            }
-
-            const company = await loadCompany(loan.company_id);
-            if (!company) return;
-
-            await loadClient(company.user_id);
-        } catch (err) {
-            console.error("Error obteniendo detalles del préstamo:", err);
-            navigate("/partner-dashboard");
-        }
-    };
-
-    // En useEffect
-    useEffect(() => {
-        loadLoanDetailsSequence(loanId);
-    }, []);
-
 
     return (
         <div className="row m-4">

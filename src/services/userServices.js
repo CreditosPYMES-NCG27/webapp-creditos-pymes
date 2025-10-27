@@ -41,7 +41,6 @@ userServices.getMyProfile = async () => {
 userServices.getProfileById = async (user_id) => {
     try {
         const token = await getAccessToken();
-        console.log(token);
 
         const response = await fetch(`${BACKEND_URL}/api/v1/profiles/${user_id}`, {
             method: "GET",

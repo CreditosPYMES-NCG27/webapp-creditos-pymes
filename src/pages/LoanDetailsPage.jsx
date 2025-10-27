@@ -10,18 +10,19 @@ import userServices from "../services/userServices";
 import { UserDetailSection } from "../features/LoanDetails/UserDetailSection";
 import { StatusDropDown } from "../features/LoanDetails/StatusDropDown";
 import { DocumentSection } from "../features/LoanDetails/DocumentSection";
+import { loanDetails } from "../features/LoanDetails/loanDetails";
 
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const LoanDetailsPage = () => {
 
     const navigate = useNavigate();
-    const loan_id = useParams();
-    const [loading, setLoading] = useState(true);
-    const [role, setRole] = useState("");
+    const loanId = useParams();
+    
+    const { loading, loan, company, client, documents } = loanDetails(loanId.loan_id);
 
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
@@ -36,10 +37,7 @@ export const LoanDetailsPage = () => {
             navigate("/dashboard");
             return;
         }
-
-        setRole(partner.role)
-        setLoading(false);
-    };
+    };    
 
     useEffect(() => {
         checkRole();
@@ -61,13 +59,16 @@ export const LoanDetailsPage = () => {
             </h1>
 
             <h3 className="text-center mb-4 text-secondary fw-bold">
-                {loan_id.loan_id}
+                {loanId.loan_id}
             </h3>
 
             <StatusDropDown />
-            <UserDetailSection loan_id={loan_id}/>
-            <DocumentSection />
-
+            <UserDetailSection 
+            loan_details={loan}
+            company_details={company}
+            client_details={client}
+            />
+            <DocumentSection loan_documents={documents}/>
         </div>
     );
 }

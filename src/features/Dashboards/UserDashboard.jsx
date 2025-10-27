@@ -29,7 +29,6 @@ export default function UserDashboard() {
       try {
         const data = await fetchCreditApplications(user.id);
         setSolicitudes(data);
-        console.log(data);
         
       } catch (err) {
         console.error("Error fetching credit applications:", err);
