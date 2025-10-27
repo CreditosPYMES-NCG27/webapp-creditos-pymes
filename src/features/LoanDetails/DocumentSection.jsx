@@ -18,8 +18,6 @@ export const DocumentSection = ({ loan_documents, loan_id }) => {
     const [alldocuments, setAllDocuments] = useState(loan_documents);
     const [showAll, setShowAll] = useState(false);
 
-    console.log(alldocuments);
-
     // muestra primeros 5 documentos
     // máximo se permite 10 documentos para no recargar página y hacer leve el proceso
     const displayedDocs = showAll ? alldocuments : alldocuments?.slice(0, 5);
@@ -53,7 +51,7 @@ export const DocumentSection = ({ loan_documents, loan_id }) => {
                                         : ""
                                 }
                                 <p className={`me-4 mt-3 d-flex files_list lh-sm ${doc.status === "approved" ? "text-success" : doc.status === "declined" ? "text-danger" : ""}`}>
-                                    <span className="badge bg-secondary me-2">
+                                    <span className="badge tag_document me-2">
                                         {documentType(doc.document_type)}
                                     </span>
                                     {doc.file_name.length > 20

@@ -23,7 +23,7 @@ export const LoanDetailsPage = () => {
     const loanId = useParams();
     const [loanIdState] = useState(loanId.loan_id);
 
-    const { loading, loan, company, client, documents } = loanDetails(loanIdState);
+    const { loading, loan, company, client, documents } = loanDetails(loanIdState);    
 
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
@@ -63,13 +63,18 @@ export const LoanDetailsPage = () => {
                 {loanIdState}
             </h3>
 
-            <StatusDropDown />
+            <StatusDropDown loan_details={loan}/>
+
             <UserDetailSection 
             loan_details={loan}
             company_details={company}
             client_details={client}
             />
-            <DocumentSection loan_documents={documents} loan_id={loanIdState} />
+
+            <DocumentSection 
+            loan_documents={documents} 
+            loan_id={loanIdState} 
+            />
         </div>
     );
 }

@@ -132,3 +132,37 @@ export async function createNewLoan(newLoanData) {
     return null;
   }
 };
+
+//Actualiza el estado de una solicitud de crédiot - operadores
+export async function updateLoanStatus(applicationId, newStatus, currentLoanData) {
+  try {
+    const token = await getAccessToken();
+
+    const bodyData = {
+      ...currentLoanData,
+      status: newStatus
+    };
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/credit-applications/${applicationId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(bodyData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Error al actualizar la solicitud de crédito");
+    }
+
+    const updatedLoan = await response.json();
+    return updatedLoan;
+
+  } catch (err) {
+    console.error("Error actualizando la solicitud de crédito:", err);
+    return null;
+  }
+};
+

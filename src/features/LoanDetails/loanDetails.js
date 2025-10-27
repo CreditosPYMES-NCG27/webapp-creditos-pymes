@@ -27,6 +27,7 @@ export const loanDetails = (loan_id) => {
             try {
                 //fetch loan details by loan_id
                 const loanData = await getLoanById(loan_id);
+                
                 if (!loanData) {
                     navigate("/partner-dashboard");
                     return;
@@ -46,7 +47,7 @@ export const loanDetails = (loan_id) => {
                     created_at: loanData.created_at,
                     updated_at: loanData.updated_at,
                     documents: loanData.documents || [],
-                });
+                });                
 
                 //fetch company details with company_id
                 const companyData = await companyServices.getCompanyById(loanData.company_id);
