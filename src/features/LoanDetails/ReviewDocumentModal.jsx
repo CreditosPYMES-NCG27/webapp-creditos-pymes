@@ -1,6 +1,42 @@
 
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-export const ReviewDocumentModal = () => {
+//auth service
+import { supabase } from '@/auth/supabaseClient';
+
+export const ReviewDocumentModal = ({ document_path, modalId, document_title, loan_id}) => {
+
+    const [signedUrl, setSignedUrl] = useState(null);
+
+    const getDocumentSignedUrl = async (path) => {
+
+        const { data, error } = await supabase
+            .storage
+            .from('documents')
+            .createSignedUrl(path, 60);
+
+        if (error) console.error("Supabase error:", error);
+
+        return data.signedUrl;
+    };
+
+    useEffect(() => {
+        const fetchSignedUrl = async () => {
+            if (!document_path) return;
+
+            try {
+
+                const url = await getDocumentSignedUrl(document_path);
+                setSignedUrl(url);
+
+            } catch (err) {
+                console.error("Error getting signed URL:", err);
+            }
+        };
+
+        fetchSignedUrl();
+    }, [document_path, loan_id]);
 
     return (
         <>
@@ -8,15 +44,15 @@ export const ReviewDocumentModal = () => {
                 type="button"
                 className="btn border-0 m-0 review_document_btn"
                 data-bs-toggle="modal"
-                data-bs-target="#reviewDocument">
+                data-bs-target={`#${modalId}`}>
                 Revisar
             </button>
 
             <div
                 className="modal fade"
-                id="reviewDocument"
+                id={modalId}
                 tabIndex="-1"
-                aria-labelledby="reviewDocumentLabel"
+                aria-labelledby={`reviewDocumentLabel-${modalId}`}
                 aria-hidden="true">
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
@@ -29,29 +65,35 @@ export const ReviewDocumentModal = () => {
                                 type="button"
                                 className="btn-close"
                                 data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                                aria-label="Close"
+                                onClick={() => { document.activeElement?.blur() }}></button>
                         </div>
 
                         <div className="modal-body p-4">
                             <h6 className="fw-bold mb-4 mt-2">
-                                Document1
+                                {document_title}
                             </h6>
-                            <iframe
-                                src="https://www.orimi.com/pdf-test.pdf"
-                                title="Documento"
-                                className="documentView"
-                            ></iframe>
+                            {signedUrl ? (
+                                <iframe
+                                    src={signedUrl}
+                                    title="Documento"
+                                    className="documentView"
+                                ></iframe>
+                            ) : (
+                                <p className='fs-5 text-center'>No se pudo cargar el documento.</p>
+                            )}
                         </div>
                         <div className="modal-footer d-flex justify-content-between px-5 py-2">
                             <button
                                 type="button"
                                 className="btn btn-danger"
-                                data-bs-dismiss="modal">
+                                onClick={() => { document.activeElement?.blur() }}>
                                 Rechazar
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-success">
+                                className="btn btn-success"
+                                onClick={() => { document.activeElement?.blur() }}>
                                 Aprobar
                             </button>
                         </div>

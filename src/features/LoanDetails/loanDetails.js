@@ -1,5 +1,4 @@
 
-// hooks/useLoanDetails.js
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +9,8 @@ import userServices from "../../services/userServices";
 import documentServices from "../../services/documentServices";
 
 export const loanDetails = (loan_id) => {
-    const navigate = useNavigate();
+    
+    const navigate = useNavigate();    
 
     const [loan, setLoan] = useState(null);
     const [company, setCompany] = useState(null);

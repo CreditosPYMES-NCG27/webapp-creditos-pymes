@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 //CSS files
 import '../features/LoanDetails/LoanPage.css';
@@ -15,14 +16,14 @@ import { loanDetails } from "../features/LoanDetails/loanDetails";
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { useEffect } from "react";
 
 export const LoanDetailsPage = () => {
 
     const navigate = useNavigate();
     const loanId = useParams();
-    
-    const { loading, loan, company, client, documents } = loanDetails(loanId.loan_id);
+    const [loanIdState] = useState(loanId.loan_id);
+
+    const { loading, loan, company, client, documents } = loanDetails(loanIdState);
 
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
@@ -59,7 +60,7 @@ export const LoanDetailsPage = () => {
             </h1>
 
             <h3 className="text-center mb-4 text-secondary fw-bold">
-                {loanId.loan_id}
+                {loanIdState}
             </h3>
 
             <StatusDropDown />
@@ -68,7 +69,7 @@ export const LoanDetailsPage = () => {
             company_details={company}
             client_details={client}
             />
-            <DocumentSection loan_documents={documents}/>
+            <DocumentSection loan_documents={documents} loan_id={loanIdState} />
         </div>
     );
 }
