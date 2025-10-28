@@ -13,7 +13,7 @@ import { ReviewDocumentModal } from "./ReviewDocumentModal";
 import { RequestDocumentBtn } from './RequestDocumentBtn';
 import { RequestSignatureBtn } from './RequestSignatureBtn';
 
-export const DocumentSection = ({ loan_documents, loan_id }) => {
+export const DocumentSection = ({ loan_documents, loan_id, client_details }) => {
 
     const [alldocuments, setAllDocuments] = useState(loan_documents);
     const [showAll, setShowAll] = useState(false);
@@ -36,7 +36,11 @@ export const DocumentSection = ({ loan_documents, loan_id }) => {
             <div className="col-6">
                 <h3 className="subtitle_loan_details_page">Documentos:</h3>
 
-                {displayedDocs?.map((doc) => (
+                {displayedDocs == 0 ? 
+                <p className='fs-5 mt-3'>No hay documentos disponibles.</p>
+                :
+                
+                displayedDocs?.map((doc) => (
                     <div key={doc.id} className="row">
                         <div className="col-9">
                             <div className="d-flex align-items-center">
@@ -86,7 +90,7 @@ export const DocumentSection = ({ loan_documents, loan_id }) => {
                         <RequestDocumentBtn />
                     </div>
                     <div className="col-12 mt-2 d-flex justify-content-center">
-                        <RequestSignatureBtn />
+                        <RequestSignatureBtn client={client_details} loan_id={loan_id}/>
                     </div>
                 </div>
             </div>

@@ -74,6 +74,7 @@ export const LoanDetailsPage = () => {
             <DocumentSection 
             loan_documents={documents} 
             loan_id={loanIdState} 
+            client_details={client}
             />
         </div>
     );

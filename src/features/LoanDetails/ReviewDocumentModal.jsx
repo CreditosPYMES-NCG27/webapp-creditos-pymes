@@ -5,18 +5,26 @@ import { useEffect, useState } from 'react';
 //auth service
 import { supabase } from '@/auth/supabaseClient';
 
-export const ReviewDocumentModal = ({ document_path, modalId, document_title, loan_id}) => {
+export const ReviewDocumentModal = ({ document_path, modalId, document_title, loan_id }) => {
 
     const [signedUrl, setSignedUrl] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const getDocumentSignedUrl = async (path) => {
-
         const { data, error } = await supabase
             .storage
             .from('documents')
             .createSignedUrl(path, 60);
 
-        if (error) console.error("Supabase error:", error);
+        if (error) {
+            console.error("Supabase error:", error);
+            return null; // evita que falle al acceder a signedUrl
+        }
+
+        if (!data || !data.signedUrl) {
+            console.warn("No se pudo generar signedUrl para:", path);
+            return null;
+        }
 
         return data.signedUrl;
     };
@@ -25,13 +33,14 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
         const fetchSignedUrl = async () => {
             if (!document_path) return;
 
+            setLoading(true);
             try {
-
                 const url = await getDocumentSignedUrl(document_path);
                 setSignedUrl(url);
-
             } catch (err) {
                 console.error("Error getting signed URL:", err);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -73,7 +82,9 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                             <h6 className="fw-bold mb-4 mt-2">
                                 {document_title}
                             </h6>
-                            {signedUrl ? (
+                            {loading ? (
+                                <p className="fs-5 text-center">Cargando documento...</p>
+                            ) : signedUrl ? (
                                 <iframe
                                     src={signedUrl}
                                     title="Documento"
@@ -82,6 +93,7 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                             ) : (
                                 <p className='fs-5 text-center'>No se pudo cargar el documento.</p>
                             )}
+
                         </div>
                         <div className="modal-footer d-flex justify-content-between px-5 py-2">
                             <button

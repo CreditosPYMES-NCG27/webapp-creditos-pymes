@@ -15,13 +15,40 @@ p.loan_details_text{
     font-size: 1.16rem;
 }
 
-.button_status_size{
+.button_status_size_pending{
     min-width: 5rem;
     max-width: 10rem;
     color: white;
-    background-color: var(--aqua-600);
     font-size: 1.1rem;
     font-weight: 500;
+    background-color: var(--aqua-600);
+}
+
+.button_status_size_in-review{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--yellow-600);
+}
+
+.button_status_size_approved{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--green-600);
+}
+
+.button_status_size_declined{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--red-500);
 }
 
 button.pending_status_dropdown{
