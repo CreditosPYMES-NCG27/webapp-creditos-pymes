@@ -3,18 +3,27 @@ import { useState, useEffect } from 'react';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { TableRenderers } from '@/components/Table/TableUtils';
-import { fetchAllCreditApplications } from '@/services/creditService';
+import { fetchCreditApplications } from '../../services/creditService';
+import { Pagination } from '../../components/Pagination';
 
 export default function PartnerDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const data = await fetchAllCreditApplications();
-      setSolicitudes(data);
+      try {
+        const data = await fetchCreditApplications();
+        setSolicitudes(data.items || data);
+      } catch (err) {
+        console.error("Error fetching credit applications:", err);
+        setSolicitudes([]);
+      }
       setLoading(false);
     };
 
@@ -33,37 +42,45 @@ export default function PartnerDashboard() {
     );
   });
 
+  // Paginación
+  const paginatedData = filteredData.slice(
+    (page - 1) * itemsPerPage,
+    page * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
   // Columnas para partners
   const columns = [
     {
       key: 'applicant_name',
       label: 'Solicitante',
       render: TableRenderers.texto,
-      sortable: true // ⚠️ FALTA 
+      sortable: true
     },
     {
       key: 'id',
       label: 'Solicitud',
       render: TableRenderers.idSolicitud,
-      sortable: false 
+      sortable: false
     },
     {
       key: 'requested_amount',
       label: 'Monto',
       render: TableRenderers.monto,
-      sortable: true 
+      sortable: true
     },
     {
       key: 'status',
       label: 'Estado',
       render: TableRenderers.estado,
-      sortable: true 
+      sortable: true
     },
     {
       key: 'created_at',
       label: 'Fecha de Creación',
       render: TableRenderers.texto,
-      sortable: true 
+      sortable: true
     },
     {
       key: 'verification',
@@ -71,7 +88,7 @@ export default function PartnerDashboard() {
       headerClassName: 'text-center',
       cellClassName: 'text-center',
       render: TableRenderers.verificacion,
-      sortable: false 
+      sortable: false
     }
   ];
 
@@ -95,7 +112,16 @@ export default function PartnerDashboard() {
         <h3 className="text-primary">Solicitudes de Crédito</h3>
       </div>
 
-      <Table columns={columns} data={filteredData} />
+      <Table columns={columns} data={paginatedData} />
+
+      {totalPages > 1 && (
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
+      )}
     </div>
   );
 }
+

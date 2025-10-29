@@ -6,7 +6,7 @@ import "./NewLoanBtn.css";
 //services
 import { createNewLoan } from "../../services/creditService";
 
-export const NewLoanBtn = ({ company }) => {
+export const NewLoanBtn = ({ company, onSuccess }) => {
 
     const [newLoanForm, setNewLoan] = useState({
         requested_amount: "",
@@ -54,24 +54,7 @@ export const NewLoanBtn = ({ company }) => {
     const minAmount = 1000;
     const maxAmount = 250000;
 
-    const currencyOptions = [
-        { value: 1, label: "EUR" },
-        { value: 2, label: "USD" },
-        { value: 3, label: "GBP" },
-        { value: 4, label: "JPY" },
-        { value: 5, label: "CHF" },
-        { value: 6, label: "CAD" },
-        { value: 7, label: "AUD" },
-        { value: 8, label: "CNY" },
-        { value: 9, label: "SEK" },
-        { value: 10, label: "NZD" },
-        { value: 11, label: "MXN" },
-        { value: 12, label: "BRL" },
-        { value: 13, label: "ARS" },
-        { value: 14, label: "CLP" },
-        { value: 15, label: "COP" },
-        { value: 16, label: "PEN" }
-    ]
+    const currencyOptions = "EUR"
 
     const handleLoanForm = (e) => {
         const { name, value } = e.target;
@@ -243,31 +226,9 @@ export const NewLoanBtn = ({ company }) => {
                                             onChange={handleLoanForm}
                                         />
 
-                                        <div className="input-group-append dropdown scrollable_dropdown_currency">
-                                            <button
-                                                className="btn rounded-end ms-1 border-light border-1 dropdown_currency dropdown-toggle input-group-text"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                {currentCurrency}
-                                            </button>
-
-                                            <ul className="dropdown-menu dropdown_menu_currency">
-                                                {currencyOptions.map((currency) => (
-                                                    <li key={currency.value}>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            type="button"
-                                                            onClick={() => setCurrentCurrency(currency.label)}
-                                                        >
-                                                            {currency.label}
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <input type="hidden" name="currency" value={currentCurrency} />
-                                        </div>
+                                        <span className="input-group-text">
+                                            {currencyOptions}
+                                        </span>
                                         <div className="invalid-feedback">{errors.requested_amount}</div>
                                     </div>
 

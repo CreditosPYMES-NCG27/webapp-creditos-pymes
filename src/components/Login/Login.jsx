@@ -3,16 +3,14 @@ import Button from "../Button/Button";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonActions } from "../Button/ButtonActions";
-import { useNotifications } from "../../hooks/useNotifications";
 
 const Login = ({ isPartner = false }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const notifications = useNotifications();
 
     const handleLogin = () => {
-        ButtonActions.login(navigate, email, password, isPartner, notifications);
+        ButtonActions.login(navigate, email, password, isPartner);
     };
 
     return (
