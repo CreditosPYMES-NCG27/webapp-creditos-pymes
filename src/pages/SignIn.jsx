@@ -11,8 +11,7 @@ const SignInPage = () => {
         setShowSecondForm(true);
     };
     return(
-        <div>
-            <Navbar />
+        <div className="container-fluid">
             <section>
                 <div>
                     <img 
@@ -33,31 +32,31 @@ const SignInPage = () => {
                         />
                     </div>
                     {/*form */}
-                    <div className="w-80 border rounded mt-3" style={{ minWidth: "340px" }}>
-                       <form className="p-4 border-2">
+                    <div className="w-80 border border-rounded mt-3" style={{ minWidth: "340px" }}>
+                       <form className="p-4 border border-1">
                         {!showSecondForm ? (
                             <>
-                                <div class="mb-3">
-                                    <label class="form-label">Nombre de la Empresa</label>
-                                    <input type="text" class="form-control" id="" required/>
+                                <div className="mb-3">
+                                    <label className="form-label">Nombre de la Empresa</label>
+                                    <input type="text" className="form-control" id="" required/>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Identificador Fiscal de la Empresa</label>
-                                    <input type="text" class="form-control" id="" required/>
+                                <div className="mb-3">
+                                    <label className="form-label">Identificador Fiscal de la Empresa</label>
+                                    <input type="text" className="form-control" id="" required/>
                                 </div>
-                                <div class="mb-3 ms-0">
-                                    <label class="form-label">Teléfono de la Empresa</label>
-                                    <input type="text" class="form-control" id="" required/>
+                                <div className="mb-3 ms-0">
+                                    <label className="form-label">Teléfono de la Empresa</label>
+                                    <input type="text" className="form-control" id="" required/>
                                 </div>
-                                <div class="mb-3 ms-0">
-                                    <label class="form-label">Dirección de la Empresa</label>
-                                    <input type="text" class="form-control" id="" required/>
+                                <div className="mb-3 ms-0">
+                                    <label className="form-label">Dirección de la Empresa</label>
+                                    <input type="text" className="form-control" id="" required/>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Dirección de la Empresa 2(Opcional)</label>
-                                    <input type="text" class="form-control" id=""/>
+                                <div className="mb-3">
+                                    <label className="form-label">Dirección de la Empresa 2(Opcional)</label>
+                                    <input type="text" className="form-control" id=""/>
                                 </div>
-                                <button type="submit" class="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
+                                <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
                             </>
                         ) : (
                             <>
@@ -97,7 +96,6 @@ const SignInPage = () => {
                     </div>
                 </div>
             </section>
-            <Footer />
         </div>
     );
 };

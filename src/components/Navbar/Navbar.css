@@ -29,9 +29,20 @@ header > nav > ul > li > a {
     padding: 6px;
     border-radius: 6px;
 }
-header > nav > ul > li > a:hover {
-    background-color: var(--aqua-200);
+
+.tabs_link{
+    background-color: white;
 }
+
+.active_link {
+  background-color: var(--aqua-200);
+}
+
+.active_link:hover,
+.active_link:focus {
+  background-color: var(--aqua-300);
+}
+
 header > a {
     margin-right: 24px;
     text-decoration: none;

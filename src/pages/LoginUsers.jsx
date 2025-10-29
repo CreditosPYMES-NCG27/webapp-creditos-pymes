@@ -6,7 +6,6 @@ import Navbar from "../components/Navbar/Navbar";
 const LoginUsers = () => {
   return (
     <div className="d-flex flex-column login-root">
-      <Navbar />
       <div className="container-fluid">
         <div className="row">
           {/* Columna izquierda con imagen */}
@@ -24,7 +23,6 @@ const LoginUsers = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
 
   );

@@ -6,7 +6,7 @@ import "./NewLoanBtn.css";
 //services
 import { createNewLoan } from "../../services/creditService";
 
-export const NewLoanBtn = ({ company }) => {
+export const NewLoanBtn = ({ company, onSuccess }) => {
 
     const [newLoanForm, setNewLoan] = useState({
         requested_amount: "",
@@ -54,24 +54,7 @@ export const NewLoanBtn = ({ company }) => {
     const minAmount = 1000;
     const maxAmount = 250000;
 
-    const currencyOptions = [
-        { value: 1, label: "EUR" },
-        { value: 2, label: "USD" },
-        { value: 3, label: "GBP" },
-        { value: 4, label: "JPY" },
-        { value: 5, label: "CHF" },
-        { value: 6, label: "CAD" },
-        { value: 7, label: "AUD" },
-        { value: 8, label: "CNY" },
-        { value: 9, label: "SEK" },
-        { value: 10, label: "NZD" },
-        { value: 11, label: "MXN" },
-        { value: 12, label: "BRL" },
-        { value: 13, label: "ARS" },
-        { value: 14, label: "CLP" },
-        { value: 15, label: "COP" },
-        { value: 16, label: "PEN" }
-    ]
+    const currencyOptions = "EUR"
 
     const handleLoanForm = (e) => {
         const { name, value } = e.target;
@@ -162,7 +145,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyName"
-                                        value={company.legal_name}
+                                        value={company.legal_name || ""}
                                         aria-label="Disabled input companyName"
                                         disabled />
                                 </div>
@@ -175,7 +158,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyIdNumber"
-                                        value={company.tax_id}
+                                        value={company.tax_id || ""}
                                         aria-label="Disabled input companyIdNumber"
                                         disabled />
                                 </div>
@@ -188,7 +171,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="tel"
                                         id="companyPhoneNumber"
-                                        value={company.contact_phone}
+                                        value={company.contact_phone || ""}
                                         aria-label="Disabled input companyPhoneNumber"
                                         disabled />
                                 </div>
@@ -201,7 +184,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="email"
                                         id="companyEmail"
-                                        value={company.contact_email}
+                                        value={company.contact_email || ""}
                                         aria-label="Disabled input companyEmail"
                                         disabled />
                                 </div>
@@ -214,7 +197,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         type="text"
                                         id="companyAddress"
-                                        value={`${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`}
+                                        value={`${company?.address?.street || ""}, ${company?.address?.city || ""}, ${company?.address?.state || ""}, ${company?.address?.zip_code || ""}, ${company?.address?.country || ""}`}
                                         aria-label="Disabled input companyAddress"
                                         disabled />
                                 </div>
@@ -243,31 +226,9 @@ export const NewLoanBtn = ({ company }) => {
                                             onChange={handleLoanForm}
                                         />
 
-                                        <div className="input-group-append dropdown scrollable_dropdown_currency">
-                                            <button
-                                                className="btn rounded-end ms-1 border-light border-1 dropdown_currency dropdown-toggle input-group-text"
-                                                type="button"
-                                                data-bs-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                {currentCurrency}
-                                            </button>
-
-                                            <ul className="dropdown-menu dropdown_menu_currency">
-                                                {currencyOptions.map((currency) => (
-                                                    <li key={currency.value}>
-                                                        <button
-                                                            className="dropdown-item"
-                                                            type="button"
-                                                            onClick={() => setCurrentCurrency(currency.label)}
-                                                        >
-                                                            {currency.label}
-                                                        </button>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            <input type="hidden" name="currency" value={currentCurrency} />
-                                        </div>
+                                        <span className="input-group-text">
+                                            {currencyOptions}
+                                        </span>
                                         <div className="invalid-feedback">{errors.requested_amount}</div>
                                     </div>
 
@@ -310,7 +271,6 @@ export const NewLoanBtn = ({ company }) => {
                                         id="loanReason"
                                         name="purpose"
                                         value={newLoanForm.purpose}
-                                        defaultValue={""}
                                         className={`form-select w-75 ${errors.purpose ? "is-invalid" : ""}`}
                                         aria-label=".form-select-sm loanReason"
                                         required
@@ -349,7 +309,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         id="financeStatement"
                                         name="estadosFinancieros"
-                                        required
+                                        
                                     />
                                 </div>
 
@@ -362,7 +322,7 @@ export const NewLoanBtn = ({ company }) => {
                                         className="form-control"
                                         id="bankStatements"
                                         name="extractosBancarios"
-                                        required
+                                        
                                     />
                                 </div>
 

@@ -1,68 +1,130 @@
 import { useState } from "react";
 import { supabase } from "../../auth/supabaseClient.js";
 
-//services
-import { requestSignature } from "../../services/helloSignServices.js";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export const RequestSignatureBtn = ({ client }) => {
+//services
+import helloSignServices from "../../services/helloSignServices.js";
+
+export const RequestSignatureBtn = ({ client, loan_id }) => {
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState("");
     const [title, setTitle] = useState("");
-    const [comment, setComment] = useState("");
+    const [documentType, setDocumentType] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const closeModal = () => {
+        // Forzar blur del elemento enfocado
+        document.activeElement?.blur();
+
+        const modalEl = document.getElementById("requestSignature");
+        if (modalEl) {
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            modalInstance?.hide();
+        }
+    };
+
+    const getDocumentSignedUrl = async (path) => {
+        const { data, error } = await supabase
+            .storage
+            .from('documents')
+            .createSignedUrl(path, 60);
+
+        if (error) {
+            console.error("Supabase error:", error);
+            // evita que falle al acceder a signedUrl
+            return null;
+        }
+
+        if (!data || !data.signedUrl) {
+            console.warn("No se pudo generar signedUrl para:", path);
+            return null;
+        }
+
+        return data.signedUrl;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
 
-        let url = fileUrl;
-
-        //Sube el documento a supabase y lo convierte en url
-        if (file) {
-            const { data, error } = await supabase.storage
-                .from("documents")
-                .upload(`loan_${Date.now()}_${file.name}`, file);
-
-            if (error) {
-                alert("Error al subir archivo: " + error.message);
-                setLoading(false);
+        try {
+            if (!file) {
+                alert("Debe adjuntar un archivo PDF para firmar.");
                 return;
             }
 
-            const { publicUrl } = supabase.storage
-                .from("documents")
-                .getPublicUrl(data.path);
-
-            url = publicUrl;
-        }
-
-        if (!url) {
-            alert("Por favor proporcione un URL o seleccione un archivo.");
-            setLoading(false);
-            return;
-        }
-
-        //estrutura del email en helloSign
-        // se rellena con datos del cliente
-        try {
-            const response = await helloSignServices.requestSignature({
-                signerEmail: client.email,
-                signerName: client.name,
-                fileUrl: url,
-                title,
-                comment,
-            });
-
-            if(response){
-                alert("✅ Solicitud de firma enviada correctamente!");
+            if (!documentType) {
+                alert("Debe seleccionar un tipo de documento.");
+                return;
             }
 
-        } catch (err) {
-            console.error(err);
-            alert("❌ " + err.message);
-        }
+            const token = localStorage.getItem("sb-token");
+            if (!token) throw new Error("Usuario no autenticado");
 
-        setLoading(false);
+            // 1️⃣ Upload file to private/tmp/ folder
+            const safeTitle = title.replace(/[^a-z0-9_-]/gi, "_");
+            const tempPath = `private/tmp/${Date.now()}_${safeTitle}`;
+
+            const { data: uploadData, error: uploadError } = await supabase
+                .storage
+                .from("documents")
+                .upload(tempPath, file, { contentType: "application/pdf", upsert: true });
+
+            if (uploadError) throw new Error("Error al subir el archivo temporal: " + uploadError.message);
+
+            // 2️⃣ Generate temporary signed URL for HelloSign
+            const { data: signedUrlData, error: signedUrlError } = await supabase
+                .storage
+                .from("documents")
+                .createSignedUrl(tempPath, 60); // valid 60 seconds
+
+            if (signedUrlError || !signedUrlData?.signedUrl) {
+                throw new Error("No se pudo generar signed URL temporal");
+            }
+
+            const signedUrl = signedUrlData.signedUrl;
+
+            // 3️⃣ Create a temporary document record in backend
+            const docResponse = await fetch(`${BACKEND_URL}/api/v1/documents`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    title,
+                    documentType,
+                    filePath: tempPath,
+                    fileUrl: signedUrl,
+                    userId: client.id, // optional
+                }),
+            });
+
+            const docData = await docResponse.json();
+            if (!docResponse.ok) throw new Error(JSON.stringify(docData));
+
+            const documentId = docData.document_id; // valid ID for API
+
+            // 4️⃣ Request HelloSign signature
+            const result = await helloSignServices.requestSignature({
+                signerEmail: client.email,
+                signerName: client.name,
+                documentId,
+                callbackUrl: `${BACKEND_URL}/webhooks/hellosign`,
+            });
+
+            console.log("HelloSign result:", result);
+            window.alert("✅ Solicitud de firma enviada correctamente. Se guardará cuando se firme.");
+            closeModal();
+
+        } catch (err) {
+            console.error("Error en el proceso de firma:", err);
+            alert(err.message || "Error al solicitar la firma");
+        } finally {
+            setLoading(false);
+            closeModal();
+        }
     };
 
     if (loading) return <p className="text-center mt-5 fs-5">Cargando...</p>;
@@ -110,7 +172,29 @@ export const RequestSignatureBtn = ({ client }) => {
                                         id="documentTitle"
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
+                                        required
                                     />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="documentType" className="form-label">
+                                        Tipo de documento:
+                                    </label>
+                                    <select
+                                        id="documentType"
+                                        value={documentType}
+                                        onChange={(e) => setDocumentType(e.target.value)}
+                                        className="form-select"
+                                        required
+                                    >
+                                        <option value="">Seleccionar tipo de documento</option>
+                                        <option value="tax_return">Declaración de impuestos</option>
+                                        <option value="financial_statement">Estado financiero</option>
+                                        <option value="id_document">Documento de identidad</option>
+                                        <option value="business_license">Licencia comercial</option>
+                                        <option value="bank_statement">Extracto bancario</option>
+                                        <option value="other">Otro</option>
+                                    </select>
                                 </div>
 
                                 <div className="mb-3">
@@ -136,20 +220,8 @@ export const RequestSignatureBtn = ({ client }) => {
                                         className="form-control"
                                         id="attachDocument"
                                         onChange={(e) => setFile(e.target.files[0])}
+                                        accept="application/pdf"
                                     />
-                                </div>
-
-                                <div className="mb-3">
-                                    <label htmlFor="comment" className="form-label">
-                                        Comentarios:
-                                    </label>
-                                    <textarea
-                                        className="form-control"
-                                        placeholder="Deje un mensaje al cliente"
-                                        id="comment"
-                                        value={comment}
-                                        onChange={(e) => setComment(e.target.value)}
-                                    ></textarea>
                                 </div>
 
                                 <div className="d-flex justify-content-around pt-3">

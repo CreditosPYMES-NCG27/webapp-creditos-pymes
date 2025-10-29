@@ -12,16 +12,43 @@ p.loan_fields_text{
 p.loan_details_text{
     color: var(--teal-700);
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.16rem;
 }
 
-.button_status_size{
+.button_status_size_pending{
     min-width: 5rem;
     max-width: 10rem;
     color: white;
-    background-color: var(--aqua-600);
     font-size: 1.1rem;
     font-weight: 500;
+    background-color: var(--aqua-600);
+}
+
+.button_status_size_in-review{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--yellow-600);
+}
+
+.button_status_size_approved{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--green-600);
+}
+
+.button_status_size_declined{
+    min-width: 5rem;
+    max-width: 10rem;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background-color: var(--red-500);
 }
 
 button.pending_status_dropdown{
@@ -38,6 +65,22 @@ button.pending_status_dropdown:active {
   font-size: 1.1rem;
   font-weight: 500;
   background-color: var(--aqua-700);
+}
+
+button.in_review_status_dropdown{
+    color: white;
+    background-color: var(--yellow-600);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+button.in_review_status_dropdown:hover,
+button.in_review_status_dropdown:focus,
+button.in_review_status_dropdown:active {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: var(--yellow-700);
 }
 
 button.approved_status_dropdown{
@@ -140,5 +183,12 @@ button.submit_send_btn:hover,
 button.submit_send_btn:active{
     background-color: var(--teal-700);
     color: white;
+}
+
+.tag_document{
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+    background-color: var(--aqua-600);
 }
 
