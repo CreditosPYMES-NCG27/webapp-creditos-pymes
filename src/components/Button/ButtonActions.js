@@ -4,7 +4,7 @@ export const ButtonActions = {
   goHome: (navigate) => navigate("/"),
   loginUser: (navigate) => navigate("/login-users"),
   loginPartner: (navigate) => navigate("/login-partners"),
-  register: (navigate) => navigate("/register"),
+  register: (navigate) => navigate("/sign-up"),
   alert: () => alert("Ejemplo"),
 
   login: async (navigate, email, password, isPartner = false, showNotification = null) => {

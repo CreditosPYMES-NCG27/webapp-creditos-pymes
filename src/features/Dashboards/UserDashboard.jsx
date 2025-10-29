@@ -76,6 +76,7 @@ export default function UserDashboard() {
 
   return (
     <div className="container my-5">
+      <Navbar />
       <div className="dashboard-header text-center mb-4">
         <h2>Bienvenido {user?.email}</h2>
       </div>

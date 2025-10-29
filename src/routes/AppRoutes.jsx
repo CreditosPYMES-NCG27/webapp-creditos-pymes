@@ -9,12 +9,15 @@ import { PartnerDashboardPage } from "../pages/PartnerDashboardPage";
 import { ClientProfilePage } from "../pages/ClientProfilePage";
 import { PartnerProfilePage } from "../pages/PartnerProfilePage";
 import { LoanDetailsPage } from "../pages/LoanDetailsPage";
+import SignInPage from "../pages/SignIn";
 
-// function ProtectedRoute({ children }) {
-//   const session = getStoredSession();
-//   if (!session) return <Navigate to="/login-users" replace />;
-//   return children;
-// }
+function ProtectedRoute({ children }) {
+  const session = getStoredSession();
+  if (!session) {
+    return <Navigate to="/login-users" replace />;
+  }
+  return children;
+}
 
 // function RoleRoute({ children, allowedRoles }) {
 //   const session = getStoredSession();
@@ -35,6 +38,7 @@ export const AppRoutes = createBrowserRouter(
       <Route path="user/profile" element={<ClientProfilePage />} />
       <Route path="partner/profile" element={<PartnerProfilePage />} />
       <Route path="partner/loan-details/:loan_id" element={<LoanDetailsPage />} />
+      <Route path="/sign-up" element={<SignInPage />} />
     </Route>
   ),
   {
