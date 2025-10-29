@@ -1,26 +1,46 @@
 import './UserDashboard.css';
 import { useState, useEffect } from 'react';
+
+//services
+import { fetchCreditApplications } from '@/services/creditService';
+import companyServices from '../../services/companyServices';
+
+//components
+import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
+import { TableRenderers } from '@/components/Table/TableUtils';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
-import { TableRenderers } from '@/components/Table/TableUtils';
-import { fetchCreditApplications } from '@/services/creditService';
-import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
-import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [company, setCompany] = useState("")
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('sb-user'));
     if (!user) return;
+
     const loadData = async () => {
       setLoading(true);
-      const data = await fetchCreditApplications(user.id);
-      setSolicitudes(data);
+
+      // Fetch credit applications separado de company details
+      //Esto permite que aún que uno de los fecth falle no afecte al otro
+      try {
+        const data = await fetchCreditApplications(user.id);
+        setSolicitudes(data);
+      } catch (err) {
+        console.error("Error fetching credit applications:", err);
+      }
+
+      //se llama company details desde el parent para evitar demoras en cargar el modal
+      try {
+        const company = await companyServices.getMyCompanyDetails();
+        setCompany(company);
+      } catch (err) {
+        console.error("Error fetching company details:", err);
+      }
+
       setLoading(false);
     };
 
@@ -38,13 +58,40 @@ export default function UserDashboard() {
     );
   });
 
-  // Columnas
+  // Columnas 
   const columns = [
-    { key: 'id', label: 'ID Solicitud', render: TableRenderers.idSolicitud },
-    { key: 'requested_amount', label: 'Monto', render: TableRenderers.monto },
-    { key: 'status', label: 'Estado', render: TableRenderers.estado },
-    { key: 'created_at', label: 'Fecha', render: TableRenderers.texto },
-    { key: 'acciones', label: 'Acciones', headerClassName: 'text-center', cellClassName: 'text-center', render: TableRenderers.acciones }
+    {
+      key: 'id',
+      label: 'ID Solicitud',
+      render: TableRenderers.idSolicitud,
+      sortable: false
+    },
+    {
+      key: 'requested_amount',
+      label: 'Monto',
+      render: TableRenderers.monto,
+      sortable: true
+    },
+    {
+      key: 'status',
+      label: 'Estado',
+      render: TableRenderers.estado,
+      sortable: true
+    },
+    {
+      key: 'created_at',
+      label: 'Fecha',
+      render: TableRenderers.texto,
+      sortable: true
+    },
+    {
+      key: 'acciones',
+      label: 'Acciones',
+      headerClassName: 'text-center',
+      cellClassName: 'text-center',
+      render: TableRenderers.acciones,
+      sortable: false
+    }
   ];
 
   if (loading) {
@@ -65,7 +112,7 @@ export default function UserDashboard() {
       />
 
       <div className="mb-4">
-        <NewLoanBtn />
+        <NewLoanBtn company={company}/>
       </div>
 
       <div className="dashboard-header mb-3">

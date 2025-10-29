@@ -17,7 +17,7 @@ const LoginPartners = () => {
 
           {/* Columna derecha con login */}
           <div className="col-lg-6 d-flex align-items-center justify-content-center">
-            <Login />
+            <Login isPartner={true} />
           </div>
         </div>
       </div>
@@ -27,7 +27,6 @@ const LoginPartners = () => {
         <p className="mb-0">&copy; 2025 Todos los derechos reservados</p>
       </footer>
     </div>
-
   );
 };
 
