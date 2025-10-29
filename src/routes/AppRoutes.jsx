@@ -8,6 +8,7 @@ import { PartnerProfilePage } from "../pages/PartnerProfilePage";
 import { LoanDetailsPage } from "../pages/LoanDetailsPage";
 import PartnerDashboardPage from '../pages/PartnerDashboardPage';
 import { getStoredSession, getStoredRole } from "@/auth/authService";
+import SignInPage from "../pages/SignIn";
 
 function ProtectedRoute({ children }) {
   const session = getStoredSession();
@@ -46,6 +47,7 @@ export default function AppRoutes() {
       <Route path="/user/profile" element={<ClientProfilePage />} />
       <Route path="/partner/profile" element={<PartnerProfilePage />} />
       <Route path="/partner/loan-details/:loan_id" element={<LoanDetailsPage />} />
+      <Route path="/sign-in" element={<SignInPage />} />
     </Routes>
   );
 }

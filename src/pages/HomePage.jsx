@@ -2,10 +2,12 @@ import HeroSection from "../features/HeroSection/HeroSection";
 import LoanAmount from "../features/LoanAmount/LoanAmount";
 import Comments from "../components/Comments/Comments";
 import { NewLoanBtn } from "../features/CreateNewLoan/NewLoanBtn";
-
+import Footer from "../components/Footer/Footer";
+import Navbar from "../components/Navbar/Navbar";
 const HomePage = () => {
   return (
-    <div className="container-fluid p-0 m-0 bg-light"> 
+    <div className="container-fluid p-0 m-0 bg-light">
+      <Navbar />
       <HeroSection /> 
       <LoanAmount /> 
       {/* Sección de reseñas */}
@@ -44,6 +46,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
