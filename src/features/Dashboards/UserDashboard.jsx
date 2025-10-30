@@ -16,25 +16,25 @@ export default function UserDashboard() {
   const [company, setCompany] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 10;
+  const [limit, setLimit] = useState(10);
 
   const user = JSON.parse(localStorage.getItem('sb-user'));
 
   const loadCreditApplications = async (pageNumber = 1) => {
     if (!user) return;
-    setLoading(true);
 
+    setLoading(true);
     try {
       const data = await fetchCreditApplications(user.id, pageNumber, limit);
-      if (data) {
-        setSolicitudes(data.items || []);
-        setTotalPages(data.totalPages || 1);
-      }
+
+      setSolicitudes(data.items || []);
+      setTotalPages(data.totalPages || 1);
+      setLimit(data.perPage || limit);
     } catch (err) {
       console.error("Error fetching credit applications:", err);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -61,10 +61,7 @@ export default function UserDashboard() {
     );
   });
 
-  const paginatedData = filteredData.slice(
-    (page - 1) * limit,
-    page * limit
-  );
+  const paginatedData = filteredData;
 
   const columns = [
     { key: 'id', label: 'ID Solicitud', render: TableRenderers.idSolicitud, sortable: false },
@@ -76,7 +73,6 @@ export default function UserDashboard() {
 
   return (
     <div className="container my-5">
-      <Navbar />
       <div className="dashboard-header text-center mb-4">
         <h2>Bienvenido {user?.email}</h2>
       </div>
@@ -84,7 +80,7 @@ export default function UserDashboard() {
       <SearchBar placeholder="Buscar por ID, monto, estado o fecha..." value={searchText} onChange={setSearchText} />
 
       <div className="mb-4">
-        <NewLoanBtn company={company} onSuccess={loadCreditApplications}/>
+        <NewLoanBtn company={company} onSuccess={loadCreditApplications} />
       </div>
 
       <div className="dashboard-header mb-3">
@@ -96,11 +92,11 @@ export default function UserDashboard() {
       ) : (
         <>
           <div className="table-wrapper">
-  <Table columns={columns} data={paginatedData} />
-</div>
+            <Table columns={columns} data={paginatedData} />
+          </div>
           <Pagination
             page={page}
-            totalPages={Math.ceil(filteredData.length / limit)}
+            totalPages={totalPages}
             onPageChange={setPage}
           />
         </>
