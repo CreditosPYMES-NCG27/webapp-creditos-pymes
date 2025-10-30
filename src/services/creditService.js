@@ -207,8 +207,32 @@ export async function updateLoanStatus(applicationId, newStatus, currentLoanData
     return updatedLoan;
 
   } catch (err) {
-    console.error("Error actualizando la solicitud de crédito:", err);
-    return null;
+    console.error("Error actualizando la solicitud de crédito:", err?.message || err);
+    console.error("Full error object:", err);
+  }
+};
+
+export const updateLoanDraft = async (application_id, updateData) => {
+  try {
+    const token = await getAccessToken();
+    const resp = await fetch(`${BACKEND_URL}/api/v1/credit-applications/${application_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(updateData)
+    });
+
+    if (!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(JSON.stringify(errorData));
+    }
+
+    return await resp.json();
+  } catch (error) {
+    console.error("Error actualizando borrador:", error);
+    throw error;
   }
 };
 

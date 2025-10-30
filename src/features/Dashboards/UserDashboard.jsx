@@ -1,22 +1,31 @@
 import './UserDashboard.css';
 import { useState, useEffect } from 'react';
+
+//services
 import { fetchCreditApplications } from '@/services/creditService';
 import companyServices from '../../services/companyServices';
-
 import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
+
+//components
 import { TableRenderers } from '@/components/Table/TableUtils';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { Pagination } from '../../components/Pagination';
+import StatusBadge from '../../components/Table/StatusBadge';
+import ActionsDropdown from './ActionDropdown';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
-  const [solicitudes, setSolicitudes] = useState([]);
+  const [dateFilter, setDateFilter] = useState(""); // NEW: column filter for date
+  const [loans, setLoans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [company, setCompany] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(10);
+
+  // modal state per loan
+  const [openModals, setOpenModals] = useState({});
 
   const user = JSON.parse(localStorage.getItem('sb-user'));
 
@@ -26,8 +35,7 @@ export default function UserDashboard() {
     setLoading(true);
     try {
       const data = await fetchCreditApplications(user.id, pageNumber, limit);
-
-      setSolicitudes(data.items || []);
+      setLoans(data.items || []);
       setTotalPages(data.totalPages || 1);
       setLimit(data.perPage || limit);
     } catch (err) {
@@ -35,6 +43,13 @@ export default function UserDashboard() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const toggleModal = (loanId) => {
+    setOpenModals(prev => ({
+      ...prev,
+      [loanId]: !prev[loanId],
+    }));
   };
 
   useEffect(() => {
@@ -51,24 +66,62 @@ export default function UserDashboard() {
     loadCompany();
   }, [page]);
 
-  const filteredData = solicitudes.filter((item) => {
+  // Filter with search text and date column
+  const filteredData = loans.filter((item) => {
     const search = searchText.toLowerCase();
+    const dateStr = item.created_at ? item.created_at.split('T')[0] : "";
+
     return (
-      item.id.toLowerCase().includes(search) ||
-      item.requested_amount?.toString().toLowerCase().includes(search) ||
-      item.status?.toLowerCase().includes(search) ||
-      item.created_at?.toLowerCase().includes(search)
+      (item.id.toLowerCase().includes(search) ||
+        item.requested_amount?.toString().toLowerCase().includes(search) ||
+        item.status?.toLowerCase().includes(search)) &&
+      (!dateFilter || dateStr === dateFilter)
     );
   });
 
   const paginatedData = filteredData;
 
   const columns = [
-    { key: 'id', label: 'ID Solicitud', render: TableRenderers.idSolicitud, sortable: false },
-    { key: 'requested_amount', label: 'Monto', render: TableRenderers.monto, sortable: true },
-    { key: 'status', label: 'Estado', render: TableRenderers.estado, sortable: true },
-    { key: 'created_at', label: 'Fecha', render: TableRenderers.texto, sortable: true },
-    { key: 'acciones', label: 'Acciones', headerClassName: 'text-center', cellClassName: 'text-center', render: TableRenderers.acciones, sortable: false }
+    {
+      key: "id",
+      label: "ID Solicitud",
+      render: (value) => <span className="fw-semibold">## {value}</span>,
+    },
+    {
+      key: "requested_amount",
+      label: "Monto",
+      render: (value) => `$${value}`,
+      sortable: true,
+    },
+    {
+      key: "status",
+      label: "Estado",
+      render: (value) => <StatusBadge status={value} />,
+      sortable: true,
+    },
+    {
+      key: "created_at",
+      label: "Fecha",
+      render: (value) => new Date(value).toLocaleDateString(),
+      filter: {
+        type: "date",
+        value: dateFilter,
+        onChange: setDateFilter,
+      },
+    },
+    {
+      key: "acciones",
+      label: "Acciones",
+      render: (value, row) => (
+        <ActionsDropdown
+          row={row}
+          company={company}
+          isOpen={!!openModals[row.id]}
+          toggleModal={() => toggleModal(row.id)}
+          onSuccess={loadCreditApplications}
+        />
+      ),
+    },
   ];
 
   return (
@@ -77,7 +130,7 @@ export default function UserDashboard() {
         <h2>Bienvenido {user?.email}</h2>
       </div>
 
-      <SearchBar placeholder="Buscar por ID, monto, estado o fecha..." value={searchText} onChange={setSearchText} />
+      <SearchBar placeholder="Buscar por ID, monto o estado..." value={searchText} onChange={setSearchText} />
 
       <div className="mb-4">
         <NewLoanBtn company={company} onSuccess={loadCreditApplications} />
