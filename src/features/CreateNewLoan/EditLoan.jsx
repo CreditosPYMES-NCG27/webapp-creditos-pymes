@@ -276,7 +276,7 @@ export const EditLoanModal = ({ loanId, company, onSuccess }) => {
                                 ))}
 
                                 <div className="modal-footer flex-column border-0">
-                                    <button type="submit" className="btn saveBtn_modal mx-auto" onClick={updateLoanDraft} disabled={!isEditable}>Guardar</button>
+                                    <button type="submit" className="btn saveBtn_modal mx-auto" onClick={handleDraft} disabled={!isEditable}>Guardar</button>
                                     <div className="d-flex justify-content-between w-100">
                                         <button type="button" className="btn cancelBtn_modal p-2 m-4" data-bs-dismiss="modal">Cancelar</button>
                                         <button type="submit" className="btn submitBtn_modal p-2 m-4" onClick={handleSubmit} disabled={!isEditable}>Enviar Solicitud</button>
