@@ -38,15 +38,20 @@ const SignInPage = () => {
             email: formData.email,
             password: formData.password,
             options: {
-            data: {
-                nombre: formData.nombre,
-                apellido: formData.apellido,
-                empresa: formData.nombreEmpresa,
-                telefono_empresa: formData.telefonoEmpresa,
-                direccion_empresa: formData.direccionEmpresa,
-                direccion_empresa2: formData.direccionEmpresa2,
-                identificador_fiscal: formData.identificadorFiscal,
-            },
+                data: {
+                    first_name: formData.nombre,
+                    last_name: formData.apellido,
+                    company: {
+                        legal_name: formData.nombreEmpresa,
+                        tax_id: formData.identificadorFiscal,
+                        contact_email: formData.email,
+                        contact_phone: formData.telefonoEmpresa,
+                        address: {
+                            line1: formData.direccionEmpresa,
+                            line2: formData.direccionEmpresa2,
+                        }
+                    }
+                },
             },
         });
 
