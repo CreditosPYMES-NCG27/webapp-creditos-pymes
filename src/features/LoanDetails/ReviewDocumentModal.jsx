@@ -1,14 +1,13 @@
 
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { supabase } from '../../auth/supabaseClient';
+import documentServices from '../../services/documentServices';
 
-//auth service
-import { supabase } from '@/auth/supabaseClient';
-
-export const ReviewDocumentModal = ({ document_path, modalId, document_title, loan_id }) => {
-
+export const ReviewDocumentModal = ({ document_path, modalId, document_title, loan_id, document_id }) => {
     const [signedUrl, setSignedUrl] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [actionLoading, setActionLoading] = useState(false);
 
     const getDocumentSignedUrl = async (path) => {
         const { data, error } = await supabase
@@ -18,15 +17,10 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
 
         if (error) {
             console.error("Supabase error:", error);
-            return null; // evita que falle al acceder a signedUrl
-        }
-
-        if (!data || !data.signedUrl) {
-            console.warn("No se pudo generar signedUrl para:", path);
             return null;
         }
 
-        return data.signedUrl;
+        return data?.signedUrl || null;
     };
 
     useEffect(() => {
@@ -46,6 +40,35 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
 
         fetchSignedUrl();
     }, [document_path, loan_id]);
+
+    const handleAction = async (status) => {
+        if (!document_id) {
+            console.error("document_id is required");
+            return;
+        }
+
+        setActionLoading(true);
+        try {
+            let result;
+            if (status === "approved") {
+                result = await documentServices.approve({ document_id });
+            } else if (status === "rejected") {
+                result = await documentServices.reject({ document_id });
+            }
+
+            console.log(`Documento ${status}:`, result);
+
+            // Close modal
+            const modalEl = document.getElementById(modalId);
+            const modalInstance = bootstrap.Modal.getInstance(modalEl);
+            modalInstance.hide();
+
+        } catch (err) {
+            console.error(`Error ${status} documento:`, err);
+        } finally {
+            setActionLoading(false);
+        }
+    };
 
     return (
         <>
@@ -93,20 +116,24 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                             ) : (
                                 <p className='fs-5 text-center'>No se pudo cargar el documento.</p>
                             )}
-
                         </div>
+
                         <div className="modal-footer d-flex justify-content-between px-5 py-2">
                             <button
                                 type="button"
                                 className="btn btn-danger"
-                                onClick={() => { document.activeElement?.blur() }}>
-                                Rechazar
+                                onClick={() => handleAction("rejected")}
+                                disabled={actionLoading}
+                            >
+                                {actionLoading ? "Procesando..." : "Rechazar"}
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-success"
-                                onClick={() => { document.activeElement?.blur() }}>
-                                Aprobar
+                                onClick={() => handleAction("approved")}
+                                disabled={actionLoading}
+                            >
+                                {actionLoading ? "Procesando..." : "Aprobar"}
                             </button>
                         </div>
                     </div>
@@ -114,4 +141,4 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
             </div>
         </>
     );
-}
+};

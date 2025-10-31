@@ -173,7 +173,7 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                                     </select>
                                 </div>
 
-                                <div className="mb-3">
+                                <div className="mb-3 m-0">
                                     <label htmlFor="attachDocument" className="form-label">
                                         Adjuntar documento a firmar:
                                     </label>

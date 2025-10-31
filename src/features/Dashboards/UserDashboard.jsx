@@ -7,7 +7,6 @@ import companyServices from '../../services/companyServices';
 import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
 
 //components
-import { TableRenderers } from '@/components/Table/TableUtils';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import { Pagination } from '../../components/Pagination';
@@ -18,8 +17,9 @@ export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
   const [dateFilter, setDateFilter] = useState(""); // NEW: column filter for date
   const [loans, setLoans] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [company, setCompany] = useState("");
+
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(10);

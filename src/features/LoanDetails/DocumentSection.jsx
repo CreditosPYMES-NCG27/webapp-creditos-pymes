@@ -41,21 +41,21 @@ export const DocumentSection = ({ loan_documents, loan_id, client_details }) => 
                 :
                 
                 displayedDocs?.map((doc) => (
-                    <div key={doc.id} className="row">
+                    <div key={doc.id} className="row mb-1 ms-0">
                         <div className="col-9">
                             <div className="d-flex align-items-center">
                                 {doc.status === "approved"
                                     ? <FontAwesomeIcon
                                         icon={faSquareCheck}
                                         className='fs-5 text-success d-flex align-self-center m-0 me-2' />
-                                    : doc.status === "declined"
+                                    : doc.status === "rejected"
                                         ? <FontAwesomeIcon
                                             icon={faSquareXmark}
                                             className='fs-5 text-danger d-flex align-self-center m-0 me-2' />
-                                        : ""
+                                        : <div className="ms-4 p-1"></div>
                                 }
-                                <p className={`me-4 mt-3 d-flex files_list lh-sm ${doc.status === "approved" ? "text-success" : doc.status === "declined" ? "text-danger" : ""}`}>
-                                    <span className="badge tag_document me-2">
+                                <p className={`me-4 mt-3 d-flex files_list lh-sm ${doc.status === "approved" ? "text-success" : doc.status === "rejected" ? "text-danger" : ""}`}>
+                                    <span className={`badge me-2 ${doc.status === "approved" ? "bg-success" : doc.status === "rejected" ? "bg-danger" : "tag_document"}`}>
                                         {documentType(doc.document_type)}
                                     </span>
                                     {doc.file_name.length > 20
@@ -64,8 +64,9 @@ export const DocumentSection = ({ loan_documents, loan_id, client_details }) => 
                                 </p>
                             </div>
                         </div>
-                        <div className="col-3 d-flex align-items-center">
+                        <div className="col-3 d-flex align-items-center justify-content-end">
                             <ReviewDocumentModal
+                                document_id={doc.id}
                                 document_path={doc.storage_path}
                                 loan_id={loan_id}
                                 document_title={doc.file_name}
@@ -87,7 +88,9 @@ export const DocumentSection = ({ loan_documents, loan_id, client_details }) => 
             <div className="col-6 d-flex justify-content-center align-self-center">
                 <div className="row d-flex">
                     <div className="col-12 mb-2 d-flex justify-content-center">
-                        <RequestDocumentBtn />
+                        <RequestDocumentBtn 
+                            application_id={loan_id}
+                            user_id={client_details.id} />
                     </div>
                     <div className="col-12 mt-2 d-flex justify-content-center">
                         <RequestSignatureBtn client={client_details} loan_id={loan_id}/>
