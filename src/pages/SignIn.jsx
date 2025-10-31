@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar/Navbar";
-import Footer from "../components/Footer/Footer";
 import "../features/SignIn/SignIn.css";
 import { supabase } from "../auth/supabaseClient";
 
@@ -114,7 +112,6 @@ const SignInPage = () => {
                                     <label class="form-label">Dirección de la Empresa 2(Opcional)</label>
                                     <input type="text" name="direccionEmpresa2" value={formData.direccionEmpresa2} onChange={handleChange} className="form-control" id=""/>
                                 </div>
-                                <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
                                 <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
                             </>
                         ) : (
