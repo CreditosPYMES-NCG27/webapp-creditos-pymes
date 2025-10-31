@@ -1,7 +1,5 @@
 import Login from "../components/Login/Login";
 import "@/components/Login/Login.css";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
 
 const LoginUsers = () => {
   return (
