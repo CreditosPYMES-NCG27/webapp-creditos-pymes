@@ -5,13 +5,13 @@ import { supabase } from "../auth/supabaseClient";
 const SignInPage = () => {
     const [showSecondForm, setShowSecondForm] = useState(false);
     const [formData, setFormData] = useState({
-        nombreEmpresa: "",
-        identificadorFiscal: "",
-        telefonoEmpresa: "",
-        direccionEmpresa: "",
-        direccionEmpresa2: "",
-        nombre: "",
-        apellido: "",
+        company: "",
+        tax_id: "",
+        contact_phone: "",
+        address1: "",
+        address2: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: "",
         confirmarPassword: "",
@@ -39,13 +39,13 @@ const SignInPage = () => {
             password: formData.password,
             options: {
             data: {
-                nombre: formData.nombre,
-                apellido: formData.apellido,
-                empresa: formData.nombreEmpresa,
-                telefono_empresa: formData.telefonoEmpresa,
-                direccion_empresa: formData.direccionEmpresa,
-                direccion_empresa2: formData.direccionEmpresa2,
-                identificador_fiscal: formData.identificadorFiscal,
+                company: formData.company,
+                tax_id: formData.tax_id,
+                contact_phone: formData.contact_phone,
+                address1: formData.address1,
+                address2: formData.address2,
+                first_name: formData.first_name,
+                last_name: formData.last_name,
             },
             },
         });
@@ -94,23 +94,23 @@ const SignInPage = () => {
                             <>
                                 <div class="mb-3">
                                     <label class="form-label">Nombre de la Empresa</label>
-                                    <input type="text" name="nombreEmpresa" value={formData.nombreEmpresa} onChange={handleChange} className="form-control" required/>
+                                    <input type="text" name="company" value={formData.company} onChange={handleChange} className="form-control" required/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Identificador Fiscal de la Empresa</label>
-                                    <input type="text" name="identificadorFiscal" value={formData.identificadorFiscal} onChange={handleChange} className="form-control" required/>
+                                    <input type="text" name="tax_id" value={formData.tax_id} onChange={handleChange} className="form-control" required/>
                                 </div>
                                 <div class="mb-3 ms-0">
                                     <label class="form-label">Teléfono de la Empresa</label>
-                                    <input type="text" name="telefonoEmpresa" value={formData.telefonoEmpresa} onChange={handleChange} className="form-control" required/>
+                                    <input type="text" name="contact_phone" value={formData.contact_phone} onChange={handleChange} className="form-control" required/>
                                 </div>
                                 <div class="mb-3 ms-0">
                                     <label class="form-label">Dirección de la Empresa</label>
-                                    <input type="text" name="direccionEmpresa" value={formData.direccionEmpresa} onChange={handleChange} className="form-control" required/>
+                                    <input type="text" name="address1" value={formData.address1} onChange={handleChange} className="form-control" required/>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Dirección de la Empresa 2(Opcional)</label>
-                                    <input type="text" name="direccionEmpresa2" value={formData.direccionEmpresa2} onChange={handleChange} className="form-control" id=""/>
+                                    <input type="text" name="address2" value={formData.address2} onChange={handleChange} className="form-control" id=""/>
                                 </div>
                                 <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
                             </>
@@ -118,11 +118,11 @@ const SignInPage = () => {
                             <>
                                 <div className="mb-3">
                                     <label className="form-label">Nombre</label>
-                                    <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} className="form-control" required />
+                                    <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} className="form-control" required />
                                 </div>
                                 <div className="mb-3">
                                     <label className="form-label">Apellido</label>
-                                    <input type="text" name="apellido" value={formData.apellido} onChange={handleChange} className="form-control" required />
+                                    <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} className="form-control" required />
                                 </div>
                                 <div className="mb-3 ms-0">
                                     <label className="form-label">Email</label>
