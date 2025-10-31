@@ -19,7 +19,6 @@ export default function PartnerDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [company, setCompany] = useState("");
-
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -42,25 +41,35 @@ export default function PartnerDashboard() {
 
   const loadCompany = async () => {
     try {
-      const companyData = await companyServices.getMyCompanyDetails();
+      const data = await companyServices.getCompanies({ page: 1, limit: 1 });
+      const companyData = data?.items?.[0] || null;
       setCompany(companyData);
     } catch (err) {
-      console.error("Error fetching company details:", err);
+      console.error('Error fetching company details:', err);
+      setCompany(null);
     }
   };
 
   useEffect(() => {
-    loadCreditApplications(page);
-    loadCompany();
+    const fetchData = async () => {
+      await loadCompany();
+      await loadCreditApplications(page);
+    };
+    fetchData();
   }, [page]);
 
   // Only include loans with status pending, approved, or rejected
   const validStatuses = ['pending', 'approved', 'rejected', 'in_review'];
   const filteredData = solicitudes
     .filter((item) => validStatuses.includes(item.status.toLowerCase()))
+    .map((item) => ({
+      ...item,
+      legal_name: company?.legal_name || '—', // 🔹 Asigna el nombre legal de la empresa
+    }))
     .filter((item) => {
       const search = searchText.toLowerCase();
       return (
+        item.legal_name?.toLowerCase().includes(search) ||
         item.id.toLowerCase().includes(search) ||
         item.applicant_name?.toLowerCase().includes(search) ||
         item.requested_amount?.toString().toLowerCase().includes(search) ||

@@ -9,6 +9,36 @@ export async function getAccessToken() {
   return token;
 }
 
+//Fetch de la lista de empresas
+companyServices.getCompanies = async ({ page = 1, limit = 10, order = 'desc' } = {}) => {
+    try {
+        const token = await getAccessToken();
+
+        const response = await fetch(
+            `${BACKEND_URL}/api/v1/companies/?page=${page}&limit=${limit}&order=${order}`,
+            {
+                method: 'GET',
+                headers: {
+                    'accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || 'Error obteniendo lista de empresas');
+        }
+
+        const companies = await response.json();
+        return companies;
+
+    } catch (err) {
+        console.error('Error fetching companies:', err);
+        return null;
+    }
+};
+
 //Fetch de los datos de la empresa dek usuario
 companyServices.getMyCompanyDetails = async () => {
     try {
@@ -92,6 +122,5 @@ companyServices.updateCompanyContact = async (contactData) => {
         return null;
     }
 }
-
 
 export default companyServices;
