@@ -103,4 +103,76 @@ documentServices.deleteLoanDocument = async (fileName) => {
   }
 };
 
+
+documentServices.updateStatus = async ({ document_id, status } = {}) => {
+  try {
+    if (!document_id) throw new Error("document_id is required");
+    if (!status) throw new Error("status is required");
+
+    const token = await getAccessToken();
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/documents/${document_id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ status })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "No se pudo actualizar el documento");
+    }
+
+    const data = await response.json();
+    console.log(`Documento actualizado correctamente: ${document_id}`, data);
+    return data;
+
+  } catch (err) {
+    console.error("Error actualizando documento:", err);
+    return null;
+  }
+};
+
+// Helpers
+documentServices.approve = async ({ document_id } = {}) => {
+  return await documentServices.updateStatus({ document_id, status: "approved" });
+};
+
+documentServices.reject = async ({ document_id } = {}) => {
+  return await documentServices.updateStatus({ document_id, status: "rejected" });
+};
+
+documentServices.requestDocument = async ({ application_id, user_id, document_type, title }) => {
+  try {
+    // Use a placeholder file (empty blob) to track the request
+    const fileName = `${application_id}_${document_type}_${Date.now()}.txt`;
+    const filePath = `private/${fileName}`;
+    const placeholder = new Blob([""], { type: "text/plain" });
+
+    const { data, error } = await supabase.storage
+      .from("documents")
+      .upload(filePath, placeholder, {
+        cacheControl: "3600",
+        upsert: false,
+        metadata: {
+          application_id,
+          user_id,
+          document_type,
+          title,
+          status: "pending" // track requested status
+        }
+      });
+
+    if (error) throw error;
+
+    console.log("Documento solicitado correctamente:", data);
+    return data;
+  } catch (err) {
+    console.error("Error solicitando documento:", err);
+    return null;
+  }
+};
+
 export default documentServices;
