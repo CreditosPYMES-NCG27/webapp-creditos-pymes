@@ -4,7 +4,8 @@ import { useState } from "react";
 import "./NewLoanBtn.css";
 
 //services
-import { createNewLoan } from "../../services/creditService";
+import { createNewLoan, updateLoanStatus } from "../../services/creditService";
+import documentServices, { DocumentTypes } from "../../services/documentServices";
 
 export const NewLoanBtn = ({ company, onSuccess }) => {
 
@@ -50,10 +51,8 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
         { label: "Otro", value: "other" },
     ]
 
-    const [currentCurrency, setCurrentCurrency] = useState("EUR");
     const minAmount = 1000;
     const maxAmount = 250000;
-
     const currencyOptions = "EUR"
 
     const handleLoanForm = (e) => {
@@ -79,21 +78,109 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleDraft = async (e) => {
         e.preventDefault();
 
-        const createdLoan = await createNewLoan(newLoanForm);
-        if (createdLoan) {
-            window.alert("Loan created:", createdLoan);
+        try {
+            //Crear el borrador del préstamo
+            const createdDraft = await createNewLoan({
+                ...newLoanForm,
+                company_id: company.id,
+            });
+
+            if (!createdDraft) {
+                console.error("Error al crear el borrador");
+                return;
+            }
+
+            //Subir documentos al bucket privado
+            const filesToUpload = {
+                [DocumentTypes.FINANCIAL_STATEMENT]: document.getElementById("financeStatement")?.files,
+                [DocumentTypes.BANK_STATEMENT]: document.getElementById("bankStatements")?.files,
+                [DocumentTypes.OTHER]: document.getElementById("accountingReports")?.files,
+            };
+
+            for (const [docType, files] of Object.entries(filesToUpload)) {
+                if (files && files.length > 0) {
+                    for (const file of files) {
+                        await documentServices.uploadLoanDocument(createdDraft.id, docType, file);
+                    }
+                }
+            }
+
+            //Estado default es draft para las nuevas solicitudes
+            //Refrescar dashboard
+            if (onSuccess) onSuccess();
+
+            window.alert("Borrador del préstamo guardado");
             closeModal();
             setNewLoan({
                 requested_amount: "",
                 term_months: "",
                 purpose: "",
                 purpose_other: ""
-            })
-        } else {
-            console.error("Failed to create loan");
+            });
+            document.getElementById("financeStatement").value = "";
+            document.getElementById("bankStatements").value = "";
+            document.getElementById("accountingReports").value = "";
+
+        } catch (error) {
+            console.error("Error al guardar borrador:", error);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) return;
+
+        try {
+            //Crear el préstamo
+            const createdLoan = await createNewLoan({
+                ...newLoanForm,
+                company_id: company.id,
+            });
+
+            if (!createdLoan) {
+                console.error("Error al crear la solicitud");
+                return;
+            }
+
+            //Subir documentos al bucket privado
+            const filesToUpload = {
+                [DocumentTypes.FINANCIAL_STATEMENT]: document.getElementById("financeStatement")?.files,
+                [DocumentTypes.BANK_STATEMENT]: document.getElementById("bankStatements")?.files,
+                [DocumentTypes.OTHER]: document.getElementById("accountingReports")?.files,
+            };
+
+            for (const [docType, files] of Object.entries(filesToUpload)) {
+                if (files && files.length > 0) {
+                    for (const file of files) {
+                        await documentServices.uploadLoanDocument(createdLoan.id, docType, file);
+                    }
+                }
+            }
+
+            //Actualizar el estado a "pending" para que lo vean los operadores en su dashboard
+            await updateLoanStatus(createdLoan.id, "pending", createdLoan);
+
+            //Refrescar dashboard
+            if (onSuccess) onSuccess();
+
+            window.alert("Solicitud de préstamo creada");
+            closeModal();
+            setNewLoan({
+                requested_amount: "",
+                term_months: "",
+                purpose: "",
+                purpose_other: ""
+            });
+            document.getElementById("financeStatement").value = "";
+            document.getElementById("bankStatements").value = "";
+            document.getElementById("accountingReports").value = "";
+
+        } catch (error) {
+            console.error("Error al enviar la solicitud:", error);
         }
     };
 
@@ -163,12 +250,12 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
                                         disabled />
                                 </div>
 
-                                <div className="mb-4">
+                                <div className="mb-4 m-0">
                                     <label htmlFor="companyPhoneNumber" className="form-label">
                                         Teléfono de la empresa
                                     </label>
                                     <input
-                                        className="form-control"
+                                        className="form-control w-100"
                                         type="tel"
                                         id="companyPhoneNumber"
                                         value={company.contact_phone || ""}
@@ -176,7 +263,7 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
                                         disabled />
                                 </div>
 
-                                <div className="mb-4">
+                                <div className="mb-4 m-0">
                                     <label htmlFor="companyEmail" className="form-label">
                                         Email de la empresa
                                     </label>
@@ -309,7 +396,7 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
                                         className="form-control"
                                         id="financeStatement"
                                         name="estadosFinancieros"
-                                        
+                                        required
                                     />
                                 </div>
 
@@ -322,7 +409,7 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
                                         className="form-control"
                                         id="bankStatements"
                                         name="extractosBancarios"
-                                        
+                                        required
                                     />
                                 </div>
 
@@ -340,10 +427,9 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
 
                                 <div className="modal-footer flex-column border-0">
                                     <button
-                                        type="button"
+                                        type="submit"
                                         className="btn saveBtn_modal mx-auto"
-                                        onClick={() => { document.activeElement?.blur() }}
-                                    >
+                                        onClick={handleDraft}>
                                         Guardar
                                     </button>
                                     <div className="d-flex justify-content-between w-100">

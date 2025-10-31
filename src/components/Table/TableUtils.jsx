@@ -11,11 +11,11 @@ export const TableRenderers = {
   estado: (value) => {
     const getEstadoClass = (estado) => {
       switch (estado) {
-        case "Pendiente":
+        case "pending":
           return "badge-pendiente";
-        case "Aprobado":
+        case "approved":
           return "badge-aprobado";
-        case "Rechazado":
+        case "rejected":
           return "badge-rechazado";
         default:
           return "bg-secondary";
@@ -37,7 +37,9 @@ export const TableRenderers = {
     return ` $${value}`;
   },
 
-  acciones: (value, item) => {
+  acciones: (value, item, extra = {}) => {
+    const { company, editLoanId, setEditLoanId, onSuccess } = extra;
+
     return (
       <div className="dropdown text-center acciones-dropdown">
         <button
@@ -56,7 +58,7 @@ export const TableRenderers = {
             </button>
           </li>
           <li>
-            <button className="dropdown-item" onClick={() => handleEditar(item)}>
+            <button className="dropdown-item" onClick={() => setEditLoanId(item.id)}>
               Editar solicitud
             </button>
           </li>
@@ -75,6 +77,18 @@ export const TableRenderers = {
             </button>
           </li>
         </ul>
+
+        {/* Edit loan modal */}
+        {editLoanId && (
+          <EditLoanModal
+            loanId={editLoanId}
+            company={company}
+            onSuccess={() => {
+              onSuccess?.();
+              setEditLoanId(null);
+            }}
+          />
+        )}
       </div>
     );
   },

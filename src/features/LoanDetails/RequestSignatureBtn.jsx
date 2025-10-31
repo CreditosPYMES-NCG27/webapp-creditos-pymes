@@ -2,46 +2,21 @@ import { useState } from "react";
 import { supabase } from "../../auth/supabaseClient.js";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-//services
 import helloSignServices from "../../services/helloSignServices.js";
 
 export const RequestSignatureBtn = ({ client, loan_id }) => {
     const [file, setFile] = useState(null);
-    const [fileUrl, setFileUrl] = useState("");
     const [title, setTitle] = useState("");
     const [documentType, setDocumentType] = useState("");
     const [loading, setLoading] = useState(false);
 
     const closeModal = () => {
-        // Forzar blur del elemento enfocado
         document.activeElement?.blur();
-
         const modalEl = document.getElementById("requestSignature");
         if (modalEl) {
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
             modalInstance?.hide();
         }
-    };
-
-    const getDocumentSignedUrl = async (path) => {
-        const { data, error } = await supabase
-            .storage
-            .from('documents')
-            .createSignedUrl(path, 60);
-
-        if (error) {
-            console.error("Supabase error:", error);
-            // evita que falle al acceder a signedUrl
-            return null;
-        }
-
-        if (!data || !data.signedUrl) {
-            console.warn("No se pudo generar signedUrl para:", path);
-            return null;
-        }
-
-        return data.signedUrl;
     };
 
     const handleSubmit = async (e) => {
@@ -53,16 +28,22 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                 alert("Debe adjuntar un archivo PDF para firmar.");
                 return;
             }
-
             if (!documentType) {
                 alert("Debe seleccionar un tipo de documento.");
                 return;
             }
 
+            // Obtener token y usuario actual
             const token = localStorage.getItem("sb-token");
             if (!token) throw new Error("Usuario no autenticado");
 
-            // 1️⃣ Upload file to private/tmp/ folder
+            const {
+                data: { user: operator },
+                error: userError
+            } = await supabase.auth.getUser(token);
+            if (userError || !operator) throw new Error("No se pudo obtener operador");
+
+            // 1️⃣ Subir archivo al tmp folder
             const safeTitle = title.replace(/[^a-z0-9_-]/gi, "_");
             const tempPath = `private/tmp/${Date.now()}_${safeTitle}`;
 
@@ -71,42 +52,37 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                 .from("documents")
                 .upload(tempPath, file, { contentType: "application/pdf", upsert: true });
 
-            if (uploadError) throw new Error("Error al subir el archivo temporal: " + uploadError.message);
+            if (uploadError) throw new Error("Error al subir archivo temporal: " + uploadError.message);
 
-            // 2️⃣ Generate temporary signed URL for HelloSign
+            // 2️⃣ Crear metadata temporal en la tabla (cumple RLS y no rompe NOT NULL)
+            const { data: docData, error: metaError } = await supabase
+                .from("documents")
+                .insert([{
+                    application_id: loan_id,
+                    user_id: operator.id,
+                    document_type: documentType,
+                    storage_path: tempPath,
+                    bucket_name: "documents",
+                    file_name: title
+                }])
+                .select()
+                .single();
+
+            if (metaError) throw new Error("Error al guardar metadata: " + metaError.message);
+
+            const documentId = docData.id; // ID generado por Supabase
+
+            // 3️⃣ Generar signed URL temporal para HelloSign
             const { data: signedUrlData, error: signedUrlError } = await supabase
                 .storage
                 .from("documents")
-                .createSignedUrl(tempPath, 60); // valid 60 seconds
+                .createSignedUrl(tempPath, 60);
 
-            if (signedUrlError || !signedUrlData?.signedUrl) {
-                throw new Error("No se pudo generar signed URL temporal");
-            }
+            if (signedUrlError || !signedUrlData?.signedUrl) throw new Error("No se pudo generar signed URL temporal");
 
             const signedUrl = signedUrlData.signedUrl;
 
-            // 3️⃣ Create a temporary document record in backend
-            const docResponse = await fetch(`${BACKEND_URL}/api/v1/documents`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`,
-                },
-                body: JSON.stringify({
-                    title,
-                    documentType,
-                    filePath: tempPath,
-                    fileUrl: signedUrl,
-                    userId: client.id, // optional
-                }),
-            });
-
-            const docData = await docResponse.json();
-            if (!docResponse.ok) throw new Error(JSON.stringify(docData));
-
-            const documentId = docData.document_id; // valid ID for API
-
-            // 4️⃣ Request HelloSign signature
+            // 4️⃣ Solicitar firma vía servicio
             const result = await helloSignServices.requestSignature({
                 signerEmail: client.email,
                 signerName: client.name,
@@ -195,20 +171,6 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                                         <option value="bank_statement">Extracto bancario</option>
                                         <option value="other">Otro</option>
                                     </select>
-                                </div>
-
-                                <div className="mb-3">
-                                    <label htmlFor="fileUrl" className="form-label">
-                                        URL del documento (opcional si sube archivo):
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="fileUrl"
-                                        placeholder="https://..."
-                                        value={fileUrl}
-                                        onChange={(e) => setFileUrl(e.target.value)}
-                                    />
                                 </div>
 
                                 <div className="mb-3">
