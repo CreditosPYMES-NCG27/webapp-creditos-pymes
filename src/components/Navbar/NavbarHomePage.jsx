@@ -1,11 +1,17 @@
 import { useState } from "react";
 import "./Navbar.css";
+import { useNavigate } from "react-router-dom";
 
 export default function NavbarHomePage() {
 
   const [active, setActive] = useState(false);
   const [active2, setActive2] = useState(false);
   const [active3, setActive3] = useState(false);
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate("/");
+  };
 
   const handleTabs = (tab) => {
     if (tab === "empresas") {
@@ -25,13 +31,12 @@ export default function NavbarHomePage() {
 
   return (
     <header>
-      <img src="/logo.svg" alt="Logo Fintech NC" />
+      <img src="/logo.svg" alt="Logo Fintech NC" onClick={goHome}/>
       <nav>
         <ul>
           <li>
             <a
               href="/"
-              className={active ? "active_link" : ""}
               onClick={() => handleTabs("empresas")}
             >
               Empresas
@@ -40,7 +45,6 @@ export default function NavbarHomePage() {
           <li>
             <a
               href="#"
-              className={active2 ? "active_link" : "tabs_link"}
               onClick={() => handleTabs("partners")}
             >
               Partners
@@ -49,7 +53,6 @@ export default function NavbarHomePage() {
           <li>
             <a
               href="#"
-              className={active3 ? "active_link" : ""}
               onClick={() => handleTabs("nosotros")}
             >
               Sobre Nosotros

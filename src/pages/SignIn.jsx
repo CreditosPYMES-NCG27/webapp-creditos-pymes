@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../features/SignIn/SignIn.css";
 import { supabase } from "../auth/supabaseClient";
+import { useNavigate } from "react-router-dom";
 
 const SignInPage = () => {
     const [showSecondForm, setShowSecondForm] = useState(false);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         company: "",
         tax_id: "",
@@ -56,8 +58,11 @@ const SignInPage = () => {
             return;
         }
 
-      alert("Usuario registrado exitosamente.");
-      console.log("Usuario registrado:", data);
+        alert("Usuario registrado exitosamente.");
+        console.log("Usuario registrado:", data);
+        setTimeout(() => {
+        navigate("/login-users");
+        }, 1000)
 
         } catch (err) {
         console.error("Error inesperado:", err);
