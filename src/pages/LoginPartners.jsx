@@ -1,7 +1,8 @@
 import Login from "../components/Login/Login";
 import "@/components/Login/Login.css";
 
-const LoginPartners = () => {
+export const LoginPartners = () => {
+
   return (
     <div className="d-flex flex-column login-root">
       <div className="container-fluid">
@@ -28,6 +29,4 @@ const LoginPartners = () => {
       </footer>
     </div>
   );
-};
-
-export default LoginPartners;
+}

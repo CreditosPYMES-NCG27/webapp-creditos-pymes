@@ -1,7 +1,7 @@
 import './Footer.css';
 export default function Footer(){
     return (
-        <footer>
+        <footer className='footer footer_container'>
             <div className='ps-4'>
                 <div>
                     <img src="/logo.svg" alt="Logo Fintech NC"/>

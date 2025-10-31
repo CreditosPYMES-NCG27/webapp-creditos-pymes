@@ -15,7 +15,6 @@ import userServices from "../services/userServices.js";
 //Components
 import { CompanyDetails } from "../features/ProfileFormClient/CompanyDetails";
 import { UserDetails } from "../features/ProfileFormClient/UserDetails";
-import Footer from "../components/Footer/Footer";
 
 export const ClientProfilePage = () => {
 

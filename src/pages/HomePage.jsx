@@ -1,20 +1,24 @@
 import HeroSection from "../features/HeroSection/HeroSection";
 import LoanAmount from "../features/LoanAmount/LoanAmount";
 import Comments from "../components/Comments/Comments";
-import { NewLoanBtn } from "../features/CreateNewLoan/NewLoanBtn";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
+
 const HomePage = () => {
   return (
-    <div className="container-fluid p-0 m-0 bg-light">
-      <Navbar />
-      <HeroSection /> 
-      <LoanAmount /> 
+    <div className="container-fluid bg-light">
+      <div className="row">
+        <div className="col-12 p-0">
+          <HeroSection /> 
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-12 p-0 m-0">
+          <LoanAmount /> 
+        </div>
+      </div>
       {/* Sección de reseñas */}
-      <div className="container my-5">
-        <h5 className="mb-4 fw-bold">Opinión de nuestros clientes</h5>
-        <div className="row g-4">
-          <div className="col-md-4">
+      <div className="row justify-content-center m-0 px-4 py-5">
+          <h5 className="my-4 fw-bold">Opinión de nuestros clientes</h5>
+          <div className="col-4 m-0">
             <Comments 
               rating={5}
               title="Excelente servicio"
@@ -24,7 +28,7 @@ const HomePage = () => {
               avatar="https://i.pravatar.cc/40?img=1"
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-4 m-0">
             <Comments 
               rating={4}
               title="Muy recomendable"
@@ -34,7 +38,7 @@ const HomePage = () => {
               avatar="https://i.pravatar.cc/40?img=2"
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-4 m-0">
             <Comments 
               rating={5}
               title="Fácil y rápido"
@@ -45,8 +49,6 @@ const HomePage = () => {
             />
           </div>
         </div>
-      </div>
-      <Footer />
     </div>
   );
 };

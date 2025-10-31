@@ -1,5 +1,3 @@
-// src/services/creditService.js
-import { supabase } from '@/auth/supabaseClient';
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getAccessToken() {
@@ -8,78 +6,46 @@ export async function getAccessToken() {
   return token;
 }
 
-// Obtiene las solicitudes del usuario logueado
-export async function fetchCreditApplications(userId) {
+export async function fetchCreditApplications(user_id, page = 1, limit = 10, status = null, company_id = null) {
   try {
-    const { data, error } = await supabase
-      .from('credit_applications')
-      .select('id, requested_amount, status, created_at')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+    const token = await getAccessToken();
 
-    if (error) throw error;
-    return data;
+    const query = new URLSearchParams();
+    query.append("page", page);
+    query.append("limit", limit);
+    if (status) query.append("status", status);
+    if (company_id) query.append("company_id", company_id);
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/credit-applications/?${query.toString()}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Error al obtener las solicitudes de crédito");
+    }
+
+    const data = await response.json();
+
+    // Adaptamos la respuesta para que tenga items y totalPages
+    return {
+      items: data.items || data || [],
+      totalPages: data.totalPages || 1
+    };
+
   } catch (err) {
-    console.error('❌ Error al obtener solicitudes:', err);
-    return [];
+    console.error("Error obteniendo las solicitudes de crédito:", err);
+    return { items: [], totalPages: 1 };
   }
 }
-export async function fetchAllCreditApplications() {
-  try {
-    const { data, error } = await supabase
-      .from('credit_applications')
-      .select(`
-        id,
-        requested_amount,
-        status,
-        created_at,
-        user_id,
-        company_id,
-        users:user_id (
-          email,
-          full_name
-        ),
-        companies (
-          legal_name
-        )
-      `)
-      .order('created_at', { ascending: false });
-
-    if (error) throw error;
-
-    return data.map(item => ({
-      ...item,
-      applicant_name:
-        item.companies?.legal_name ||
-        item.users?.full_name ||
-        item.users?.email ||
-        'Sin identificar'
-    }));
-  } catch (err) {
-    console.error('❌ Error al obtener todas las solicitudes:', err);
-    return [];
-  }
-}
-
-// export async function createNewLoan(userId) {
-//   try {
-//     const { data, error } = await supabase
-//       .from('credit_applications')
-//       .select('id, requested_amount, status, created_at')
-//       .eq('user_id', userId)
-//       .order('created_at', { ascending: false });
-
-//     if (error) throw error;
-//     return data;
-//   } catch (err) {
-//     console.error('❌ Error al obtener solicitudes:', err);
-//     return [];
-//   }
-// }
 
 export async function getLoanById(loan_id) {
   try {
-    
+
     const token = await getAccessToken();
 
     // Fetch the loan by ID
@@ -132,3 +98,37 @@ export async function createNewLoan(newLoanData) {
     return null;
   }
 };
+
+//Actualiza el estado de una solicitud de crédiot - operadores
+export async function updateLoanStatus(applicationId, newStatus, currentLoanData) {
+  try {
+    const token = await getAccessToken();
+
+    const bodyData = {
+      ...currentLoanData,
+      status: newStatus
+    };
+
+    const response = await fetch(`${BACKEND_URL}/api/v1/credit-applications/${applicationId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(bodyData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Error al actualizar la solicitud de crédito");
+    }
+
+    const updatedLoan = await response.json();
+    return updatedLoan;
+
+  } catch (err) {
+    console.error("Error actualizando la solicitud de crédito:", err);
+    return null;
+  }
+};
+

@@ -69,8 +69,7 @@ const SignInPage = () => {
 
 
     return(
-        <div>
-            <Navbar />
+        <div className="container-fluid">
             <section>
                 <div>
                     <img 
@@ -116,6 +115,7 @@ const SignInPage = () => {
                                     <input type="text" name="direccionEmpresa2" value={formData.direccionEmpresa2} onChange={handleChange} className="form-control" id=""/>
                                 </div>
                                 <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
+                                <button type="submit" className="btn color-btn w-100" onClick={handleSiguiente}>Siguiente</button>
                             </>
                         ) : (
                             <>
@@ -155,7 +155,6 @@ const SignInPage = () => {
                     </div>
                 </div>
             </section>
-            <Footer />
         </div>
     );
 };

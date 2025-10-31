@@ -1,12 +1,9 @@
 import Login from "../components/Login/Login";
 import "@/components/Login/Login.css";
-import Footer from "../components/Footer/Footer";
-import Navbar from "../components/Navbar/Navbar";
 
 const LoginUsers = () => {
   return (
     <div className="d-flex flex-column login-root">
-      <Navbar />
       <div className="container-fluid">
         <div className="row">
           {/* Columna izquierda con imagen */}
@@ -24,7 +21,6 @@ const LoginUsers = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
 
   );

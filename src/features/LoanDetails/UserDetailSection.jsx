@@ -1,87 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-//CSS files
+//CSS
 import './LoanPage.css';
 
 //services
 import { getLoanById } from "../../services/creditService.js";
 import companyServices from '../../services/companyServices.js';
+import userServices from '../../services/userServices.js';
 
-export const UserDetailSection = ({ loan_id, role }) => {
+export const UserDetailSection = ({ loan_details, company_details, client_details }) => {
 
-    const [loanData, setloanData] = useState({
-        id: "",
-        company_id: "",
-        requested_amount: "",
-        purpose: "",
-        purpose_other: "",
-        term_months: "",
-        status: "",
-        risk_score: "",
-        approved_amount: "",
-        interest_rate: "",
-        created_at: "",
-        updated_at: ""
-    })
+    const loanData = loan_details;
+    const companyDetails = company_details;
+    const representative = client_details;
 
-    const [companyDetails, setCompanyDetails] = useState({
-        id: "",
-        user_id: "",
-        legal_name: "",
-        tax_id: "",
-        contact_email: "",
-        contact_phone: "",
-        address: "",
-        created_at: "",
-        updated_at: ""
-    });
-
-    const capitalizeFirstLetter = (text) => {
-        if (!text) return "";
-        return text.charAt(0).toUpperCase() + text.slice(1);
-    };
-
-    const getLoanDetails = async () => {
-
-        const loan = await getLoanById(loan_id.loan_id || loan_id);
-
-        if (loan) {
-            const company = await companyServices.getCompanyById(loan.company_id);
-
-            if (company) {
-                setloanData({
-                    id: loan.id,
-                    company_id: loan.company_id,
-                    requested_amount: loan.requested_amount,
-                    purpose: loan.purpose,
-                    purpose_other: loan.purpose_other,
-                    term_months: loan.term_months,
-                    status: loan.status,
-                    risk_score: loan.risk_score,
-                    approved_amount: loan.approved_amount,
-                    interest_rate: loan.interest_rate,
-                    created_at: loan.created_at,
-                    updated_at: loan.updated_at
-                })
-
-                setCompanyDetails({
-                    id: company.id,
-                    user_id: company.user_id,
-                    legal_name: company.legal_name,
-                    tax_id: company.tax_id,
-                    contact_email: company.contact_email,
-                    contact_phone: company.contact_phone,
-                    address: `${company?.address?.street}, ${company?.address?.city}, ${company?.address?.state}, ${company?.address?.zip_code}, ${company?.address?.country}`,
-                    created_at: company.created_at,
-                    updated_at: company.updated_at
-                })
-            }
-        }
-    };
-
-    useEffect(() => {
-        getLoanDetails();
-    }, []);
+    const capitalizeFirstLetter = (text) => text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 
     return (
         <div className="row m-4">
@@ -108,7 +42,13 @@ export const UserDetailSection = ({ loan_id, role }) => {
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Representante:</h5>
                     <p className='ms-2 loan_details_text'>
-                        "FALTA FETCH"
+                        {representative.name}
+                    </p>
+                </div>
+                <div className='d-flex'>
+                    <h5 className='loan_fields_text'>Email representante:</h5>
+                    <p className='ms-2 loan_details_text'>
+                        {representative.email}
                     </p>
                 </div>
                 <div className='d-flex'>
@@ -126,10 +66,12 @@ export const UserDetailSection = ({ loan_id, role }) => {
                 <h5 className="mt-4">Verificación: FALTA</h5>
             </div>
 
-            <div className="col-6 align-self-end mt-5">
+            <div className="col-6 align-self-end mt-3">
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Montón solicitado:</h5>
-                    <p className='ms-2 loan_details_text'>{loanData.requested_amount}</p>
+                    <p className='ms-2 loan_details_text text-success fw-bold'>
+                        {loanData.requested_amount}
+                    </p>
                 </div>
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Finalidad del crédito:</h5>

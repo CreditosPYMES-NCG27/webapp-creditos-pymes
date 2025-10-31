@@ -1,53 +1,56 @@
 import './UserDashboard.css';
 import { useState, useEffect } from 'react';
-
-//services
 import { fetchCreditApplications } from '@/services/creditService';
 import companyServices from '../../services/companyServices';
 
-//components
 import { NewLoanBtn } from '../CreateNewLoan/NewLoanBtn';
 import { TableRenderers } from '@/components/Table/TableUtils';
 import Table from '@/components/Table/Table';
 import SearchBar from '@/components/SearchBar/SearchBar';
+import { Pagination } from '../../components/Pagination';
 
 export default function UserDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [company, setCompany] = useState("")
+  const [company, setCompany] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 10;
+
+  const user = JSON.parse(localStorage.getItem('sb-user'));
+
+  const loadCreditApplications = async (pageNumber = 1) => {
+    if (!user) return;
+    setLoading(true);
+
+    try {
+      const data = await fetchCreditApplications(user.id, pageNumber, limit);
+      if (data) {
+        setSolicitudes(data.items || []);
+        setTotalPages(data.totalPages || 1);
+      }
+    } catch (err) {
+      console.error("Error fetching credit applications:", err);
+    }
+
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('sb-user'));
-    if (!user) return;
+    loadCreditApplications(page);
 
-    const loadData = async () => {
-      setLoading(true);
-
-      // Fetch credit applications separado de company details
-      //Esto permite que aún que uno de los fecth falle no afecte al otro
+    const loadCompany = async () => {
       try {
-        const data = await fetchCreditApplications(user.id);
-        setSolicitudes(data);
-      } catch (err) {
-        console.error("Error fetching credit applications:", err);
-      }
-
-      //se llama company details desde el parent para evitar demoras en cargar el modal
-      try {
-        const company = await companyServices.getMyCompanyDetails();
-        setCompany(company);
+        const companyData = await companyServices.getMyCompanyDetails();
+        setCompany(companyData);
       } catch (err) {
         console.error("Error fetching company details:", err);
       }
-
-      setLoading(false);
     };
+    loadCompany();
+  }, [page]);
 
-    loadData();
-  }, []);
-
-  // Filtrado
   const filteredData = solicitudes.filter((item) => {
     const search = searchText.toLowerCase();
     return (
@@ -58,68 +61,50 @@ export default function UserDashboard() {
     );
   });
 
-  // Columnas 
-  const columns = [
-    {
-      key: 'id',
-      label: 'ID Solicitud',
-      render: TableRenderers.idSolicitud,
-      sortable: false
-    },
-    {
-      key: 'requested_amount',
-      label: 'Monto',
-      render: TableRenderers.monto,
-      sortable: true
-    },
-    {
-      key: 'status',
-      label: 'Estado',
-      render: TableRenderers.estado,
-      sortable: true
-    },
-    {
-      key: 'created_at',
-      label: 'Fecha',
-      render: TableRenderers.texto,
-      sortable: true
-    },
-    {
-      key: 'acciones',
-      label: 'Acciones',
-      headerClassName: 'text-center',
-      cellClassName: 'text-center',
-      render: TableRenderers.acciones,
-      sortable: false
-    }
-  ];
+  const paginatedData = filteredData.slice(
+    (page - 1) * limit,
+    page * limit
+  );
 
-  if (loading) {
-    return <p className="text-center my-5">Cargando solicitudes...</p>;
-  }
+  const columns = [
+    { key: 'id', label: 'ID Solicitud', render: TableRenderers.idSolicitud, sortable: false },
+    { key: 'requested_amount', label: 'Monto', render: TableRenderers.monto, sortable: true },
+    { key: 'status', label: 'Estado', render: TableRenderers.estado, sortable: true },
+    { key: 'created_at', label: 'Fecha', render: TableRenderers.texto, sortable: true },
+    { key: 'acciones', label: 'Acciones', headerClassName: 'text-center', cellClassName: 'text-center', render: TableRenderers.acciones, sortable: false }
+  ];
 
   return (
     <div className="container my-5">
-      <Navbar />
+      
       <div className="dashboard-header text-center mb-4">
-        <h2>Bienvenido {JSON.parse(localStorage.getItem('sb-user'))?.email}</h2>
+        <h2>Bienvenido {user?.email}</h2>
       </div>
 
-      <SearchBar
-        placeholder="Buscar por ID, monto, estado o fecha..."
-        value={searchText}
-        onChange={setSearchText}
-      />
+      <SearchBar placeholder="Buscar por ID, monto, estado o fecha..." value={searchText} onChange={setSearchText} />
 
       <div className="mb-4">
-        <NewLoanBtn company={company}/>
+        <NewLoanBtn company={company} onSuccess={loadCreditApplications}/>
       </div>
 
       <div className="dashboard-header mb-3">
         <h3 className="text-primary">Mis Solicitudes</h3>
       </div>
 
-      <Table columns={columns} data={filteredData} />
+      {loading ? (
+        <p className="text-center my-5">Cargando solicitudes...</p>
+      ) : (
+        <>
+          <div className="table-wrapper">
+  <Table columns={columns} data={paginatedData} />
+</div>
+          <Pagination
+            page={page}
+            totalPages={Math.ceil(filteredData.length / limit)}
+            onPageChange={setPage}
+          />
+        </>
+      )}
     </div>
   );
 }
