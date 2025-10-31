@@ -33,7 +33,7 @@ export const ButtonActions = {
     }
     
     if (isPartner) {
-      setAppRole("partner");
+      setAppRole("operator");
       navigate("/partner-dashboard");
     } else {
       setAppRole("user");
