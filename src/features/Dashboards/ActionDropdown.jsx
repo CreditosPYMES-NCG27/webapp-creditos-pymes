@@ -5,12 +5,14 @@ import "../../components/Table/Table.css";
 
 //components
 import { EditLoanModal } from "../CreateNewLoan/EditLoan";
+import { AttachDocumentModal } from "./AttachDocument";
 
 export default function ActionsDropdown({ row, company, isOpen, toggleModal, onSuccess }) {
 
     const handleBorrar = () => console.log("🗑️ Borrar solicitud:", row.id);
 
     const canEdit = row.status === "draft";
+    const canAttachDocument = row.status === "pending"
     const [showEditModal, setShowEditModal] = useState(false);
 
     return (
@@ -28,12 +30,22 @@ export default function ActionsDropdown({ row, company, isOpen, toggleModal, onS
             <ul className="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby={`dropdownMenu-${row.id}`}>
                 {canEdit ? (<li>
                     <button
-                        className="dropdown-item text-info fw-bold lh-sm"
+                        className="dropdown-item text-info fw-bold lh-sm bg-light"
                         type="button"
                         data-bs-toggle="modal"
                         data-bs-target={`#editLoanModal-${row.id}`}
                     >
                         Editar
+                    </button>
+                </li>) : null}
+                {canAttachDocument ? (<li>
+                    <button
+                        className="dropdown-item text-success fw-bold lh-sm bg-light"
+                        type="button"
+                        data-bs-toggle="modal"
+                        data-bs-target={`#${row.id}attachDocument`}
+                    >
+                        Adjuntar Documento
                     </button>
                 </li>) : null}
                 <li>
@@ -54,6 +66,10 @@ export default function ActionsDropdown({ row, company, isOpen, toggleModal, onS
                 modalId={`editLoanModal-${row.id}`}
                 onSuccess={onSuccess}
             />
+
+            <AttachDocumentModal 
+            loanId={row.id}
+            modalId={`${row.id}attachDocument`}/>
         </div>
     );
 }

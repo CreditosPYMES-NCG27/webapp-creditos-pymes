@@ -32,7 +32,7 @@ export const UserDetailSection = ({ loan_details, company_details, client_detail
                     <p className='ms-2 loan_details_text'>{companyDetails.tax_id}</p>
                 </div>
 
-                <div className='d-flex'>
+                <div className='d-flex m-0'>
                     <p className="loan_fields_text">Dirección:</p>
                     <p className='ms-2 loan_details_text'>{companyDetails.address}</p>
                 </div>
@@ -51,22 +51,21 @@ export const UserDetailSection = ({ loan_details, company_details, client_detail
                         {representative.email}
                     </p>
                 </div>
-                <div className='d-flex'>
+                <div className='d-flex m-0'>
                     <h5 className='loan_fields_text'>Teléfono de la empresa:</h5>
                     <p className='ms-2 loan_details_text'>
                         {companyDetails.contact_phone}
                     </p>
                 </div>
-                <div className='d-flex'>
+                <div className='d-flex m-0'>
                     <h5 className='loan_fields_text'>Email de la empresa:</h5>
                     <p className='ms-2 loan_details_text'>
                         {companyDetails.contact_email}
                     </p>
                 </div>
-                <h5 className="mt-4">Verificación: FALTA</h5>
             </div>
 
-            <div className="col-6 align-self-end mt-3">
+            <div className="col-6 align-self-end mt-3 m-0">
                 <div className='d-flex'>
                     <h5 className='loan_fields_text'>Montón solicitado:</h5>
                     <p className='ms-2 loan_details_text text-success fw-bold'>

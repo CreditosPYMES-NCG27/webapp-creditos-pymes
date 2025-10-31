@@ -23,7 +23,7 @@ export const LoanDetailsPage = () => {
     const loanId = useParams();
     const [loanIdState] = useState(loanId.loan_id);
 
-    const { loading, loan, company, client, documents } = loanDetails(loanIdState);    
+    const { loading, loan, company, client, documents } = loanDetails(loanIdState);
 
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
@@ -38,11 +38,17 @@ export const LoanDetailsPage = () => {
             navigate("/dashboard");
             return;
         }
-    };    
+    };
+
+    console.log(loan?.status);
+
 
     useEffect(() => {
+        if (loan?.status === "draft") {
+            navigate("/partner-dashboard");
+        }
         checkRole();
-    }, []);
+    }, [loan, navigate]);
 
     if (loading) return <p className="text-center mt-5 fs-5">Cargando datos...</p>;
 
@@ -63,18 +69,18 @@ export const LoanDetailsPage = () => {
                 {loanIdState}
             </h3>
 
-            <StatusDropDown loan_details={loan}/>
+            <StatusDropDown loan_details={loan} />
 
-            <UserDetailSection 
-            loan_details={loan}
-            company_details={company}
-            client_details={client}
+            <UserDetailSection
+                loan_details={loan}
+                company_details={company}
+                client_details={client}
             />
 
-            <DocumentSection 
-            loan_documents={documents} 
-            loan_id={loanIdState} 
-            client_details={client}
+            <DocumentSection
+                loan_documents={documents}
+                loan_id={loanIdState}
+                client_details={client}
             />
         </div>
     );
