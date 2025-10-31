@@ -10,27 +10,33 @@ export default function PartnerDashboard() {
   const [searchText, setSearchText] = useState('');
   const [solicitudes, setSolicitudes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
 
-  const itemsPerPage = 10;
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+
+  // Carga las solicitudes
+  const loadCreditApplications = async (pageNumber = 1) => {
+    setLoading(true);
+    try {
+      const data = await fetchCreditApplications(null, pageNumber, limit, null, null);
+
+      setSolicitudes(data.items);
+      setTotalPages(data.totalPages);
+    } catch (err) {
+      console.error("Error fetching credit applications:", err);
+      setSolicitudes([]);
+      setTotalPages(1);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchCreditApplications();
-        setSolicitudes(data.items || data);
-      } catch (err) {
-        console.error("Error fetching credit applications:", err);
-        setSolicitudes([]);
-      }
-      setLoading(false);
-    };
+    loadCreditApplications(page);
+  }, [page]);
 
-    loadData();
-  }, []);
-
-  // Filtrado adaptado a los nuevos campos
+  // Filtrado por search
   const filteredData = solicitudes.filter((item) => {
     const search = searchText.toLowerCase();
     return (
@@ -42,13 +48,7 @@ export default function PartnerDashboard() {
     );
   });
 
-  // Paginación
-  const paginatedData = filteredData.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage
-  );
-
-  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const paginatedData = filteredData;
 
   // Columnas para partners
   const columns = [
@@ -66,7 +66,7 @@ export default function PartnerDashboard() {
     },
     {
       key: 'requested_amount',
-      label: 'Monto',
+      label: 'Montón',
       render: TableRenderers.monto,
       sortable: true
     },
@@ -83,7 +83,7 @@ export default function PartnerDashboard() {
       sortable: true
     },
     {
-      key: 'verification',
+      key: 'Más detalles',
       label: 'Verificación',
       headerClassName: 'text-center',
       cellClassName: 'text-center',

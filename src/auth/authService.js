@@ -22,7 +22,6 @@ export async function loginUser(email, password, showNotification = null) {
     localStorage.setItem("sb-token", data.session.access_token);
     localStorage.setItem("sb-user", JSON.stringify(data.user));
 
-
     // Mostrar notificación de éxito si se proporciona la función
     if (showNotification) {
       const userName = data.user.user_metadata?.full_name || data.user.email?.split('@')[0] || 'Usuario';
