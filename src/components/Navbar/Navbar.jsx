@@ -10,9 +10,11 @@ export default function Navbar() {
     return <NavbarLoginUser />;
   } else if (location.pathname.startsWith("/dashboard")) {
     return <NavbarDashboard />;
+  } else if (location.pathname.startsWith("/partner")) {
+    return <NavbarDashboard />;
   } else if (location.pathname.startsWith("/sign-in")){
     return <NavbarLoginUser />;
   } else {
     return <NavbarHomePage />;
-  }
+  } 
 }
