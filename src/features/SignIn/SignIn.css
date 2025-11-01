@@ -28,6 +28,7 @@ button.color-btn{
   box-shadow: none !important;
 }
 
-.signup_page_form:focus{
+div.signup_page_form{
+    width: 5rem;
     border-bottom: 2px solid var(--teal-600) !important;
 }

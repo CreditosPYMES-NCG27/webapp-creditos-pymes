@@ -16,6 +16,12 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 const SignInPage = () => {
     const [showSecondForm, setShowSecondForm] = useState(false);
     const navigate = useNavigate();
+    const [activeIcon, setActiveIcon] = useState("company");
+
+    const handleNext = () => {
+        setActiveIcon("user");
+        setShowSecondForm(true);
+    }
 
     const [formData, setFormData] = useState({
         company: "",
@@ -115,9 +121,19 @@ const SignInPage = () => {
                     />
                 </div>
                 <div className="col-lg-7 mt-5 mx-auto pb-5">
-                    <div className="text-center mt-5 mx-auto signup_page_form">
-                        <FontAwesomeIcon icon={faHouse} className="border fs-1 me-3" />
-                        <FontAwesomeIcon icon={faUser} className="icons_profile_page fs-1" />
+                    <div className="d-flex text-center mt-5 mx-auto justify-content-center">
+                        <div className={`bg-white border-0 mt-3 icons_profile_page me-3 ${activeIcon === "company" ? "signup_page_form" : ""}`}>
+                            <FontAwesomeIcon
+                                icon={faHouse}
+                                className="fs-1"
+                            />
+                        </div>
+
+                        <div className={`bg-white border-0 icons_profile_page fs-1 ${activeIcon === "user" ? "signup_page_form" : ""}`}>
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                className="fs-1" />
+                        </div>
                     </div>
                     <div className="container w-75 d-flex align-items-center justify-content-center">
 
@@ -227,9 +243,10 @@ const SignInPage = () => {
                                         </div>
                                     </div>
 
-                                    <button 
-                                    type="submit" 
-                                    className="border rounded color-btn w-50 d-flex mx-auto justify-content-center mt-4">
+                                    <button
+                                        type="submit"
+                                        className="border rounded color-btn w-50 d-flex mx-auto justify-content-center mt-4"
+                                        onClick={handleNext}>
                                         Siguiente
                                     </button>
                                 </>
@@ -298,9 +315,9 @@ const SignInPage = () => {
                                             <a href="#" className="terminosycondiciones">términos y condiciones</a>
                                         </label>
                                     </div>
-                                    <button 
-                                    type="submit" 
-                                    className="border rounded color-btn w-50 d-flex mx-auto justify-content-center mt-4">
+                                    <button
+                                        type="submit"
+                                        className="border rounded color-btn w-50 d-flex mx-auto justify-content-center mt-4">
                                         Registrarse
                                     </button>
                                 </>

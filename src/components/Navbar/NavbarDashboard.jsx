@@ -32,7 +32,7 @@ export default function NavbarDashboard() {
           <li><a href="">Ayuda</a></li>
         </ul>
       </nav>
-      <button onClick={handleLogout}>Cerrar Sesión</button>
+      <button onClick={handleLogout} className="btn btn-outline-danger me-4 fw-bold">Cerrar Sesión</button>
     </header>
   );
 }

@@ -77,7 +77,7 @@ export default function LoanAmount() {
           text="Solicitar ahora mismo"
           color="teal"
           size="xl"
-          action="alert"
+          action="register"
         />
       </div>
     </div>
