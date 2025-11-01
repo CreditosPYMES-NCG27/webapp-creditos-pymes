@@ -7,15 +7,15 @@ export default function Navbar() {
   const location = useLocation();
 
   const loggedUserPaths =
-    location.pathname === "/dasboard" ||
+    location.pathname === "/dashboard" ||
     location.pathname === "/partner-dashboard" ||
     location.pathname === "/user/profile" ||
     location.pathname === "/partner/profile" ||
     location.pathname.startsWith("/partner/loan-details/");
 
   const authPaths = 
-    location.pathname === "login-users" ||
-    location.pathname === "sign-up"
+    location.pathname === "/login-users" ||
+    location.pathname === "/sign-up"
 
   if (authPaths) {
     return <NavbarLoginUser />;
