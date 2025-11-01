@@ -13,6 +13,7 @@ import {
   faEye,
 } from '@fortawesome/free-solid-svg-icons';
 import companyServices from '../../services/companyServices';
+import StatusBadge from '../../components/Table/StatusBadge';
 
 export default function PartnerDashboard() {
   const navigate = useNavigate();
@@ -21,15 +22,18 @@ export default function PartnerDashboard() {
   const [company, setCompany] = useState("");
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(100);
   const [totalPages, setTotalPages] = useState(1);
+
+  const user = JSON.parse(localStorage.getItem('sb-user'));
 
   const loadCreditApplications = async (pageNumber = 1) => {
     setLoading(true);
     try {
-      const data = await fetchCreditApplications(null, pageNumber, limit, null, null);
-      setSolicitudes(data.items || []);
-      setTotalPages(data.totalPages || 1);
+      const data = await fetchCreditApplications(null, pageNumber, limit);
+      setSolicitudes(data?.items || []);
+      setTotalPages(data?.totalPages || 1);
+      setLimit(data?.perPage || limit);
     } catch (err) {
       console.error('Error fetching credit applications:', err);
       setSolicitudes([]);
@@ -84,17 +88,7 @@ export default function PartnerDashboard() {
   const renderText = (value) => value;
   const renderId = (value) => <span className="fw-semibold">## {value}</span>;
   const renderAmount = (value) => `$${value}`;
-  const renderStatus = (value) => {
-    const getBadgeClass = (status) => {
-      switch (status) {
-        case 'pending': return 'badge-pendiente';
-        case 'approved': return 'badge-aprobado';
-        case 'rejected': return 'badge-rechazado';
-        default: return 'bg-secondary';
-      }
-    };
-    return <span className={`badge badge-estado ${getBadgeClass(value)}`}>{value}</span>;
-  };
+  
   const renderVerification = (value, item) => {
     const getIcon = (status) => {
       switch (status.toLowerCase()) {
@@ -124,11 +118,11 @@ export default function PartnerDashboard() {
     { key: 'legal_name', label: 'Solicitante', render: renderText, sortable: true },
     { key: 'id', label: 'Solicitud', render: renderId, sortable: false },
     { key: 'requested_amount', label: 'Monto', render: renderAmount, sortable: true },
-    { key: 'status', label: 'Estado', render: renderStatus, sortable: true },
+    { key: 'status', label: 'Estado', render: (value) => <StatusBadge status={value} />, sortable: true },
     { key: 'created_at', label: 'Fecha de Creación', render: renderText, sortable: true },
     {
-      key: 'verification',
-      label: 'Verificación',
+      key: 'Más detalles',
+      label: 'Más detalles',
       headerClassName: 'text-center',
       cellClassName: 'text-center',
       render: renderVerification,

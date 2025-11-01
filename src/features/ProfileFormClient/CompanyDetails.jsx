@@ -134,7 +134,7 @@ export const CompanyDetails = () => {
                         disabled />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 m-0 p-0">
                     <label htmlFor="companyPhoneNumber" className="form-label">
                         Teléfono de la empresa
                     </label>
@@ -148,7 +148,7 @@ export const CompanyDetails = () => {
                         onChange={handleChange} />
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 m-0 p-0">
                     <label htmlFor="companyEmail" className="form-label">
                         Email de la empresa
                     </label>

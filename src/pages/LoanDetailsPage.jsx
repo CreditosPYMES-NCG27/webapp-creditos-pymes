@@ -24,7 +24,7 @@ export const LoanDetailsPage = () => {
     const [loanIdState] = useState(loanId.loan_id);
 
     const { loading, loan, company, client, documents } = loanDetails(loanIdState);
-
+    
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
 

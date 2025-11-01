@@ -84,7 +84,7 @@ export const UserDetails = (props) => {
                         onChange={handleChange}/>
                 </div>
 
-                <div className="mb-4">
+                <div className="mb-4 m-0 p-0">
                     <label htmlFor="user_email" className="form-label">
                         Correo electrónico
                     </label>
@@ -98,7 +98,7 @@ export const UserDetails = (props) => {
                         onChange={handleChange}/>
                 </div>
 
-                <div className="mb-3">
+                <div className="mb-3 m-0 p-0">
                     <label htmlFor="password" className="form-label">
                         Contraseña
                     </label>

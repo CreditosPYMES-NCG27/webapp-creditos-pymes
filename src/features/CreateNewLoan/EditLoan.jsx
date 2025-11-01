@@ -101,12 +101,7 @@ export const EditLoanModal = ({ loanId, company, onSuccess }) => {
             console.log(loanId);
 
             // Update the loan draft without changing status
-            await updateLoanDraft(loanId, {
-                requested_amount: newLoanForm.requested_amount,
-                term_months: newLoanForm.term_months,
-                purpose: newLoanForm.purpose,
-                purpose_other: newLoanForm.purpose_other || ""
-            });
+            await updateLoanDraft(loanId, "draft", newLoanForm);
 
             // Upload any new documents
             const filesToUpload = {
