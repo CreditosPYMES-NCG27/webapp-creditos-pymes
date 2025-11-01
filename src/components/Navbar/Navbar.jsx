@@ -6,14 +6,21 @@ import NavbarHomePage from "./NavbarHomePage";
 export default function Navbar() {
   const location = useLocation();
 
-  if (location.pathname === "/login-users" ) {
+  const loggedUserPaths =
+    location.pathname === "/dasboard" ||
+    location.pathname === "/partner-dashboard" ||
+    location.pathname === "/user/profile" ||
+    location.pathname === "/partner/profile" ||
+    location.pathname.startsWith("/partner/loan-details/");
+
+  const authPaths = 
+    location.pathname === "login-users" ||
+    location.pathname === "sign-up"
+
+  if (authPaths) {
     return <NavbarLoginUser />;
-  } else if (location.pathname.startsWith("/dashboard")) {
+  } else if (loggedUserPaths) {
     return <NavbarDashboard />;
-  } else if (location.pathname.startsWith("/partner")) {
-    return <NavbarDashboard />;
-  } else if (location.pathname.startsWith("/sign-in")){
-    return <NavbarLoginUser />;
   } else {
     return <NavbarHomePage />;
   } 

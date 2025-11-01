@@ -129,6 +129,9 @@ export const NewLoanBtn = ({ company, onSuccess }) => {
         }
     };
 
+    console.log(company);
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 

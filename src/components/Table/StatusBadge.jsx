@@ -9,8 +9,10 @@ export default function StatusBadge({ status }) {
                 return "badge-aprobado";
             case "rejected":
                 return "badge-rechazado";
+            case "in_review":
+                return "badge-in-review";
             default:
-                return "bg-secondary";
+                return "badge-in-review";
         }
     };
 

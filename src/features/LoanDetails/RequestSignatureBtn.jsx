@@ -59,7 +59,7 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                 .from("documents")
                 .insert([{
                     application_id: loan_id,
-                    user_id: operator.id,
+                    user_id: client.id,
                     document_type: documentType,
                     storage_path: tempPath,
                     bucket_name: "documents",
@@ -89,11 +89,10 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                 documentId,
                 callbackUrl: `${BACKEND_URL}/webhooks/hellosign`,
             });
-
             console.log("HelloSign result:", result);
-            window.alert("✅ Solicitud de firma enviada correctamente. Se guardará cuando se firme.");
             closeModal();
-
+            window.alert("✅ Solicitud de firma enviada correctamente. Se guardará cuando se firme.");
+            
         } catch (err) {
             console.error("Error en el proceso de firma:", err);
             alert(err.message || "Error al solicitar la firma");

@@ -24,7 +24,7 @@ export const LoanDetailsPage = () => {
     const [loanIdState] = useState(loanId.loan_id);
 
     const { loading, loan, company, client, documents } = loanDetails(loanIdState);
-
+    
     const checkRole = async () => {
         const partner = await userServices.getMyProfile();
 
@@ -48,7 +48,7 @@ export const LoanDetailsPage = () => {
             navigate("/partner-dashboard");
         }
         checkRole();
-    }, [loan, navigate]);
+    }, [loan, navigate, documents]);
 
     if (loading) return <p className="text-center mt-5 fs-5">Cargando datos...</p>;
 

@@ -28,7 +28,7 @@ export default function NavbarDashboard() {
       <nav>
         <ul>
           <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/perfil">Mi Perfil</a></li>
+          <li><a href="/user/profile">Mi Perfil</a></li>
           <li><a href="">Ayuda</a></li>
         </ul>
       </nav>

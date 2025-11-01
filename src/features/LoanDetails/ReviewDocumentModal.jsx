@@ -56,8 +56,6 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                 result = await documentServices.reject({ document_id });
             }
 
-            console.log(`Documento ${status}:`, result);
-
             // Close modal
             const modalEl = document.getElementById(modalId);
             const modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -101,7 +99,7 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                                 onClick={() => { document.activeElement?.blur() }}></button>
                         </div>
 
-                        <div className="modal-body p-4">
+                        <div className="modal-body p-4 m-0 p-0">
                             <h6 className="fw-bold mb-4 mt-2">
                                 {document_title}
                             </h6>
@@ -110,7 +108,7 @@ export const ReviewDocumentModal = ({ document_path, modalId, document_title, lo
                             ) : signedUrl ? (
                                 <iframe
                                     src={signedUrl}
-                                    title="Documento"
+                                    title="documento"
                                     className="documentView"
                                 ></iframe>
                             ) : (

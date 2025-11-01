@@ -30,7 +30,7 @@
 }
 
 .badge-pendiente {
-  background-color: var(--yellow-500);
+  background-color: var(--aqua-600);
   color: #000;
 }
 
@@ -40,7 +40,12 @@
 }
 
 .badge-rechazado {
-  background-color: var(--red-500);
+  background-color: var(--red-600);
+  color: #fff;
+}
+
+.badge-in-review {
+  background-color: var(--yellow-600);
   color: #fff;
 }
 
