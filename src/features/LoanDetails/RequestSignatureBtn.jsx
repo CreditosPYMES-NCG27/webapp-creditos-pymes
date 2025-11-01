@@ -59,9 +59,8 @@ export const RequestSignatureBtn = ({ client, loan_id }) => {
                 .from("documents")
                 .insert([{
                     application_id: loan_id,
-                    user_id: operator.id,
+                    user_id: client.id,
                     document_type: documentType,
-                    status:"uploaded",
                     storage_path: tempPath,
                     bucket_name: "documents",
                     file_name: title

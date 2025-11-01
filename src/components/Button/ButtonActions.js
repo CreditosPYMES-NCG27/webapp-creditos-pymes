@@ -1,4 +1,7 @@
-import { loginUser, setAppRole } from "@/auth/authService";
+import { loginUser } from "../../auth/authService";
+import { supabase } from "../../auth/supabaseClient";
+import { showError, showSuccess } from "../../services/toastService";
+import userServices from "../../services/userServices";
 
 export const ButtonActions = {
   goHome: (navigate) => navigate("/"),
@@ -7,37 +10,51 @@ export const ButtonActions = {
   register: (navigate) => navigate("/sign-up"),
   alert: () => alert("Ejemplo"),
 
-  login: async (navigate, email, password, isPartner = false, showNotification = null) => {
+  login: async (navigate, email, password, isPartner = false) => {
     if (!email || !password) {
-      if (showNotification) {
-        showNotification.showError("Por favor complete usuario y contraseña");
-      } else {
-        alert("Por favor complete usuario y contraseña ❌");
-      }
+      showError("Por favor complete usuario y contraseña");
       return;
     }
 
-    const { user, session, error } = await loginUser(email, password, showNotification);
+    // ✅ Iniciar sesión correctamente
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
     if (error) {
-      // La notificación de error ya se maneja en loginUser si se proporciona showNotification
-      if (!showNotification) {
-        alert(`❌ Error: ${error.message}`);
-      }
+      showError(error.message || "Error al iniciar sesión.");
       return;
     }
 
-    // La notificación de éxito ya se maneja en loginUser si se proporciona showNotification
-    if (!showNotification) {
-      alert(`✅ Bienvenido ${user.email}`);
+    const user = data.user;
+    const session = data.session;
+
+    console.log("Sesión iniciada:", session);
+    console.log("Token JWT:", session.access_token);
+
+    //Supabase ya maneja el refresh automático
+    localStorage.setItem("sb-session", JSON.stringify(session));
+
+    //Obtener perfil del backend
+    try {
+      const profile = await userServices.getMyProfile(user.id);
+
+      if (profile && !profile.error) {
+        sessionStorage.setItem("user", JSON.stringify(profile));
+        showSuccess(`Bienvenido ${user.email}`);
+        navigate(isPartner ? "/partner-dashboard" : "/dashboard");
+      } else {
+        showError(profile?.error || "No se pudo cargar el perfil.");
+      }
+    } catch (err) {
+      console.error(err);
+      showError("Error obteniendo el perfil.");
     }
-    
-    if (isPartner) {
-      setAppRole("operator");
-      navigate("/partner-dashboard");
-    } else {
-      setAppRole("user");
-      navigate("/dashboard");
-    }
+
+    // Fetch profile in background
+    userServices.getMyProfile(user.id)
+      .then(profile => sessionStorage.setItem("user", JSON.stringify(profile)))
+      .catch(err => console.error(err));
   },
 };

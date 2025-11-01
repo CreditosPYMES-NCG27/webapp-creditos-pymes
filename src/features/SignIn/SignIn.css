@@ -27,3 +27,7 @@ button.color-btn{
 .form-check-input:focus {
   box-shadow: none !important;
 }
+
+.signup_page_form:focus{
+    border-bottom: 2px solid var(--teal-600) !important;
+}

@@ -3,7 +3,9 @@ import { supabase } from "../auth/supabaseClient";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getAccessToken() {
-  const token = localStorage.getItem("sb-token");
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw new Error("No se pudo obtener la sesión: " + error.message);
+  const token = data?.session?.access_token;
   if (!token) throw new Error("Usuario no autenticado");
   return token;
 }

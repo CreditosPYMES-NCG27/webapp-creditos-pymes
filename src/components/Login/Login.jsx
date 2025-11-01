@@ -1,7 +1,7 @@
 import "./Login.css";
 import Button from "../Button/Button";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ButtonActions } from "../Button/ButtonActions";
 
 const Login = ({ isPartner = false }) => {
@@ -59,15 +59,15 @@ const Login = ({ isPartner = false }) => {
                     />
                 </div>
 
-                <div className="mb-3 text-center">
-                    <a href="#" className="forgot-link small">¿Olvidó su contraseña?</a>
+                <div className="d-flex align-self-center justify-content-center my-4 m-0">
+                    <Link className="forgot-link" to="/reset-password"> ¿Olvidó su contraseña?</Link>
                 </div>
 
                 <Button
                     text="Iniciar Sesión"
                     color="teal"
                     size="md"
-                    className="w-100 mb-1"
+                    className="w-100 mb-2"
                     action={handleLogin}  
                 />
                 {!isPartner && (

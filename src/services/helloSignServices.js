@@ -1,5 +1,7 @@
 // const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
+import { supabase } from "../auth/supabaseClient";
+
 // export async function getAccessToken() {
 //   const token = localStorage.getItem("sb-token");
 //   if (!token) throw new Error("Usuario no autenticado");
@@ -41,14 +43,16 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getAccessToken() {
-    const token = localStorage.getItem("sb-token");
-    if (!token) throw new Error("Usuario no autenticado");
-    return token;
+  const { data, error } = await supabase.auth.getSession();
+  if (error) throw new Error("No se pudo obtener la sesión: " + error.message);
+  const token = data?.session?.access_token;
+  if (!token) throw new Error("Usuario no autenticado");
+  return token;
 }
 
 const helloSignServices = {};
 
-helloSignServices.requestSignature = async ({ documentId, signerEmail, signerName, callbackUrl }) => {
+helloSignServices.requestSignature = async ({ documentId, signerEmail, signerName }) => {
     const token = await getAccessToken();
 
     try {
@@ -60,8 +64,7 @@ helloSignServices.requestSignature = async ({ documentId, signerEmail, signerNam
             },
             body: JSON.stringify({
                 signer_email: signerEmail,
-                signer_name: signerName,
-                callback_url: callbackUrl,
+                signer_name: signerName
             }),
         });
 
