@@ -21,7 +21,7 @@ export default function Navbar() {
     return <NavbarLoginUser />;
   } else if (loggedUserPaths) {
     return <NavbarDashboard />;
-  }else {
+  } else {
     return <NavbarHomePage />;
-  }
+  } 
 }
